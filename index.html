@@ -1,31 +1,37 @@
 <!doctype html>
-<html lang="uk">
+<html lang="uk" data-lang="uk">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Тетяна: перетворюю хаос із таблиць, зошитів і чатів на зручні й гарні застосунки.">
-<meta property="og:title" content="Тетяна">
-<meta property="og:description" content="Беру хаос із таблиць, зошитів і чатів і роблю з нього щось зручне й гарне.">
-<meta name="theme-color" content="#2B3BFF">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232B3BFF'/%3E%3Ctext x='32' y='45' font-size='38' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23FFC83D'%3ET%3C/text%3E%3C/svg%3E">
-<title>Робочий стіл Тетяни</title>
+<meta name="description" content="Ti Ost — I make things. Systems. Words. Ideas. Digital tools, poetry, books.">
+<meta property="og:title" content="Ti Ost">
+<meta property="og:description" content="I make things. Systems. Words. Ideas.">
+<meta name="theme-color" content="#1E1410">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%238E2433'/%3E%3Ctext x='32' y='45' font-size='34' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23E2A544'%3ETi%3C/text%3E%3C/svg%3E">
+<title>Ti Ost</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: colour-blocked chapters, one saturated slab per idea. Chaos → order is the through-line:
-   draggable "chaos" stickers in the hero, flip cards that tidy themselves, a colour scroller of finished work.
-   Deliberately a single bright look in both host themes. */
+/* Layout: two moods in one site. BUILD = bright colour-blocked slabs (chaos → order);
+   WRITE = the dark, quiet world of the book cover (black, feather-white, serif); CREATE/ABOUT/NOW soften back.
+   Bilingual: every text exists as .u (UA) and .e (EN); <html data-lang> decides which shows. Single deliberate look. */
 :root{
-  --ink:#17121F; --paper:#F6F3FF; --white:#FFFFFF;
-  --cobalt:#2B3BFF; --coral:#FF5B3A; --sun:#FFC83D; --mint:#2FD69A; --pink:#FF9AD5; --lilac:#B9A6FF; --lime:#C6F432;
-  --display:"Unbounded", "Golos Text", system-ui, sans-serif;
+  /* autumn yard: cherry, autumn lime, pie crust, bonfire ember, plaid green, espresso, oat milk */
+  --ink:#24170F; --paper:#F3E8D6; --white:#FBF5EA;
+  --cobalt:#8E2433; --coral:#D2612C; --sun:#E2A544; --mint:#A3B34A; --pink:#D99A8C; --lilac:#B88A6E; --lime:#C4D15C;
+  --forest:#33452F; --cherry-d:#5E1622;
+  --blush:#F6E3D6; --cream:#F7EBD3; --night:#1A120E; --night-2:#241912; --feather:#F1E6D6; --dust:#A8957F; --gold:#E2A544;
+  --display:"Playfair Display", Georgia, serif;
+  --label:"Montserrat", "Golos Text", system-ui, sans-serif;
+  --book:"Playfair Display", Georgia, serif;
   --serif:"Cormorant Garamond", Georgia, serif;
   --body:"Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
   --hand:"Caveat", "Segoe Print", cursive;
   --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
   color-scheme:light;
 }
+html[data-lang="en"] .u, html:not([data-lang="en"]) .e{display:none!important}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -35,484 +41,706 @@ p{margin:0}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:8px}
 .it{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0}
-.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .kicker{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
-section{position:relative}
-.slab{padding-block:clamp(64px,9vw,128px)}
+.slab{padding-block:clamp(64px,9vw,128px);position:relative}
 
 /* top bar */
-.bar{position:fixed;left:0;right:0;top:0;z-index:20;padding-top:env(safe-area-inset-top,0px);pointer-events:none}
-.bar .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:14px}
-.bar a{pointer-events:auto;text-decoration:none;font-weight:600;font-size:14px;background:var(--white);color:var(--ink);padding:8px 16px;border-radius:99px;box-shadow:0 6px 20px -8px rgba(23,18,31,.35)}
-.bar a.logo{font-family:var(--display);font-weight:800;letter-spacing:-.02em}
-.bar a.go{background:var(--sun)}
+.bar{position:fixed;left:0;right:0;top:0;z-index:30;padding-top:env(safe-area-inset-top,0px);pointer-events:none}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:14px}
+.bar .pillset{pointer-events:auto;display:flex;gap:4px;align-items:center;background:var(--white);padding:4px;border-radius:99px;box-shadow:0 6px 20px -8px rgba(23,18,31,.35)}
+.bar a,.bar button{text-decoration:none;font:inherit;font-weight:600;font-size:13.5px;color:var(--ink);padding:6px 12px;border-radius:99px;border:0;background:none;cursor:pointer}
+.bar a:hover{background:var(--paper)}
+.bar .logo{font-family:var(--display);font-weight:800;letter-spacing:-.02em;font-size:15px}
+.bar .lang button[aria-pressed="true"]{background:var(--ink);color:var(--white)}
+.bar .right{display:flex;gap:8px;align-items:center;min-width:0}
+.bar nav a.n{display:inline-flex;gap:6px;align-items:baseline;white-space:nowrap}
+.bar nav a.n i{font-style:normal;font-family:var(--mono);font-size:11px;opacity:.55}
+.bar nav a.n.on{background:var(--ink);color:var(--white)}
+.bar nav a.n.on i{opacity:1;color:var(--sun)}
+@media (max-width:860px){
+  .bar .wrap{flex-wrap:wrap;row-gap:8px}
+  .bar .right{display:contents}
+  .bar .lang{order:2}
+  .bar .secnav{order:3;width:100%;overflow-x:auto;scrollbar-width:none;justify-content:flex-start}
+  .bar .secnav::-webkit-scrollbar{display:none}
+}
+
+/* chapter header (01 — I BUILD …) */
+.chapter{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:clamp(24px,4vw,40px)}
+.chapter h2{font-weight:900;font-size:clamp(44px,8vw,112px);line-height:.9;letter-spacing:-.045em}
+.chapter .sub{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,28px)}
 
 /* HERO */
-.hero{background:var(--cobalt);color:var(--white);padding-block:clamp(96px,11vw,140px) 0;overflow:hidden}
-.hero .grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center}
+.hero{background:radial-gradient(70% 60% at 75% 110%,rgba(210,97,44,.55),transparent 60%),radial-gradient(40% 35% at 78% 100%,rgba(226,165,68,.45),transparent 70%),linear-gradient(180deg,#1E1410,#2A1A12);color:var(--white);position:relative;padding-block:clamp(110px,11vw,150px) clamp(56px,7vw,96px);overflow:hidden}
+#embers{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .grid{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center}
 @media (max-width:900px){.hero .grid{grid-template-columns:1fr}}
-.hero .hi{font-family:var(--hand);font-size:clamp(28px,3vw,38px);color:var(--sun)}
-.hero h1{font-weight:900;font-size:clamp(56px,10.5vw,170px);line-height:.86;margin-top:4px;letter-spacing:-.05em;white-space:nowrap}
-@media (max-width:900px){.hero h1{font-size:min(19vw,170px)}}
-.hero h1 span{display:inline-block;animation:pop .9s cubic-bezier(.2,1.4,.4,1) both}
-.hero h1 span:nth-child(2){animation-delay:.05s}.hero h1 span:nth-child(3){animation-delay:.1s}.hero h1 span:nth-child(4){animation-delay:.15s}.hero h1 span:nth-child(5){animation-delay:.2s}.hero h1 span:nth-child(6){animation-delay:.25s}
-@keyframes pop{from{transform:translateY(.25em) rotate(-6deg)}to{transform:none}}
-.hero h1 .dot{color:var(--coral)}
-.hero .sub{font-size:clamp(26px,3vw,40px);line-height:1.15;margin-top:22px;max-width:18em}
-.hero .sub b{font-family:var(--body);font-style:normal;font-weight:600;background:var(--pink);color:var(--ink);padding:0 .25em;border-radius:.2em}
-.hero .lead{margin-top:20px;font-size:17px;max-width:44ch;color:rgba(255,255,255,.82)}
+.hero .hi{font-family:var(--hand);font-size:clamp(26px,3vw,36px);color:var(--sun)}
+.hero h1{font-weight:900;font-size:clamp(64px,11vw,176px);line-height:.86;margin-top:4px;letter-spacing:-.05em;white-space:nowrap}
+@media (max-width:900px){.hero h1{font-size:min(24vw,176px)}}
+.hero h1 .dot{color:var(--sun)}
+.hero .make{margin-top:22px;font-size:clamp(24px,2.8vw,36px);line-height:1.15;font-family:var(--serif);font-style:italic}
+.three{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.three a{text-decoration:none;font-family:var(--display);font-weight:800;font-size:clamp(16px,1.6vw,20px);padding:10px 18px;border-radius:99px;color:var(--ink);transition:transform .3s cubic-bezier(.2,1.5,.4,1)}
+.three a:hover{transform:translateY(-3px) rotate(-2deg)}
+.three .t1{background:var(--sun)}.three .t2{background:var(--feather)}.three .t3{background:var(--pink)}
+.hero .lead{margin-top:22px;font-size:17px;max-width:46ch;color:rgba(255,255,255,.82)}
 
 .board{position:relative;height:clamp(380px,40vw,500px);touch-action:none}
+.vinyl{position:absolute;right:-6%;top:-4%;width:clamp(150px,16vw,210px);aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#140D0A 0 2px,#21160F 2px 4px);box-shadow:0 20px 40px -14px rgba(0,0,0,.7);animation:spin 7s linear infinite;opacity:.95}
+.vinyl::after{content:attr(data-side);position:absolute;inset:34%;border-radius:50%;background:var(--cobalt);color:var(--feather);display:grid;place-items:center;text-align:center;font-family:var(--hand);font-size:clamp(12px,1.2vw,15px);line-height:1;padding:6px}
+.vinyl::before{content:"";position:absolute;inset:48%;border-radius:50%;background:#1A120E;z-index:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+.write .vinyl{right:clamp(0px,2vw,24px);top:-30px;left:auto;width:clamp(120px,13vw,180px);animation-duration:9s;opacity:.9}
+.write .vinyl::after{background:var(--sun);color:var(--ink)}
+@media (max-width:760px){.write .vinyl{top:-60px;width:110px}}
 .board .hint{position:absolute;right:4%;bottom:6%;font-family:var(--hand);font-size:26px;color:var(--sun);transform:rotate(-6deg);pointer-events:none}
-.st{position:absolute;padding:10px 16px;border-radius:14px;font-weight:600;font-size:15px;color:var(--ink);box-shadow:0 14px 30px -12px rgba(0,0,0,.45);cursor:grab;user-select:none;white-space:nowrap;animation:bob 6s ease-in-out infinite;transition:box-shadow .2s}
-.st.drag{cursor:grabbing;animation:none;box-shadow:0 26px 50px -14px rgba(0,0,0,.55);z-index:5}
+.st{position:absolute;padding:10px 16px;border-radius:14px;font-weight:600;font-size:15px;color:var(--ink);box-shadow:0 14px 30px -12px rgba(0,0,0,.45);cursor:grab;user-select:none;white-space:nowrap;animation:bob 6s ease-in-out infinite}
+.st.drag{cursor:grabbing;animation:none;box-shadow:0 26px 50px -14px rgba(0,0,0,.55)}
 .st.hand{font-family:var(--hand);font-size:24px;font-weight:700;padding:6px 16px}
 .st.big{font-family:var(--mono);font-size:22px;font-weight:700}
 .st.round{border-radius:99px}
+.st.quill{font-family:var(--book);font-style:italic;background:var(--night);color:var(--feather);font-weight:400}
 @keyframes bob{0%,100%{translate:0 0}50%{translate:0 -8px}}
 
 .ribbon{background:var(--sun);color:var(--ink);transform:rotate(-2deg);margin:clamp(24px,4vw,48px) -20px -14px;padding-block:14px;overflow:hidden;position:relative;z-index:2}
-.ribbon .track{display:flex;gap:36px;width:max-content;animation:run 26s linear infinite;font-family:var(--display);font-weight:800;font-size:clamp(20px,2.4vw,30px);text-transform:uppercase;letter-spacing:-.01em}
+.ribbon .track{display:flex;gap:36px;width:max-content;animation:run 30s linear infinite;font-family:var(--display);font-weight:800;font-size:clamp(20px,2.4vw,30px);text-transform:uppercase}
 .ribbon .track span::after{content:"✳";margin-left:36px;color:var(--coral)}
 @keyframes run{to{transform:translateX(-50%)}}
 
-/* HOW I SEE HER */
-.see{background:var(--pink);padding-top:clamp(90px,11vw,150px)}
-.see .q{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(34px,5vw,72px);line-height:1.05;max-width:16em;text-wrap:balance}
-.see .q mark{background:none;color:var(--cobalt)}
-.see .by{margin-top:18px;font-size:14px;max-width:52ch}
-.traits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:clamp(36px,5vw,60px)}
-@media (max-width:980px){.traits{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.traits{grid-template-columns:1fr}}
-.trait{background:var(--white);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:10px;transition:transform .35s cubic-bezier(.2,1.4,.4,1)}
-.trait:nth-child(odd){transform:rotate(-1.2deg)}
-.trait:nth-child(even){transform:rotate(1.2deg)}
-.trait:hover{transform:rotate(0) translateY(-6px)}
-.trait .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:20px}
-.trait h3{font-size:18px;line-height:1.2;font-weight:600}
-.trait p{font-size:14.5px;color:#4A4356}
+/* photos */
+.ph-img{filter:grayscale(1) sepia(.38) contrast(1.04) brightness(.98);display:block;width:100%;height:100%;object-fit:cover}
+figure{margin:0}
 
-/* CHAOS → ORDER */
-.chaos{background:var(--paper)}
-.head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,48px)}
-.head h2{font-size:clamp(34px,5vw,64px);font-weight:800;line-height:.98}
-.head h2 .it{font-weight:600;font-size:1.08em}
-.head p{max-width:40ch;font-size:16.5px}
-.tidy{font:inherit;font-weight:600;border:0;background:var(--ink);color:var(--white);padding:14px 22px;border-radius:99px;cursor:pointer;font-size:15px;display:inline-flex;gap:10px;align-items:center}
+/* 01 BUILD */
+.build{background:var(--paper);padding-top:clamp(90px,11vw,150px)}
+.build .chapter .no,.build .chapter .sub{color:var(--cobalt)}
+.motto{font-family:var(--display);font-weight:600;font-size:clamp(24px,3vw,38px);line-height:1.15;max-width:22em;letter-spacing:-.02em}
+.motto .it{color:var(--cobalt);font-weight:600}
+.dolist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px;margin-top:clamp(28px,4vw,44px);border-top:2px solid var(--ink)}
+@media (max-width:760px){.dolist{grid-template-columns:1fr}}
+.do{display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid rgba(23,18,31,.14)}
+.do .g{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:18px;color:var(--ink);transition:transform .3s cubic-bezier(.2,1.5,.4,1)}
+.do:hover .g{transform:rotate(-10deg) scale(1.1)}
+.do b{display:block;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.01em}
+.do div > span{color:#5A5366;font-size:14.5px}
+.subhead{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin:clamp(56px,8vw,96px) 0 clamp(22px,3vw,34px)}
+.subhead h3{font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1}
+.subhead h3 .it{font-weight:600;font-size:1.08em}
+.subhead p{max-width:40ch}
+.tidy{font:inherit;font-weight:600;border:0;background:var(--ink);color:var(--white);padding:13px 20px;border-radius:99px;cursor:pointer;font-size:15px}
 .tidy:hover{background:var(--cobalt)}
 .flips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 @media (max-width:980px){.flips{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.flips{grid-template-columns:1fr}}
-.flip{perspective:1200px;height:300px;cursor:pointer;border:0;background:none;padding:0;font:inherit;text-align:left;color:inherit}
+.flip{perspective:1200px;height:290px;cursor:pointer;border:0;background:none;padding:0;font:inherit;text-align:left;color:inherit}
 .flip .in{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.3,1.3,.5,1);transform-style:preserve-3d}
 .flip.on .in{transform:rotateY(180deg)}
-.flip .f,.flip .b{position:absolute;inset:0;border-radius:22px;padding:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.flip .f,.flip .b{position:absolute;inset:0;border-radius:22px;padding:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;gap:6px;overflow:hidden}
 .flip .f{background:#FFFDF5;background-image:repeating-linear-gradient(transparent 0 31px,#D9E2FF 31px 32px);border:1px solid #E7E1D2;font-family:var(--hand);font-size:23px;line-height:32px;color:#2F2A3A}
-.flip .f .lbl{font-family:var(--body);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#8B8597;line-height:1.3}
-.flip .f s{text-decoration-color:var(--coral);text-decoration-thickness:2px}
+.flip .lbl{font-family:var(--body);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;line-height:1.3}
+.flip .f .lbl{color:#8B8597}
 .flip .f .red{color:var(--coral)}
 .flip .f .tap{margin-top:auto;font-family:var(--body);font-size:13px;font-weight:600;color:var(--cobalt);line-height:1.3}
-.flip .b{transform:rotateY(180deg);color:var(--ink);background:var(--c)}
-.flip .b .lbl{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
-.flip .b .big{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.05;margin-top:auto}
+.flip .b{transform:rotateY(180deg);background:var(--c)}
+.flip .b .big{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.05;margin-top:auto}
 .flip .b p{font-size:15px}
-.flip .b .ok{display:inline-flex;align-self:flex-start;background:var(--ink);color:var(--white);font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px}
 
-/* WORK */
-.work{background:var(--ink);color:var(--white);overflow:hidden}
-.work .head p{color:rgba(255,255,255,.75)}
-.work .head h2 .it{color:var(--lime)}
-.rail{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px clamp(16px,4vw,44px) 26px;margin-inline:calc(-1 * clamp(16px,4vw,44px));scrollbar-width:thin;scrollbar-color:var(--lilac) transparent}
-.card{scroll-snap-align:start;flex:0 0 min(440px,86vw);border-radius:30px;padding:28px;color:var(--ink);background:var(--c);display:flex;flex-direction:column;gap:14px;min-height:560px;position:relative;overflow:hidden}
-.card .tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.75}
-.card h3{font-size:clamp(28px,3vw,36px);font-weight:800;line-height:1}
-.card .one{font-family:var(--serif);font-style:italic;font-size:23px;line-height:1.2}
-.card ul{margin:0;padding:0;list-style:none;display:grid;gap:7px;font-size:14.5px}
-.card li{padding-left:20px;position:relative}
-.card li::before{content:"";position:absolute;left:0;top:.5em;width:9px;height:9px;border-radius:50%;background:var(--ink)}
-.card .stage{margin-top:auto;display:flex;justify-content:center;align-items:flex-end;min-height:190px}
+.workwrap{margin-top:clamp(56px,8vw,96px)}
+.workwrap .subhead{margin-top:0}
+.workwrap .subhead h3 .it{color:var(--cobalt)}
+.workwrap .subhead p{color:#5A5366}
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin;scrollbar-color:var(--lilac) transparent}
+.card{scroll-snap-align:start;flex:0 0 min(330px,78vw);border-radius:26px;padding:24px;color:var(--ink);background:var(--c);display:flex;flex-direction:column;gap:12px;min-height:400px}
 .card.dark{color:var(--white)}
-.card.dark li::before{background:var(--white)}
-.rail-hint{font-family:var(--hand);font-size:24px;color:var(--sun);margin-top:6px}
+.card .tag{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.75}
+.card h4{font-size:26px;font-weight:800;line-height:1}
+.card .one{font-family:var(--serif);font-style:italic;font-size:21px;line-height:1.2}
+.card ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px}
+.card li{padding-left:18px;position:relative}
+.card li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:50%;background:currentColor}
+.card .big{margin-top:auto;font-family:var(--mono);font-weight:700;font-size:28px}
+.card .big small{display:block;font-family:var(--body);font-size:12.5px;font-weight:500;opacity:.75}
+.rail-hint{font-family:var(--hand);font-size:22px;color:var(--cobalt)}
 
-/* mini phone mocks */
-.ph{width:200px;max-width:100%;aspect-ratio:9/12;border-radius:26px 26px 0 0;padding:8px 8px 0;background:#0E0F11;margin-bottom:-28px;box-shadow:0 -10px 40px -10px rgba(0,0,0,.35);transform:rotate(-3deg)}
-.ph .s{height:100%;border-radius:19px 19px 0 0;overflow:hidden;font-size:10px;line-height:1.35;padding:14px 11px}
-.s-kasa{background:#F6F5F1;color:#1E2A38}
-.s-kasa .t{font-family:Georgia,serif;font-weight:600;font-size:14px}
-.s-kasa .m{font-family:var(--mono);font-weight:700;font-size:20px;margin:8px 0 6px}
-.s-kasa .r{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #E1DED6}
-.pill{padding:1px 7px;border-radius:99px;font-size:8.5px;font-weight:600}
-.ok2{background:#E2F2E8;color:#2F8A57}.no2{background:#F8E3DA;color:#BD4318}
-.s-ob{background:linear-gradient(168deg,#8c948e,#6d746f);color:#F6F7F6}
-.s-ob .c{background:rgba(38,40,42,.55);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:9px;margin-bottom:7px}
-.s-ob .v{font-family:var(--mono);font-weight:700;font-size:22px;color:#A8FF1A}
-.s-ob .r{display:flex;justify-content:space-between;padding:2px 0}
-.s-zp{background:linear-gradient(180deg,#123426,#0B1F17);color:#EAF6EF}
-.s-zp .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:8px}
-.s-zp .cal i{aspect-ratio:1;border-radius:4px;background:rgba(255,255,255,.08)}
-.s-zp .cal .o{background:rgba(123,227,158,.6)}.s-zp .cal .g{background:#FF6E5A}.s-zp .cal .b{background:rgba(120,170,255,.55)}
-.s-zp .u{display:flex;gap:3px;flex-wrap:wrap;margin-top:7px}
-.s-zp .u span{font-size:7.5px;padding:2px 5px;border-radius:99px;border:1px solid rgba(255,255,255,.2)}
-.s-zp .u span:first-child{background:#7BE39E;color:#06170F;border-color:transparent}
-
-.plate{width:230px;max-width:100%;aspect-ratio:2/1;border-radius:18px;background:linear-gradient(135deg,#E9ECEF,#B9C0C7 45%,#F4F6F8 60%,#A7AFB7);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 18px 30px -12px rgba(0,0,0,.35);display:grid;place-items:center;position:relative;transform:rotate(-4deg);margin-bottom:10px}
-.plate::before,.plate::after{content:"";position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:#5c636b;box-shadow:inset 0 2px 2px rgba(0,0,0,.5);translate:0 -50%}
-.plate::before{left:14px}.plate::after{right:14px}
-.plate span{font-family:var(--display);font-weight:800;font-size:22px;color:#3d434a;letter-spacing:.02em}
-.plate small{position:absolute;bottom:-26px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:12px}
-
-.pages{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
-.pages a,.pages div{background:rgba(255,255,255,.55);border-radius:14px;padding:10px 12px;font-size:13px;text-decoration:none;display:flex;flex-direction:column;gap:2px}
-.pages b{font-size:13.5px}
-.pages a b::after{content:" ↗"}
-
-.widget{width:230px;max-width:100%;border-radius:22px;padding:14px;background:rgba(46,125,91,.92);color:#fff;box-shadow:0 18px 34px -14px rgba(0,0,0,.4);transform:rotate(3deg);display:grid;gap:6px;margin-bottom:6px}
-.widget .wh{font-weight:700;font-size:14px;margin-bottom:2px}
-.widget .wr{display:flex;gap:8px;font-size:13.5px;background:rgba(255,255,255,.12);border-radius:10px;padding:6px 9px}
-.widget .wr.done{opacity:.6;text-decoration:line-through}
-.card[style*="--white"]{border:2px solid rgba(255,255,255,.2)}
-
-/* UNITS */
-.units{background:var(--mint)}
-.orbit-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center}
+.orbit-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center;background:var(--mint);border-radius:36px;padding:clamp(24px,4vw,48px);margin-top:clamp(40px,6vw,64px)}
 @media (max-width:900px){.orbit-wrap{grid-template-columns:1fr}}
-.orbit{position:relative;width:min(100%,460px);aspect-ratio:1;margin-inline:auto}
+.orbit{position:relative;width:min(100%,400px);aspect-ratio:1;margin-inline:auto}
 .orbit .ring{position:absolute;inset:12%;border:2px dashed rgba(23,18,31,.35);border-radius:50%;animation:spin 60s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.orbit .core{position:absolute;inset:34%;border-radius:50%;background:var(--ink);color:var(--white);display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:clamp(13px,1.6vw,17px);line-height:1.15;padding:10px}
-.sat{position:absolute;width:28%;aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:clamp(12px,1.4vw,14.5px);color:var(--ink);display:grid;place-items:center;text-align:center;padding:8px;transition:transform .3s cubic-bezier(.2,1.5,.4,1),box-shadow .3s;box-shadow:0 10px 24px -10px rgba(23,18,31,.45)}
+.orbit .core{position:absolute;inset:34%;border-radius:50%;background:var(--ink);color:var(--white);display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:clamp(12px,1.5vw,15px);line-height:1.15;padding:10px}
+.sat{position:absolute;width:28%;aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:clamp(11.5px,1.3vw,14px);color:var(--ink);display:grid;place-items:center;text-align:center;padding:6px;transition:transform .3s cubic-bezier(.2,1.5,.4,1);box-shadow:0 10px 24px -10px rgba(23,18,31,.45)}
 .sat:hover,.sat.on{transform:scale(1.12)}
-.sat.on{box-shadow:0 0 0 4px var(--ink),0 14px 30px -10px rgba(23,18,31,.5)}
-.sat small{display:block;font-weight:500;font-size:.85em;opacity:.75}
-.s1{left:36%;top:-2%;background:var(--sun)}
-.s2{right:-2%;top:36%;background:var(--pink)}
-.s3{left:36%;bottom:-2%;background:var(--lilac)}
-.s4{left:-2%;top:36%;background:var(--white)}
-.unit-info{background:var(--white);border-radius:24px;padding:24px;margin-top:22px;min-height:150px}
-.unit-info h3{font-size:20px;font-weight:700}
-.unit-info p{margin-top:8px;color:#4A4356}
-.units .head h2 .it{color:var(--cobalt)}
+.sat.on{box-shadow:0 0 0 4px var(--ink)}
+.s1{left:36%;top:-2%;background:var(--sun)}.s2{right:-2%;top:36%;background:var(--pink)}.s3{left:36%;bottom:-2%;background:var(--lilac)}.s4{left:-2%;top:36%;background:var(--white)}
+.orbit-wrap h3{font-size:clamp(24px,3vw,36px);font-weight:800;line-height:1.05}
+.orbit-wrap h3 .it{color:var(--cobalt)}
+.unit-info{background:var(--white);border-radius:22px;padding:20px;margin-top:18px;min-height:130px}
+.unit-info b{font-family:var(--display);font-size:18px}
+.unit-info p{margin-top:6px;color:#4A4356}
 
-/* STEPS */
-.steps{background:var(--sun)}
-.stepgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:3px solid var(--ink)}
-@media (max-width:900px){.stepgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.stepgrid{grid-template-columns:1fr}}
-.stepgrid > div{padding:24px 22px 8px 0;display:flex;flex-direction:column;gap:10px}
-.stepgrid .n{font-family:var(--display);font-weight:900;font-size:clamp(60px,7vw,96px);line-height:.9;color:var(--coral);-webkit-text-stroke:2px var(--ink)}
-.stepgrid h3{font-size:20px;font-weight:700}
-.stepgrid p{font-size:15px}
-.weeks{margin-top:clamp(40px,6vw,64px);display:flex;flex-wrap:wrap;gap:10px}
-.weeks span{background:var(--ink);color:var(--white);border-radius:99px;padding:8px 14px;font-size:13.5px}
-.weeks span b{color:var(--sun);font-family:var(--mono);font-weight:700;margin-right:6px}
+/* 02 WRITE — the book's world */
+.write{background:linear-gradient(180deg,#1A120E,#2B1418);color:var(--feather);overflow:hidden}
+.write::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 85% 10%,rgba(236,232,225,.08),transparent 60%),radial-gradient(50% 40% at 0% 100%,rgba(201,168,106,.08),transparent 60%);pointer-events:none}
+.write .wrap{position:relative}
+.write .chapter .no{color:var(--gold)}
+.write .chapter h2{font-family:var(--book);font-weight:400;letter-spacing:-.02em;font-size:clamp(48px,8.5vw,120px)}
+.write .chapter .sub{color:var(--dust)}
+.path{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--book);font-style:italic;font-size:clamp(22px,2.6vw,32px);color:var(--dust);margin-bottom:clamp(40px,6vw,72px)}
+.path b{font-weight:400;color:var(--feather)}
+.path i{font-style:normal;color:var(--gold);font-family:var(--body);font-size:.6em}
+.path .becoming{color:var(--gold)}
+.book{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+@media (max-width:760px){.book{grid-template-columns:1fr}}
+.cover{display:block;position:relative;aspect-ratio:2/3;width:100%;max-width:300px;border-radius:4px 10px 10px 4px;overflow:hidden;box-shadow:0 40px 70px -30px rgba(0,0,0,.9),-6px 0 0 rgba(255,255,255,.05) inset;transform:rotate(-2deg);transition:transform .6s cubic-bezier(.2,1,.3,1);background:radial-gradient(120% 70% at 70% 20%,#5b5752,#1b1a19 60%,#0b0b0b)}
+.cover:hover{transform:rotate(0) translateY(-6px)}
+.cover .fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:22% 10% 8%;color:#F5F2EC;font-family:var(--book)}
+.cover .fb::before{content:"";position:absolute;left:50%;top:-10%;width:3px;height:130%;background:linear-gradient(transparent,rgba(255,255,255,.5),transparent);transform:rotate(28deg);box-shadow:0 0 30px 14px rgba(255,255,255,.08)}
+.cover .fb b{font-weight:400;font-size:clamp(26px,3vw,34px);line-height:1.05;position:relative}
+.cover .fb span{font-size:13px;margin-top:10px;position:relative}
+.cover .fb small{margin-top:auto;font-size:11px;letter-spacing:.2em;position:relative}
+.cover img{filter:sepia(.18);position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.book .meta{font-family:var(--mono);font-size:12.5px;color:var(--dust);letter-spacing:.06em;text-transform:uppercase}
+.book h3{font-family:var(--book);font-weight:400;font-size:clamp(38px,5vw,64px);line-height:1;margin-top:10px;letter-spacing:-.01em}
+.book .subt{font-family:var(--book);font-style:italic;font-size:20px;color:var(--dust);margin-top:8px}
+.book .bdesc{margin-top:22px;font-size:17px;max-width:54ch;color:#CFCAC2;display:grid;gap:12px}
+.book blockquote{margin:26px 0 0;padding-left:20px;border-left:1px solid var(--gold);font-family:var(--serif);font-style:italic;font-size:clamp(24px,2.6vw,32px);line-height:1.2;color:var(--feather)}
+.book .themes{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.book .themes span{border:1px solid #3A3833;border-radius:99px;padding:5px 12px;font-size:13px;color:#CFCAC2}
+.chapters{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:22px;font-family:var(--book);font-style:italic;font-size:17px;color:#CFCAC2}
+.chapters i{font-style:normal;color:var(--gold);font-family:var(--body);font-size:13px}
+.inside{margin-top:clamp(40px,6vw,64px);display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:clamp(28px,5vw,72px)}
+@media (max-width:760px){.inside{grid-template-columns:1fr}}
+.inside .lbl{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.inside .lbl b{display:block;font-family:var(--book);font-weight:400;font-size:30px;letter-spacing:0;text-transform:none;color:var(--feather);margin-top:8px}
+.inside pre{margin:0;font-family:var(--serif);font-size:clamp(21px,2.1vw,26px);line-height:1.45;color:var(--feather);white-space:pre-wrap}
+.inside pre em{color:var(--gold)}
+.buy{display:inline-flex;align-items:center;gap:10px;margin-top:26px;background:var(--feather);color:var(--night);text-decoration:none;font-weight:600;padding:13px 22px;border-radius:99px;transition:background .2s}
+.buy:hover{background:var(--gold)}
 
-/* FOR YOU */
-.you{background:var(--coral);color:var(--ink)}
-.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-@media (max-width:900px){.offers{grid-template-columns:1fr}}
-.offer{background:var(--white);border-radius:28px;padding:26px;display:flex;flex-direction:column;gap:10px}
-.offer.main{background:var(--ink);color:var(--white)}
-.offer .em{font-size:34px;font-family:var(--display);font-weight:900;line-height:1}
-.offer h3{font-size:20px;font-weight:700}
-.offer p{font-size:15px;opacity:.85}
-.offer ul{margin:4px 0 0;padding-left:18px;font-size:14.5px;display:grid;gap:4px;opacity:.85}
-.final{margin-top:clamp(56px,8vw,110px);display:grid;gap:18px}
-.final h2{font-weight:900;font-size:clamp(40px,7.5vw,108px);line-height:.92;letter-spacing:-.04em}
-.final h2 .it{font-weight:600;color:var(--white);font-size:1.05em}
-.final p{font-size:18px;max-width:46ch}
-.final .sig{font-family:var(--hand);font-size:44px;color:var(--white);transform:rotate(-4deg);display:inline-block}
+.strip{margin-top:clamp(56px,8vw,96px);position:relative;border-radius:28px;overflow:hidden;aspect-ratio:21/9;max-width:100%}
+@media (max-width:640px){.strip{aspect-ratio:4/5}}
+.strip img{object-position:50% 45%;filter:grayscale(1) sepia(.38) contrast(1.05)}
+.strip::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,10,12,.85));pointer-events:none}
+.strip figcaption{z-index:1;position:absolute;left:clamp(18px,3vw,36px);bottom:clamp(16px,3vw,32px);font-family:var(--book);font-style:italic;font-size:clamp(22px,3vw,40px);color:var(--feather);text-shadow:0 2px 20px rgba(0,0,0,.6);max-width:14em;line-height:1.1}
+.next-book .lisa-ph{border-radius:18px;overflow:hidden;aspect-ratio:3/4;max-width:260px}
+.next-book .lisa-ph img{filter:grayscale(1) sepia(.4) contrast(1.08) brightness(.92);object-position:50% 35%}
+.next-book{margin-top:clamp(56px,8vw,96px);border:1px dashed #3A3833;border-radius:28px;padding:clamp(24px,4vw,44px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:24px 56px;align-items:center}
+@media (max-width:760px){.next-book{grid-template-columns:1fr}}
+.next-book .st2{display:inline-flex;gap:8px;align-items:center;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.next-book .st2::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+.next-book h3{font-family:var(--book);font-weight:400;font-size:clamp(34px,4.4vw,56px);line-height:1;margin-top:10px}
+.next-book p{font-family:var(--serif);font-size:21px;line-height:1.4;color:#CFCAC2}
+.next-book .ph{font-family:var(--body);font-size:14.5px;color:var(--dust);margin-top:12px;line-height:1.55}
+.next-book .frag{border-left:1px solid var(--gold);padding-left:clamp(18px,3vw,32px);display:grid;gap:16px}
+.next-book .frag .fl{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.next-book .frag p{font-family:var(--serif);font-size:clamp(20px,2vw,24px);line-height:1.45;color:var(--feather)}
+.next-book .frag .uni{font-style:italic;color:var(--gold)}
 
-footer{background:var(--ink);color:rgba(255,255,255,.7);padding-block:28px;font-size:14px}
+.poetry-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin:clamp(56px,8vw,96px) 0 26px}
+.poetry-head h3{font-family:var(--book);font-weight:400;font-size:clamp(34px,4.4vw,56px);line-height:1}
+.poetry-head p{color:var(--dust);max-width:44ch}
+.poems{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:900px){.poems{grid-template-columns:1fr}}
+.poem{background:var(--night-2);border:1px solid #2A2926;border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:14px;min-height:280px}
+.poem .ptop{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.poem h4{font-family:var(--book);font-weight:400;font-size:26px}
+.poem .sw{display:flex;border:1px solid #3A3833;border-radius:99px;padding:2px}
+.poem .sw button{font:inherit;font-size:12px;font-weight:600;border:0;background:none;color:var(--dust);padding:4px 10px;border-radius:99px;cursor:pointer}
+.poem .sw button[aria-pressed="true"]{background:var(--feather);color:var(--night)}
+.poem pre{margin:0;font-family:var(--serif);font-size:20px;line-height:1.45;white-space:pre-wrap;color:var(--feather)}
+.poem.empty{border-style:dashed;align-items:flex-start;justify-content:center}
+.poem.empty .q{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--dust);line-height:1.3}
+.poem.empty .q2{font-size:13.5px;color:#77726A}
+
+/* 03 CREATE */
+.grid-words{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:clamp(36px,5vw,56px);align-items:baseline}
+.grid-words b{font-family:var(--display);font-weight:900;font-size:clamp(28px,4.4vw,56px);line-height:1;letter-spacing:-.04em}
+.grid-words .it{font-size:clamp(28px,4.4vw,56px);line-height:1}
+
+/* 03 DREAM */
+.dream{background:linear-gradient(180deg,#F3E8D6 0%,#EED6CB 100%)}
+.dream .lead2{font-family:var(--serif);font-style:italic;font-size:clamp(30px,4vw,54px);line-height:1.08;max-width:18em}
+.island{margin-top:clamp(36px,5vw,60px);display:block;background:var(--cobalt);color:var(--feather);backdrop-filter:blur(6px);border-radius:36px;padding:clamp(22px,4vw,44px)}
+@media (max-width:860px){.island{grid-template-columns:1fr}}
+.island svg{width:100%;height:auto;max-width:100%;display:block;border-radius:24px}
+.dlabel{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.7}
+.island h3{font-size:clamp(48px,7vw,104px);text-transform:uppercase;font-weight:900;line-height:.95;letter-spacing:-.04em;margin-top:10px}
+.island p.t{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.4vw,30px);line-height:1.2;margin-top:14px}
+.island p.s{margin-top:14px;font-size:17px;max-width:52ch;opacity:.85}
+.island p.t{max-width:22em}
+.dreams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}
+@media (max-width:860px){.dreams{grid-template-columns:1fr}}
+.dcard{background:var(--white);border-top:10px solid var(--c);border-radius:32px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 60px -36px rgba(23,18,31,.45)}
+.dcard svg{display:block;width:100%;height:auto}
+.dcard .body{padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:12px}
+.dcard h3{font-size:clamp(24px,2.6vw,32px);font-weight:800;line-height:1.05}
+.dcard p{font-size:16px;color:#3E3848}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chips span{font-family:var(--hand);font-size:21px;font-weight:700;padding:2px 12px;border-radius:99px;background:var(--c);line-height:1.4}
+.dnote{margin-top:clamp(28px,4vw,44px);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+.dnote p{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,28px);max-width:30em}
+.dnote .hand{font-family:var(--hand);font-size:30px;color:var(--cobalt);transform:rotate(-3deg)}
+@media (prefers-reduced-motion:no-preference){.sunrise{animation:rise 9s ease-in-out infinite alternate}@keyframes rise{from{transform:translateY(8px)}to{transform:translateY(-6px)}}}
+
+/* 04 ABOUT */
+.about{background:linear-gradient(180deg,#2F3D2B,#26331F);color:var(--feather)}
+.about .grid2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:start}
+@media (max-width:900px){.about .grid2{grid-template-columns:1fr}}
+.about .big{font-family:var(--serif);font-style:italic;font-size:clamp(30px,4vw,54px);line-height:1.08}
+.about .big mark{background:var(--lime);color:var(--ink);padding:0 .15em;border-radius:.1em;font-style:normal;font-family:var(--display);font-weight:800;font-size:.72em;letter-spacing:-.02em}
+.daynight{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+@media (max-width:520px){.daynight{grid-template-columns:1fr}}
+.daynight div{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:6px}
+.daynight .d{background:var(--white);color:var(--ink)}
+.daynight .n{background:rgba(0,0,0,.28);color:var(--feather);border:1px solid rgba(241,230,214,.15)}
+.daynight b{font-family:var(--display);font-weight:800;font-size:16px}
+.daynight .n b{font-family:var(--book);font-weight:400;font-style:italic;font-size:20px}
+.daynight p{font-size:14.5px}
+.about-ph{border-radius:28px;overflow:hidden;aspect-ratio:4/5;margin-bottom:16px}
+.about-ph img{object-position:50% 25%}
+.seen{background:rgba(0,0,0,.28);border:1px solid rgba(241,230,214,.12);color:var(--white);border-radius:28px;padding:26px;display:grid;gap:14px}
+.seen .q{font-family:var(--serif);font-style:italic;font-size:26px;line-height:1.2}
+.seen .q mark{background:none;color:var(--lime)}
+.seen .by{font-size:13px;color:rgba(255,255,255,.65)}
+.seen ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.seen li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;font-size:14.5px}
+.seen li .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:var(--ink);font-weight:800}
+
+/* 05 NOW */
+.now{background:var(--ink);color:var(--white)}
+.now .chapter .no{color:var(--lime)}
+.now .chapter .sub{color:rgba(255,255,255,.7)}
+.upd{font-family:var(--mono);font-size:13px;color:var(--lime);display:inline-flex;gap:8px;align-items:center}
+.upd::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--lime);animation:pulse 2s ease-in-out infinite}
+.nowlist{display:grid;gap:0;margin-top:26px;border-top:1px solid rgba(255,255,255,.15)}
+.nowlist div{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:18px;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.15)}
+@media (max-width:640px){.nowlist div{grid-template-columns:1fr;gap:4px}}
+.nowlist .w{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--c)}
+.nowlist b{font-family:var(--display);font-weight:600;font-size:clamp(18px,2vw,24px)}
+.nowlist b .it{font-weight:500}
+.nowlist em{font-style:normal;font-family:var(--mono);font-size:12.5px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--c);white-space:nowrap;justify-self:start}
+.sign{margin-top:clamp(56px,8vw,96px);display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.sign h2{font-weight:900;font-size:clamp(40px,7vw,100px);line-height:.92;letter-spacing:-.04em}
+.sign h2 .it{color:var(--pink);font-weight:500}
+.sign .sig{font-family:var(--hand);font-size:44px;color:var(--sun);transform:rotate(-4deg)}
+
+footer{background:var(--night);color:rgba(255,255,255,.6);padding-block:26px;font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+/* magazine type */
+.kicker,.dlabel,.card .tag,.meta,.status,.st2,.lbl,.fl,.nowlist .w,.bar nav a.n,.bar .lang button,.three a,.upd{font-family:var(--label)!important;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.bar nav a.n,.bar .lang button{font-size:11px!important}
+.three a{font-size:12.5px!important;padding:12px 20px!important}
+.chapter h2{text-transform:uppercase;letter-spacing:.01em!important}
+.hero h1{font-weight:500!important}
+.bar .logo{font-family:var(--display);font-style:italic;font-weight:500!important;font-size:17px}
+/* (old retro tuning, kept for weights) */
+h1,h2,h3,h4,.chapter h2,.hero h1,.island h3,.sign h2,.dcard h3,.card h4,.subhead h3,.motto,.do b,.daynight b,.nowlist b,.flip .b .big,.unit-info b,.bar .logo{font-weight:400;letter-spacing:-.01em}
+.hero h1{letter-spacing:-.02em}
+.three a{font-family:var(--body);font-weight:600}
+.about .big mark{font-family:var(--body);font-weight:700;letter-spacing:0}
+.chips span{color:var(--ink)}
+.bar .lang button[aria-pressed="true"],.bar nav a.n.on{background:var(--cobalt);color:var(--feather)}
 </style>
-<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
 </head>
 <body>
 
-<div class="bar"><div class="wrap"><a class="logo" href="#top">Тетяна</a><a class="go" href="#work">Мої застосунки</a></div></div>
+<div class="bar"><div class="wrap">
+  <div class="pillset"><a class="logo" href="#top">Ti Ost</a></div>
+  <div class="right">
+    <nav class="pillset secnav" aria-label="Sections">
+      <a class="n" href="#build"><i>01</i><span class="u">Створюю</span><span class="e">Build</span></a>
+      <a class="n" href="#write"><i>02</i><span class="u">Пишу</span><span class="e">Write</span></a>
+      <a class="n" href="#dream"><i>03</i><span class="u">Мрії</span><span class="e">Dreams</span></a>
+      <a class="n" href="#about"><i>04</i><span class="u">Про мене</span><span class="e">About</span></a>
+      <a class="n" href="#now"><i>05</i><span class="u">Зараз</span><span class="e">Now</span></a>
+    </nav>
+    <div class="pillset lang" role="group" aria-label="Мова / Language">
+      <button type="button" data-lang="uk" aria-pressed="true">UA</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div></div>
 
 <main id="top">
 
 <!-- HERO -->
 <section class="hero">
+  <canvas id="embers" aria-hidden="true"></canvas>
   <div class="wrap grid">
     <div>
-      <span class="hi">Привіт, я</span>
-      <h1 aria-label="Тетяна"><span>Т</span><span>е</span><span>т</span><span>я</span><span>н</span><span>а<i class="dot">.</i></span></h1>
-      <p class="sub it">Беру хаос із таблиць, зошитів і чатів і роблю з нього <b>щось зручне й гарне</b></p>
-      <p class="lead">Застосунки, які самі рахують, нагадують і не дають нічому загубитися. Для класу, для майстерні, для йоги і для себе.</p>
+      <span class="hi"><span class="u">Привіт, я Тетяна, або</span><span class="e">Hi, I'm Tetiana, also known as</span></span>
+      <h1>Ti Ost<i class="dot">.</i></h1>
+      <p class="make"><span class="u">Я створюю речі. Системи. Слова. Мрії.</span><span class="e">I make things. Systems. Words. Dreams.</span></p>
+      <div class="three">
+        <a class="t1" href="#build"><span class="u">Системи</span><span class="e">Systems</span></a>
+        <a class="t2" href="#write"><span class="u">Слова</span><span class="e">Words</span></a>
+        <a class="t3" href="#dream"><span class="u">Мрії</span><span class="e">Dreams</span></a>
+      </div>
+      <p class="lead"><span class="u">Вдень розбираю хаос із таблиць і чатів і роблю з нього зручні інструменти. Ввечері пишу вірші.</span><span class="e">By day I untangle spreadsheets and chats into tools people enjoy using. By evening I write poetry.</span></p>
     </div>
-    <div class="board" id="board" aria-label="Наліпки з хаосом, їх можна перетягувати">
-      <span class="st hand" style="left:4%;top:4%;background:var(--sun);rotate:-6deg">хто здав на екскурсію?</span>
-      <span class="st big round" style="left:56%;top:8%;background:var(--lime);rotate:5deg;animation-delay:-1s">6 510 ₴</span>
-      <span class="st" style="left:14%;top:26%;background:var(--pink);rotate:3deg;animation-delay:-2s">24,86 г золота</span>
-      <span class="st hand" style="left:52%;top:30%;background:var(--white);rotate:-4deg;animation-delay:-3s">Пн чи Пт?</span>
-      <span class="st" style="left:2%;top:48%;background:var(--coral);rotate:-3deg;animation-delay:-1.5s">четвер: на зміні нікого</span>
-      <span class="st round" style="left:58%;top:52%;background:var(--mint);rotate:6deg;animation-delay:-4s">+ новий учень</span>
-      <span class="st big" style="left:22%;top:68%;background:var(--lilac);rotate:-5deg;animation-delay:-2.5s">угар 3%</span>
-      <span class="st hand" style="left:56%;top:72%;background:var(--sun);rotate:3deg;animation-delay:-3.5s">переплата 200 ₴ ??</span>
-      <span class="hint">потягни мене ↖</span>
-    </div>
-  </div>
-  <div class="ribbon" aria-hidden="true"><div class="track">
-    <span>простіше</span><span>зручніше</span><span>красивіше</span><span>без табличок</span><span>з любов'ю до деталей</span>
-    <span>простіше</span><span>зручніше</span><span>красивіше</span><span>без табличок</span><span>з любов'ю до деталей</span>
-  </div></div>
-</section>
-
-<!-- HOW I'M SEEN -->
-<section class="see slab" id="see">
-  <div class="wrap">
-    <p class="kicker">Погляд збоку</p>
-    <p class="q" style="margin-top:16px">Тетяна не програміст. Вона <mark>перекладачка</mark> з мови «у нас так заведено» на мову, яку розуміє телефон.</p>
-    <p class="by">Так мене описав Claude, штучний інтелект, разом з яким я будую всі ці застосунки. Після шести тижнів спільної роботи він помітив ось що.</p>
-    <div class="traits">
-      <div class="trait"><span class="ic" style="background:var(--cobalt);color:var(--white)">∑</span><h3>Бачить систему в купі папірців</h3><p>Перевіряє кожну формулу з Excel, поки застосунок не порахує до гривні так само.</p></div>
-      <div class="trait"><span class="ic" style="background:var(--sun)">✦</span><h3>Вимагає краси навіть від бухгалтерії</h3><p>У кожного застосунку свій характер: спокійна синя каса, темний облік з лаймовим, зелене скло для зарплати.</p></div>
-      <div class="trait"><span class="ic" style="background:var(--mint)">♡</span><h3>Думає про людей за цифрами</h3><p>Щоб колега не втратив дані, щоб нагадування батькам звучало по-людськи, щоб ніхто не переписав чужий місяць.</p></div>
-      <div class="trait"><span class="ic" style="background:var(--coral)">↻</span><h3>Не зупиняється на першій версії</h3><p>Каса класу за два тижні пройшла п'ять великих оновлень. Для йоги є два різні дизайни.</p></div>
+    <div class="board" id="board">
+      <div class="vinyl" data-side="Ti Ost · side A" aria-hidden="true"></div>
+      <span class="st hand" style="left:4%;top:4%;background:var(--sun);rotate:-6deg"><span class="u">хто здав на екскурсію?</span><span class="e">who paid for the trip?</span></span>
+      <span class="st big round" style="left:58%;top:6%;background:var(--lime);rotate:5deg;animation-delay:-1s">6 510 ₴</span>
+      <span class="st quill" style="left:12%;top:25%;rotate:3deg;animation-delay:-2s">Echoes of Silence</span>
+      <span class="st hand" style="left:56%;top:28%;background:var(--white);rotate:-4deg;animation-delay:-3s"><span class="u">Пн чи Пт?</span><span class="e">Mon or Fri?</span></span>
+      <span class="st" style="left:2%;top:47%;background:var(--coral);rotate:-3deg;animation-delay:-1.5s"><span class="u">четвер: на зміні нікого</span><span class="e">Thursday: nobody on shift</span></span>
+      <span class="st round" style="left:60%;top:50%;background:var(--mint);rotate:6deg;animation-delay:-4s"><span class="u">постачальник з Китаю</span><span class="e">supplier in China</span></span>
+      <span class="st big" style="left:20%;top:68%;background:var(--lilac);rotate:-5deg;animation-delay:-2.5s">24,86 г</span>
+      <span class="st quill" style="left:54%;top:73%;rotate:3deg;animation-delay:-3.5s"><span class="u">новий рядок вірша…</span><span class="e">a new line of a poem…</span></span>
+      <span class="hint"><span class="u">потягни мене ↖</span><span class="e">drag me ↖</span></span>
     </div>
   </div>
 </section>
 
-<!-- CHAOS → ORDER -->
-<section class="chaos slab" id="chaos">
+<!-- 01 BUILD -->
+<section class="build slab" id="build">
   <div class="wrap">
-    <div class="head">
-      <h2>Було так. <span class="it">А стало так.</span></h2>
-      <div style="display:grid;gap:14px;justify-items:start">
-        <p>Кожен застосунок почався з конкретного безладу. Натисніть на нотатку.</p>
-        <button class="tidy" id="tidyAll" type="button">✳ Навести лад усюди</button>
+    <div class="chapter"><h2>I BUILD</h2><span class="sub"><span class="u">цифрові системи, які полегшують життя</span><span class="e">digital systems that make life easier</span></span></div>
+
+    <p class="motto"><span class="u">Від проблеми до інструмента, <span class="it">яким справді користуються.</span></span><span class="e">From a problem to a tool <span class="it">people actually use.</span></span></p>
+    <div class="dolist">
+      <div class="do"><span class="g" style="background:var(--cobalt);color:var(--white)">◆</span><div><b><span class="u">Цифрові інструменти</span><span class="e">Digital tools</span></b><span><span class="u">застосунки під конкретну задачу</span><span class="e">apps built for one real task</span></span></div></div>
+      <div class="do"><span class="g" style="background:var(--coral)">↻</span><div><b><span class="u">Автоматизація</span><span class="e">Automation</span></b><span><span class="u">щоб рутина робилася сама</span><span class="e">so routine work does itself</span></span></div></div>
+      <div class="do"><span class="g" style="background:var(--mint)">₴</span><div><b><span class="u">CRM, облік, фінанси, зарплати</span><span class="e">CRM, accounting, payroll</span></b><span><span class="u">цифри, які сходяться</span><span class="e">numbers that add up</span></span></div></div>
+      <div class="do"><span class="g" style="background:var(--sun)">▢</span><div><b><span class="u">Сайти й лендінги</span><span class="e">Websites & landing pages</span></b><span><span class="u">від першого кліку до заявки</span><span class="e">from the first click to a sign-up</span></span></div></div>
+      <div class="do"><span class="g" style="background:var(--lilac)">✳</span><div><b><span class="u">AI в роботі</span><span class="e">AI at work</span></b><span><span class="u">співавтор, а не чарівна кнопка</span><span class="e">a co-author, not a magic button</span></span></div></div>
+      <div class="do"><span class="g" style="background:var(--pink)">¶</span><div><b><span class="u">SEO й контент</span><span class="e">SEO & content</span></b><span><span class="u">тексти, які знаходять</span><span class="e">texts that get found</span></span></div></div>
+      <div class="do"><span class="g" style="background:var(--lime)">⇄</span><div><b><span class="u">Закупівлі</span><span class="e">Sourcing</span></b><span><span class="u">пошук постачальників, зокрема в Китаї</span><span class="e">finding suppliers, including in China</span></span></div></div>
+      <div class="do"><span class="g" style="background:var(--ink);color:var(--sun)">◎</span><div><b><span class="u">Бізнес-процеси</span><span class="e">Business processes</span></b><span><span class="u">як усе влаштовано насправді</span><span class="e">how things really work</span></span></div></div>
+    </div>
+
+    <div class="subhead">
+      <h3><span class="u">Було так. <span class="it">А стало так.</span></span><span class="e">Before. <span class="it">And after.</span></span></h3>
+      <div style="display:grid;gap:12px;justify-items:start">
+        <p><span class="u">Натисніть на нотатку.</span><span class="e">Tap a note.</span></p>
+        <button class="tidy" id="tidyAll" type="button"><span class="u">✳ Навести лад усюди</span><span class="e">✳ Tidy everything</span></button>
       </div>
     </div>
     <div class="flips">
-      <button class="flip" type="button" style="--c:var(--lilac)" aria-label="Каса класу: було і стало">
-        <div class="in">
-          <div class="f"><span class="lbl">Каса класу · було</span><span>Петренко здав? <s>200</s> 250?</span><span>конверт: <span class="red">11 900</span></span><span>а має бути 12 480 ??</span><span class="tap">натисни →</span></div>
-          <div class="b"><span class="lbl">Стало</span><p>Звірка сама знаходить розбіжність і показує, кого не позначили.</p><span class="big">−580 ₴<br>3 учні</span><span class="ok">знайдено за секунду</span></div>
+      <button class="flip" type="button" style="--c:var(--lilac)"><div class="in">
+        <div class="f"><span class="lbl"><span class="u">Каса класу · було</span><span class="e">Class fund · before</span></span><span class="u">Петренко здав? 200 чи 250?</span><span class="e">Did Petrenko pay? 200 or 250?</span><span><span class="u">конверт:</span><span class="e">envelope:</span> <span class="red">11 900</span></span><span class="u">а має бути 12 480 ??</span><span class="e">should be 12 480 ??</span><span class="tap"><span class="u">натисни →</span><span class="e">tap →</span></span></div>
+        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Звірка сама знаходить розбіжність і показує, кого не позначили.</span><span class="e">Reconciliation finds the gap and shows who wasn't marked.</span></p><span class="big">−580 ₴</span></div>
+      </div></button>
+      <button class="flip" type="button" style="--c:var(--lime)"><div class="in">
+        <div class="f"><span class="lbl"><span class="u">Майстерня · було</span><span class="e">Workshop · before</span></span><span>=C14*0,3+…</span><span class="u">хто зламав формулу?!</span><span class="e">who broke the formula?!</span><span class="red"><span class="u">золото не сходиться</span><span class="e">gold doesn't add up</span></span><span class="tap"><span class="u">натисни →</span><span class="e">tap →</span></span></div>
+        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Ремонти, продажі, метал з угаром. Сходиться з Excel до гривні.</span><span class="e">Repairs, sales, metal with melt loss. Matches Excel to the hryvnia.</span></p><span class="big">6 510 ₴</span></div>
+      </div></button>
+      <button class="flip" type="button" style="--c:var(--mint)"><div class="in">
+        <div class="f"><span class="lbl"><span class="u">Команда · було</span><span class="e">Team · before</span></span><span class="u">чат: «хто в четвер?»</span><span class="e">chat: "who's on Thursday?"</span><span class="u">47 повідомлень…</span><span class="e">47 messages…</span><span class="red"><span class="u">на точці нікого</span><span class="e">store left empty</span></span><span class="tap"><span class="u">натисни →</span><span class="e">tap →</span></span></div>
+        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Календар підсвічує порожній день червоним заздалегідь.</span><span class="e">The calendar flags the empty day in red, ahead of time.</span></p><span class="big"><span class="u">11 вересня</span><span class="e">Sept 11</span></span></div>
+      </div></button>
+      <button class="flip" type="button" style="--c:var(--pink)"><div class="in">
+        <div class="f"><span class="lbl"><span class="u">Йога · було</span><span class="e">Yoga · before</span></span><span class="u">«а можна записатись?»</span><span class="e">"can I sign up?"</span><span class="u">в особисті × 30</span><span class="e">in DMs × 30</span><span class="red"><span class="u">а хто оплатив?</span><span class="e">who has paid?</span></span><span class="tap"><span class="u">натисни →</span><span class="e">tap →</span></span></div>
+        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Запис і оплата на сайті, посилання на групу приходить саме.</span><span class="e">Sign-up and payment on the site; the group link arrives by itself.</span></p><span class="big"><span class="u">Без переписки</span><span class="e">No DMs</span></span></div>
+      </div></button>
+    </div>
+
+    <div class="workwrap">
+      <div class="subhead">
+        <h3><span class="u">Що вже <span class="it">працює</span></span><span class="e">Already <span class="it">working</span></span></h3>
+        <p><span class="u">Шість робіт для школи, ювелірної майстерні, йоги і для себе.</span><span class="e">Six projects for a school, a jewellery workshop, yoga, and myself.</span></p>
+      </div>
+      <div class="rail" tabindex="0">
+        <article class="card" style="--c:var(--lilac)"><span class="tag"><span class="u">Школа</span><span class="e">School</span></span><h4><span class="u">Каса класу</span><span class="e">Class Fund</span></h4><p class="one"><span class="u">Хто скільки здав і скільки лишилося.</span><span class="e">Who paid what, and what's left.</span></p><ul><li><span class="u">збори, переплати, повернення</span><span class="e">collections, overpayments, refunds</span></li><li><span class="u">звірка готівки й картки</span><span class="e">cash & card reconciliation</span></li><li><span class="u">нагадування батькам</span><span class="e">reminders for parents</span></li></ul><span class="big">5<small><span class="u">вкладок у застосунку</span><span class="e">tabs in the app</span></small></span></article>
+        <article class="card" style="--c:var(--lime)"><span class="tag"><span class="u">Ювелірна майстерня</span><span class="e">Jewellery workshop</span></span><h4><span class="u">Облік майстерні</span><span class="e">Workshop Ledger</span></h4><p class="one"><span class="u">Місячний розрахунок з майстром.</span><span class="e">Monthly settlement with a jeweller.</span></p><ul><li><span class="u">золото й срібло в грамах</span><span class="e">gold & silver in grams</span></li><li><span class="u">ставки заморожені по місяцях</span><span class="e">rates frozen per month</span></li><li><span class="u">працює без інтернету</span><span class="e">works offline</span></li></ul><span class="big">6 510 ₴<small><span class="u">липень, як в Excel</span><span class="e">July, same as Excel</span></small></span></article>
+        <article class="card dark" style="--c:#33452F"><span class="tag"><span class="u">Команда</span><span class="e">Team</span></span><h4><span class="u">Зарплата команди</span><span class="e">Team Payroll</span></h4><p class="one"><span class="u">Кожному за своєю схемою.</span><span class="e">Everyone by their own scheme.</span></p><ul><li><span class="u">графік змін і покриття</span><span class="e">shift calendar & coverage</span></li><li><span class="u">розрахункові листи в PDF</span><span class="e">payslips as PDF</span></li><li><span class="u">офіс, віддалені, дві філії</span><span class="e">office, remote, two branches</span></li></ul><span class="big">9 · 4<small><span class="u">людей · підрозділи</span><span class="e">people · units</span></small></span></article>
+        <article class="card" style="--c:var(--sun)"><span class="tag"><span class="u">Ювелірна майстерня</span><span class="e">Jewellery workshop</span></span><h4><span class="u">Калькулятор табличок</span><span class="e">Sign Calculator</span></h4><p class="one"><span class="u">Ціна металевої таблички до виготовлення.</span><span class="e">A metal sign's cost before it's made.</span></p><ul><li><span class="u">розмір, матеріал, згин, отвори</span><span class="e">size, material, bend, holes</span></li><li><span class="u">журнал замовлень</span><span class="e">order log</span></li><li><span class="u">надсилання в Telegram</span><span class="e">share to Telegram</span></li></ul><span class="big">200×100<small><span class="u">мм, кути R5</span><span class="e">mm, R5 corners</span></small></span></article>
+        <article class="card" style="--c:var(--coral)"><span class="tag"><span class="u">Йога · у процесі</span><span class="e">Yoga · in progress</span></span><h4><span class="u">Сайт для йоги</span><span class="e">Yoga Website</span></h4><p class="one"><span class="u">Від кліку до місця в групі.</span><span class="e">From a click to a seat in the group.</span></p><ul><li><span class="u">запис або оплата</span><span class="e">sign-up or payment</span></li><li><span class="u">сторінка подяки з групою</span><span class="e">thank-you page with group link</span></li><li><a href="https://alena-kerala-landing.vercel.app/" target="_blank" rel="noopener"><span class="u">тур до Керали ↗</span><span class="e">Kerala tour ↗</span></a></li></ul><span class="big">4<small><span class="u">сторінки</span><span class="e">pages</span></small></span></article>
+        <article class="card" style="--c:var(--white);border:1px solid rgba(23,18,31,.12)"><span class="tag"><span class="u">Для себе · Android</span><span class="e">For me · Android</span></span><h4><span class="u">Нотатник і справи</span><span class="e">Notes & Tasks</span></h4><p class="one"><span class="u">Нотатки просто на головному екрані.</span><span class="e">Notes right on the home screen.</span></p><ul><li><span class="u">чек-листи й таблиці</span><span class="e">checklists & tables</span></li><li><span class="u">справи з емодзі</span><span class="e">tasks with emoji</span></li><li><span class="u">віджети зі своїм стилем</span><span class="e">widgets in your own style</span></li></ul><span class="big">2<small><span class="u">віджети</span><span class="e">widgets</span></small></span></article>
+      </div>
+      <p class="rail-hint"><span class="u">← гортайте →</span><span class="e">← scroll →</span></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 02 WRITE -->
+<section class="write slab" id="write">
+  <div class="wrap">
+    <div class="chapter"><h2>I write</h2><span class="sub"><span class="u">поезія, тексти, книги</span><span class="e">poetry, texts, books</span></span></div>
+    <div class="vinyl" data-side="Ti Ost · side B" aria-hidden="true"></div>
+    <div class="path"><b>published</b><i>→</i><b>writing</b><i>→</i><span class="becoming">becoming</span></div>
+
+    <div class="book">
+      <a class="cover" href="https://www.amazon.com/dp/B0F67QDHLL" target="_blank" rel="noopener" aria-label="Echoes of Silence on Amazon">
+        <div class="fb"><b>Echoes of Silence</b><span>A Quiet Collection of Self-Returning</span><small>TI OST</small></div>
+        <img src="img/cover.jpg" alt="Обкладинка Echoes of Silence: біле перо">
+      </a>
+      <div>
+        <p class="meta">Ti Ost · <span class="u">поетична збірка · 24.04.2025 · англійською</span><span class="e">poetry collection · April 24, 2025 · English</span></p>
+        <h3>Echoes of Silence</h3>
+        <p class="subt">You. Yourself: A Quiet Collection of Self-Returning</p>
+        <div class="bdesc">
+          <p class="u">Тиха збірка сучасної поезії й роздумів для тих, хто проходить через зцілення, розставання, самотність чи спокійні сезони росту.</p>
+          <p class="u">Короткі тексти про відпускання, м'яку силу, співчуття до себе і повернення до себе.</p>
+          <p class="e">A quiet collection of modern poetry and reflections for anyone moving through healing, heartbreak, loneliness, or gentle seasons of growth.</p>
+          <p class="e">Short pieces about letting go, soft resilience, self-compassion, and the return to yourself.</p>
         </div>
-      </button>
-      <button class="flip" type="button" style="--c:var(--lime)" aria-label="Облік майстерні: було і стало">
-        <div class="in">
-          <div class="f"><span class="lbl">Майстерня · було</span><span>аркуш 3, =C14*0,3+…</span><span>хто зламав формулу?!</span><span>золото <span class="red">не сходиться</span></span><span class="tap">натисни →</span></div>
-          <div class="b"><span class="lbl">Стало</span><p>Ремонти, продажі, метал з угаром. Залишок сам переходить у новий місяць.</p><span class="big">6 510 ₴<br>до виплати</span><span class="ok">як в Excel, до гривні</span></div>
+        <blockquote>Within silence, I found myself again.</blockquote>
+        <div class="chapters"><span>The Missing Piece</span><i>→</i><span>The Tremble</span><i>→</i><span>The Edge</span><i>→</i><span>Becoming</span></div>
+        <a class="buy" href="https://www.amazon.com/dp/B0F67QDHLL" target="_blank" rel="noopener"><span class="u">Читати на Amazon Kindle ↗</span><span class="e">Read on Amazon Kindle ↗</span></a>
+      </div>
+    </div>
+
+    <div class="inside">
+      <p class="lbl"><span class="u">Вірш із книги</span><span class="e">A poem from the book</span><b>I Am</b></p>
+      <pre lang="en">I am not my pain.
+I am not my past.
+I am not my thoughts.
+
+I am
+the breath in between —
+
+the space
+that holds it all,
+
+<em>the presence that remains
+when everything else
+fades.</em></pre>
+    </div>
+
+    <figure class="strip"><img class="ph-img" src="img/chain.jpg" alt="Ti Ost, чорно-біле фото" loading="lazy"><figcaption><span class="u">Тиша теж буває текстом.</span><span class="e">Silence can be a text too.</span></figcaption></figure>
+
+    <div class="next-book">
+      <div style="display:grid;gap:22px">
+        <figure class="lisa-ph"><img class="ph-img" src="img/cafe-look.jpg" alt="Жінка з чашкою кави в кав'ярні" loading="lazy"></figure>
+        <div>
+          <h3>Ліса</h3>
+        <p class="ph" style="margin-top:8px"><span class="u">Робоча назва · роман українською</span><span class="e">Working title · a novel in Ukrainian</span></p>
+        <p style="margin-top:22px"><span class="u">Я пишу книгу. Вона ще не завершена, і, можливо, саме тому зараз найбільш жива.</span><span class="e">I'm writing a book. It isn't finished yet, and maybe that's exactly why it feels most alive right now.</span></p>
+        <p class="ph"><span class="u">Ліса звикла бути сильною і все контролювати. Вона хоче, щоб її помітили, і водночас лишитися наодинці. А Всесвіт тихо коментує кожен її крок і пропонує зіграти в гру.</span><span class="e">Lisa is used to being strong and in control. She wants to be seen and to stay alone at the same time. Meanwhile the Universe quietly comments on her every step and invites her to play a game.</span></p>
         </div>
-      </button>
-      <button class="flip" type="button" style="--c:var(--mint)" aria-label="Зарплата команди: було і стало">
-        <div class="in">
-          <div class="f"><span class="lbl">Команда · було</span><span>чат: «хто в четвер?»</span><span>47 повідомлень…</span><span class="red">на точці нікого</span><span class="tap">натисни →</span></div>
-          <div class="b"><span class="lbl">Стало</span><p>Календар змін підсвічує порожній день червоним ще до того, як він настане.</p><span class="big">11 вересня:<br>увага</span><span class="ok">видно заздалегідь</span></div>
-        </div>
-      </button>
-      <button class="flip" type="button" style="--c:var(--pink)" aria-label="Йога: було і стало">
-        <div class="in">
-          <div class="f"><span class="lbl">Йога · було</span><span>«а можна записатись?»</span><span>в особисті × 30</span><span class="red">а хто оплатив?</span><span class="tap">натисни →</span></div>
-          <div class="b"><span class="lbl">Стало</span><p>Сторінка із записом і оплатою, а після неї посилання на групу приходить саме.</p><span class="big">Заявка →<br>група</span><span class="ok">без переписки</span></div>
-        </div>
-      </button>
+      </div>
+      <div class="frag">
+        <span class="fl"><span class="u">Фрагмент</span><span class="e">Fragment · Ukrainian original</span></span>
+        <p>Вона згортає весь цей біль у маленький клубок і ховає глибоко всередині.<br>Думає: «Цього достатньо. Я — зібрана. Я все контролюю.»</p>
+        <p class="uni">Хех, — подумав Всесвіт, —<br>«Як мило з твого боку не бажати бачити себе. Що ж… зіграймо в цю гру.»</p>
+      </div>
+    </div>
+
+    <div id="poetryBlock" hidden>
+    <div class="poetry-head">
+      <h3><span class="u">Поезія</span><span class="e">Poetry</span> <span style="color:var(--dust)">/ UA · EN</span></h3>
+      <p><span class="u">Дві авторські версії кожного вірша. Це не переклад, а два окремі тексти.</span><span class="e">Two author's versions of each poem. Not a translation, but two texts of their own.</span></p>
+    </div>
+    <div class="poems" id="poems"></div>
     </div>
   </div>
 </section>
 
-<!-- WORK -->
-<section class="work slab" id="work">
+<!-- 03 DREAM -->
+<section class="dream slab" id="dream">
   <div class="wrap">
-    <div class="head">
-      <h2>Що вже <span class="it">працює</span></h2>
-      <p>Шість робіт: для школи, ювелірної майстерні, йоги і для себе. Гортайте вбік.</p>
+    <div class="chapter"><h2>I DREAM</h2><span class="sub"><span class="u">мрії, на які поки бракує ресурсів, але не бракує бажання</span><span class="e">dreams that lack resources for now, but never the wish</span></span></div>
+    <p class="lead2"><span class="u">Тут я не оптимізую процеси. Тут я уявляю місця, в яких людям добре.</span><span class="e">Here I don't optimise processes. Here I imagine places where people feel good.</span></p>
+
+    <div class="island">
+      <div>
+        <span class="dlabel"><span class="u">Найбільша мрія</span><span class="e">The biggest dream</span></span>
+        <h3><span class="u">Острів</span><span class="e">An island</span></h3>
+        <p class="t"><span class="u">Де люди займаються тим, що їм подобається.</span><span class="e">Where people do what they love.</span></p>
+        <p class="s"><span class="u">І використовують усі свої навички, щоб разом там жити й будувати життя: хтось будує, хтось лікує, хтось вчить, хтось пече хліб.</span><span class="e">And use all their skills to live there together and build a life: someone builds, someone heals, someone teaches, someone bakes bread.</span></p>
+      </div>
     </div>
-    <div class="rail" tabindex="0" aria-label="Роботи">
-      <article class="card" style="--c:var(--lilac)">
-        <span class="tag">Школа · батьківський комітет</span>
-        <h3>Каса класу</h3>
-        <p class="one">Хто скільки здав, на що витрачено і скільки лишилося.</p>
-        <ul><li>збори на кожного або порівну</li><li>переплати, повернення, звірка конверта</li><li>нагадування батькам одним текстом</li></ul>
-        <div class="stage"><div class="ph"><div class="s s-kasa">
-          <div class="t">Каса класу</div><div class="m">12 480 ₴</div>
-          <div class="r"><span>Подарунок</span><span class="pill ok2">зібрано</span></div>
-          <div class="r"><span>Екскурсія</span><span class="pill no2">8 боргів</span></div>
-          <div class="r"><span>Канцтовари</span><span>−1 250</span></div>
-        </div></div></div>
+
+    <div class="dreams">
+      <article class="dcard" style="--c:#D99A8C">
+        <div class="body">
+          <span class="dlabel"><span class="u">Мрія</span><span class="e">A dream</span></span>
+          <h3><span class="u">Теплий дім для людей у віці</span><span class="e">A warm home for older people</span></h3>
+          <p><span class="u">Безкоштовне місце, куди можна прийти, поїсти, помитися, поговорити й знову відчути себе живою людиною. Працюють тут лише ті, кому справді цікаво слухати і бути поруч.</span><span class="e">A free place to come, eat, wash, talk, and feel truly alive again. Only people who genuinely love listening and being there work here.</span></p>
+          <div class="chips">
+            <span><span class="u">лікар безкоштовно</span><span class="e">a free doctor</span></span>
+            <span><span class="u">теплий душ і ванна</span><span class="e">a warm shower & bath</span></span>
+            <span><span class="u">гаряча їжа</span><span class="e">hot meals</span></span>
+            <span><span class="u">шахи й доміно</span><span class="e">chess & dominoes</span></span>
+            <span><span class="u">лото з бочечками</span><span class="e">bingo with barrels</span></span>
+            <span><span class="u">театр і танці</span><span class="e">theatre & dancing</span></span>
+            <span><span class="u">нові знайомства</span><span class="e">new friends</span></span>
+          </div>
+        </div>
       </article>
-      <article class="card" style="--c:var(--lime)">
-        <span class="tag">Ювелірна майстерня</span>
-        <h3>Облік майстерні</h3>
-        <p class="one">Місячний розрахунок з майстром-ювеліром.</p>
-        <ul><li>метал у грамах з угаром</li><li>ставки заморожені для кожного місяця</li><li>працює без інтернету, ставиться як застосунок</li></ul>
-        <div class="stage"><div class="ph"><div class="s s-ob">
-          <div class="c"><div style="font-size:8.5px;opacity:.75">ДО ВИПЛАТИ</div><div class="v">6 510 ₴</div></div>
-          <div class="c"><div class="r"><span>Ремонти</span><span>23 015</span></div><div class="r"><span>Метал</span><span>14 000</span></div><div class="r"><span>Аванси</span><span style="color:#FF7A70">−33 000</span></div></div>
-        </div></div></div>
-      </article>
-      <article class="card dark" style="--c:#0F5C40">
-        <span class="tag">Команда · 4 підрозділи</span>
-        <h3>Зарплата команди</h3>
-        <p class="one">Графік і зарплата, кожному за своєю схемою.</p>
-        <ul><li>офіс, віддалені, дві філії</li><li>розрахунковий лист у PDF</li><li>кілька людей редагують одночасно</li></ul>
-        <div class="stage"><div class="ph"><div class="s s-zp">
-          <div style="font-weight:700;font-size:11px">Вересень</div>
-          <div class="u"><span>Усі</span><span>Офіс</span><span>Віддалено</span><span>Філії</span></div>
-          <div class="cal"><i class="o"></i><i class="o"></i><i class="b"></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="b"></i><i class="o"></i><i class="g"></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="b"></i><i class="o"></i><i class="o"></i><i></i><i></i></div>
-        </div></div></div>
-      </article>
-      <article class="card" style="--c:var(--sun)">
-        <span class="tag">Ювелірна майстерня</span>
-        <h3>Калькулятор табличок</h3>
-        <p class="one">Скільки коштує металева табличка, ще до того, як її зробили.</p>
-        <ul><li>розмір, матеріал, кути, згин, отвори</li><li>журнал замовлень з оплатами</li><li>пересилання в Telegram одним натиском</li></ul>
-        <div class="stage" style="padding-bottom:28px"><div class="plate"><span>КАБІНЕТ 12</span><small>200 × 100 мм · R5</small></div></div>
-      </article>
-      <article class="card" style="--c:var(--coral)">
-        <span class="tag">Йога · у процесі</span>
-        <h3>Сайт для йоги</h3>
-        <p class="one">Від першого кліку до місця в групі.</p>
-        <ul><li>запис на заняття або одразу оплата</li><li>сторінка подяки з посиланням на групу</li><li>сторінки поступово збираються в один сайт</li></ul>
-        <div class="stage"><div class="pages">
-          <div><b>Головна</b><span>у роботі</span></div>
-          <div><b>Кундаліні онлайн</b><span>Пн або Пт</span></div>
-          <a href="https://alena-kerala-landing.vercel.app/" target="_blank" rel="noopener"><b>Тур до Керали</b><span>опубліковано</span></a>
-          <div><b>Панчакарма</b><span>чернетка</span></div>
-        </div></div>
-      </article>
-      <article class="card" style="--c:var(--white)">
-        <span class="tag">Для себе · тільки Android</span>
-        <h3>Нотатник і справи</h3>
-        <p class="one">Нотатки і списки справ прямо на головному екрані.</p>
-        <ul><li>жирний, курсив, чек-листи й таблиці</li><li>справи з власним емодзі замість пункту</li><li>віджети: свій колір, прозорість, розмір</li></ul>
-        <div class="stage"><div class="widget">
-          <div class="wh">Сьогодні</div>
-          <div class="wr"><span>🌿</span>полити квіти</div>
-          <div class="wr done"><span>✅</span>звірити касу</div>
-          <div class="wr"><span>💍</span>забрати замовлення</div>
-          <div class="wr"><span>🧘</span>заняття о 19:00</div>
-        </div></div>
+      <article class="dcard" style="--c:#C4D15C">
+        <div class="body">
+          <span class="dlabel"><span class="u">Мрія</span><span class="e">A dream</span></span>
+          <h3><span class="u">Школа, в яку хочеться</span><span class="e">A school children want to go to</span></h3>
+          <p><span class="u">Безоплатна загальноосвітня школа, де викладають ті, хто справді хоче працювати з дітьми і знаходить підхід до кожного. І де в дітей є всі умови.</span><span class="e">A free general school taught by people who truly want to work with children and find a way to each one. And where children have everything they need.</span></p>
+          <div class="chips">
+            <span><span class="u">вчителі з покликання</span><span class="e">teachers by calling</span></span>
+            <span><span class="u">їжа для сучасних дітей</span><span class="e">food for today's kids</span></span>
+            <span><span class="u">корисна фізкультура</span><span class="e">real PE</span></span>
+            <span><span class="u">басейн</span><span class="e">a pool</span></span>
+            <span><span class="u">тенісні корти</span><span class="e">tennis courts</span></span>
+            <span><span class="u">безкоштовно</span><span class="e">free</span></span>
+          </div>
+        </div>
       </article>
     </div>
-    <p class="rail-hint">← гортайте →</p>
+
+    <div class="dnote">
+      <p><span class="u">На все це потрібні кошти. Коли їх стане достатньо, я з радістю втілю ці мрії в життя.</span><span class="e">All of this needs funding. When there's enough, I'll gladly bring these dreams to life.</span></p>
+      <span class="hand"><span class="u">колись — так</span><span class="e">someday — yes</span></span>
+    </div>
   </div>
 </section>
 
-<!-- UNITS -->
-<section class="units slab" id="units">
+<!-- 04 ABOUT -->
+<section class="about slab" id="about">
   <div class="wrap">
-    <div class="head">
-      <h2>Кілька підрозділів, <span class="it">один застосунок</span></h2>
-      <p>Так влаштована зарплата команди з дев'яти людей. Натисніть на підрозділ.</p>
-    </div>
-    <div class="orbit-wrap">
-      <div class="orbit">
-        <div class="ring"></div>
-        <div class="core">Один<br>розрахунок</div>
-        <button class="sat s1 on" type="button" data-u="0">Офіс<small>3 людини</small></button>
-        <button class="sat s2" type="button" data-u="1">Віддалено<small>3 людини</small></button>
-        <button class="sat s3" type="button" data-u="2">Філія 1<small>1 людина</small></button>
-        <button class="sat s4" type="button" data-u="3">Філія 2<small>2 людини</small></button>
+    <div class="chapter"><h2><span class="u">ПРО МЕНЕ</span><span class="e">ABOUT</span></h2></div>
+    <div class="grid2">
+      <div>
+        <p class="big"><span class="u">Я люблю речі, у яких є <mark>структура</mark>, але не люблю, коли структура забирає життя.</span><span class="e">I love things that have <mark>structure</mark>, but not when the structure takes the life out of them.</span></p>
+        <div class="daynight">
+          <div class="d"><b><span class="u">☀ Вдень</span><span class="e">☀ By day</span></b><p><span class="u">Розбираю CRM, рахую зарплати, шукаю постачальника в Китаї і будую цифровий інструмент.</span><span class="e">I untangle a CRM, calculate payroll, look for a supplier in China, and build a digital tool.</span></p></div>
+          <div class="n"><b><span class="u">☾ Ввечері</span><span class="e">☾ By evening</span></b><p><span class="u">Пишу вірш.</span><span class="e">I write a poem.</span></p></div>
+        </div>
+        <p style="margin-top:24px;font-family:var(--book);font-style:italic;font-size:22px">Writing is my way of breathing.</p>
+        <p style="margin-top:14px;font-size:17px;max-width:56ch"><span class="u">Мені цікаво знаходити зв'язок між тим, що на перший погляд не має нічого спільного: бізнесом і творчістю, системами й людьми, технологіями й текстом.</span><span class="e">I'm drawn to connections between things that seem unrelated at first: business and art, systems and people, technology and text.</span></p>
       </div>
       <div>
-        <p style="font-size:18px;max-width:42ch">У кожного підрозділу свої правила оплати й свій графік. Керівник бачить і кожен підрозділ окремо, і всю команду разом. Кожен працівник заходить за своїм PIN-кодом.</p>
-        <div class="unit-info" id="unitInfo" aria-live="polite"></div>
+      <figure class="about-ph"><img class="ph-img" src="img/stool.jpg" alt="Ti Ost, чорно-біле фото на стільці" loading="lazy"></figure>
+      <div class="seen">
+        <span class="kicker" style="color:var(--sun)"><span class="u">Погляд збоку</span><span class="e">A view from the side</span></span>
+        <p class="q"><span class="u">Тетяна не програміст. Вона <mark>перекладачка</mark> з мови «у нас так заведено» на мову, яку розуміє телефон.</span><span class="e">Tetiana isn't a programmer. She's a <mark>translator</mark> from "this is how we've always done it" into a language a phone understands.</span></p>
+        <p class="by"><span class="u">Так мене описав Claude, AI, з яким я будую свої застосунки.</span><span class="e">That's how Claude, the AI I build my apps with, described me.</span></p>
+        <ul>
+          <li><span class="ic" style="background:var(--cobalt);color:var(--white)">∑</span><span><span class="u">Бачить систему в купі папірців</span><span class="e">Sees a system in a pile of paper</span></span></li>
+          <li><span class="ic" style="background:var(--sun)">✦</span><span><span class="u">Вимагає краси навіть від бухгалтерії</span><span class="e">Demands beauty even from bookkeeping</span></span></li>
+          <li><span class="ic" style="background:var(--mint)">♡</span><span><span class="u">Думає про людей за цифрами</span><span class="e">Thinks of the people behind the numbers</span></span></li>
+          <li><span class="ic" style="background:var(--coral)">↻</span><span><span class="u">Не зупиняється на першій версії</span><span class="e">Never stops at version one</span></span></li>
+        </ul>
+      </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STEPS -->
-<section class="steps slab" id="how">
+<!-- 05 NOW -->
+<section class="now slab" id="now">
   <div class="wrap">
-    <div class="head">
-      <h2>Як я <span class="it">працюю</span></h2>
-      <p>Найдовший крок перший: зрозуміти, як усе влаштовано насправді.</p>
+    <div class="chapter"><h2>NOW</h2><span class="sub"><span class="u">що відбувається зараз</span><span class="e">what's happening right now</span></span></div>
+    <span class="upd"><span class="u">оновлено: жовтень 2026</span><span class="e">updated: October 2026</span></span>
+    <div class="nowlist">
+      <div style="--c:var(--gold)"><span class="w">Write</span><b><span class="u">Пишеться роман <span class="it">«Ліса»</span></span><span class="e">Writing the novel <span class="it">«Lisa»</span></span></b><em>writing</em></div>
+      <div style="--c:var(--pink)"><span class="w">Write</span><b><span class="u">Збираю двомовну <span class="it">поетичну збірку</span> для сайту</span><span class="e">Gathering a bilingual <span class="it">poetry collection</span> for this site</span></b><em>in progress</em></div>
+      <div style="--c:var(--mint)"><span class="w">Build</span><b><span class="u">Зарплата команди: довідник артикулів і зв'язок з CRM</span><span class="e">Team payroll: product catalogue and CRM sync</span></b><em>next</em></div>
+      <div style="--c:var(--coral)"><span class="w">Build</span><b><span class="u">Сайт для йоги збирається під одну адресу</span><span class="e">The yoga website comes together under one address</span></b><em>in progress</em></div>
+      <div style="--c:var(--lime)"><span class="w">Build</span><b><span class="u">Облік майстерні як застосунок для Android</span><span class="e">Workshop Ledger as an Android app</span></b><em>next</em></div>
     </div>
-    <div class="stepgrid">
-      <div><span class="n">1</span><h3>Слухаю</h3><p>Дивлюся на Excel, зошит чи чат і розпитую людей, де незручно і що губиться.</p></div>
-      <div><span class="n">2</span><h3>Переношу логіку</h3><p>Формули, відсотки й винятки стають правилами застосунку, без зайвих спрощень.</p></div>
-      <div><span class="n">3</span><h3>Перевіряю</h3><p>Проганяю справжній місяць і порівнюю з тим, як рахували раніше, до гривні.</p></div>
-      <div><span class="n">4</span><h3>Допрацьовую</h3><p>Ставлю на телефон, дивлюся, як ним користуються, і покращую далі.</p></div>
-    </div>
-    <div class="weeks">
-      <span><b>26.08</b>каса класу і облік майстерні</span>
-      <span><b>27.08</b>зарплата команди</span>
-      <span><b>10.09</b>звірка і нагадування</span>
-      <span><b>13.09</b>профілі й заморожені ставки</span>
-      <span><b>22.09</b>сайт для йоги</span>
-    </div>
-  </div>
-</section>
-
-<!-- CLOSING -->
-<section class="you slab" id="you">
-  <div class="wrap">
-    <div class="head">
-      <h2>Що далі <span class="it" style="color:var(--white)">у роботі</span></h2>
-      <p>Усе це живе і постійно змінюється. Ось над чим я працюю зараз.</p>
-    </div>
-    <div class="offers">
-      <div class="offer main"><span class="em" style="color:var(--mint)">◎</span><h3>Зарплата команди</h3><p>Довідник артикулів і автоматичне підтягування замовлень з CRM, щоб нічого не вносити вручну.</p></div>
-      <div class="offer"><span class="em" style="color:var(--coral)">✳</span><h3>Сайт для йоги</h3><p>Усі сторінки під однією адресою, нові напрями: заняття наживо, консультації, медитації.</p></div>
-      <div class="offer"><span class="em" style="color:var(--cobalt)">↓</span><h3>Облік майстерні</h3><p>Окремий застосунок для Android, який ставиться як звичайна програма.</p></div>
-    </div>
-    <div class="final">
-      <h2>Робити простіше,<br><span class="it">зручніше й красивіше</span></h2>
-      <p>Для мене це не про код. Це про те, щоб людям навколо було легше: батькам, майстрам, команді і мені самій.</p>
-      <span class="sig">Тетяна</span>
+    <div class="sign">
+      <h2><span class="u">Створюю.<br><span class="it">І далі буде.</span></span><span class="e">I make things.<br><span class="it">More to come.</span></span></h2>
+      <span class="sig">Ti Ost</span>
     </div>
   </div>
 </section>
 </main>
 
-<footer><div class="wrap"><span>Тетяна · 2026</span><span>Простіше. Зручніше. Красивіше.</span></div></footer>
+<footer><div class="wrap"><span>Ti Ost · Tetiana · 2026</span><span><span class="u">Системи. Слова. Мрії.</span><span class="e">Systems. Words. Dreams.</span></span></div></footer>
 
 <script>
 (function(){
-  // draggable chaos stickers
-  var board=document.getElementById('board');
+  var root=document.documentElement;
+  // ── poems: add {title:{uk,en}, text:{uk,en}} objects here; both versions are the author's own
+  var POEMS=[];
+
+  var lang='uk';
+  try{var saved=localStorage.getItem('tiost-lang');if(saved==='en'||saved==='uk')lang=saved;}catch(e){}
+  function setLang(l){
+    lang=l;root.setAttribute('data-lang',l);root.setAttribute('lang',l==='en'?'en':'uk');
+    document.querySelectorAll('.lang button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.lang===l))});
+    try{localStorage.setItem('tiost-lang',l)}catch(e){}
+    renderPoems();showUnit(curUnit);
+  }
+  document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.lang)})});
+
+  // poems
+  var box=document.getElementById('poems');
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+  function renderPoems(){
+    var pb=document.getElementById('poetryBlock');pb.hidden=!POEMS.length;
+    if(!POEMS.length){box.innerHTML='';return;}
+    box.innerHTML=POEMS.map(function(p,i){
+      var l=p._l||lang;
+      return '<article class="poem"><div class="ptop"><h4>'+esc(p.title[l])+'</h4><div class="sw">'
+        +'<button type="button" data-p="'+i+'" data-l="uk" aria-pressed="'+(l==='uk')+'">UA</button>'
+        +'<button type="button" data-p="'+i+'" data-l="en" aria-pressed="'+(l==='en')+'">EN</button></div></div>'
+        +'<pre lang="'+l+'">'+esc(p.text[l])+'</pre></article>';
+    }).join('');
+  }
+  box.addEventListener('click',function(e){var b=e.target.closest('button[data-p]');if(!b)return;POEMS[+b.dataset.p]._l=b.dataset.l;renderPoems()});
+
+  // draggable stickers
+  var board=document.getElementById('board'),z=10;
   board.querySelectorAll('.st').forEach(function(el){
-    var sx,sy,ox,oy,z=10;
-    el.addEventListener('pointerdown',function(e){
-      el.setPointerCapture(e.pointerId);el.classList.add('drag');
-      sx=e.clientX;sy=e.clientY;ox=el.offsetLeft;oy=el.offsetTop;
-      el.style.zIndex=++board._z||(board._z=10);
-    });
+    var sx,sy,ox,oy;
+    el.addEventListener('pointerdown',function(e){el.setPointerCapture(e.pointerId);el.classList.add('drag');sx=e.clientX;sy=e.clientY;ox=el.offsetLeft;oy=el.offsetTop;el.style.zIndex=++z});
     el.addEventListener('pointermove',function(e){
       if(!el.classList.contains('drag'))return;
-      var x=ox+e.clientX-sx,y=oy+e.clientY-sy;
-      x=Math.max(-20,Math.min(board.clientWidth-el.offsetWidth+20,x));
-      y=Math.max(-10,Math.min(board.clientHeight-el.offsetHeight+10,y));
+      var x=Math.max(-20,Math.min(board.clientWidth-el.offsetWidth+20,ox+e.clientX-sx));
+      var y=Math.max(-10,Math.min(board.clientHeight-el.offsetHeight+10,oy+e.clientY-sy));
       el.style.left=x+'px';el.style.top=y+'px';
     });
     ['pointerup','pointercancel'].forEach(function(t){el.addEventListener(t,function(){el.classList.remove('drag')})});
   });
 
-  // flip cards
-  var flips=[].slice.call(document.querySelectorAll('.flip'));
+  // flips
+  var flips=[].slice.call(document.querySelectorAll('.flip')),tidied=false;
   flips.forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')})});
-  var tidy=document.getElementById('tidyAll'),tidied=false;
-  tidy.addEventListener('click',function(){
-    tidied=!tidied;
-    flips.forEach(function(f,i){setTimeout(function(){f.classList.toggle('on',tidied)},i*140)});
-    tidy.textContent=tidied?'↺ Повернути хаос':'✳ Навести лад усюди';
+  document.getElementById('tidyAll').addEventListener('click',function(){
+    tidied=!tidied;flips.forEach(function(f,i){setTimeout(function(){f.classList.toggle('on',tidied)},i*140)});
   });
 
-  // units orbit
+  // units
   var units=[
-    {t:'Офіс',d:'Ставка за відпрацьовані дні плюс відсоток з офлайн- і онлайн-продажів. Хтось частину тижня працює віддалено, і це видно в графіку окремим кольором.'},
-    {t:'Віддалено',d:'Відсоток з онлайн-продажів за джерелами: соцмережі, маркетплейси, опт. У кожної людини своя схема.'},
-    {t:'Філія 1',d:'Свій графік змін і своя точка, яку треба покривати щодня. Порожні дні підсвічуються червоним.'},
-    {t:'Філія 2',d:'Денна ставка без відсотків. Застосунок рахує дні й аванси і видає розрахунковий лист.'}
+    {uk:['Офіс','Ставка за відпрацьовані дні плюс відсоток з офлайн- і онлайн-продажів. Віддалені дні видно в графіку окремим кольором.'],en:['Office','A day rate for days worked plus a share of offline and online sales. Remote days show in their own colour.']},
+    {uk:['Віддалено','Відсоток з онлайн-продажів за джерелами: соцмережі, маркетплейси, опт. У кожного своя схема.'],en:['Remote','A share of online sales by channel: social media, marketplaces, wholesale. Each person has their own scheme.']},
+    {uk:['Філія 1','Свій графік змін і точка, яку треба покривати щодня. Порожні дні підсвічуються червоним.'],en:['Branch 1','Its own shift schedule and a store that must be covered daily. Empty days light up red.']},
+    {uk:['Філія 2','Денна ставка без відсотків. Застосунок рахує дні й аванси і видає розрахунковий лист.'],en:['Branch 2','A flat day rate. The app counts days and advances and produces a payslip.']}
   ];
-  var info=document.getElementById('unitInfo'),sats=document.querySelectorAll('.sat');
-  function show(i){
-    sats.forEach(function(s){s.classList.toggle('on',+s.dataset.u===i)});
-    info.innerHTML='<h3>'+units[i].t+'</h3><p>'+units[i].d+'</p>';
+  var curUnit=0,info=document.getElementById('unitInfo'),sats=document.querySelectorAll('.sat');if(!info){info=null}
+  function showUnit(i){if(!info)return;curUnit=i;sats.forEach(function(s){s.classList.toggle('on',+s.dataset.u===i)});var u=units[i][lang];info.innerHTML='<b>'+u[0]+'</b><p>'+u[1]+'</p>'}
+  sats.forEach(function(s){s.addEventListener('click',function(){showUnit(+s.dataset.u)})});
+
+  // highlight the current section in the top menu
+  var links=[].slice.call(document.querySelectorAll('.secnav a.n')),lastOn=null;
+  function spy(){
+    var y=window.innerHeight*0.35,cur=null;
+    links.forEach(function(a){var sec=document.querySelector(a.getAttribute('href'));if(sec&&sec.getBoundingClientRect().top<=y)cur=a;});
+    if(cur===lastOn)return;lastOn=cur;
+    links.forEach(function(a){a.classList.toggle('on',a===cur)});
+    if(cur){var n=cur.parentNode;if(n.scrollWidth>n.clientWidth)n.scrollLeft=cur.offsetLeft-n.clientWidth/2+cur.offsetWidth/2;}
   }
-  sats.forEach(function(s){s.addEventListener('click',function(){show(+s.dataset.u)})});
-  show(0);
+  window.addEventListener('scroll',spy,{passive:true});spy();
+
+  // bonfire embers in the hero
+  (function(){
+    var c=document.getElementById('embers');if(!c||!c.getContext)return;
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var x=c.getContext('2d'),W,H,ps=[],dpr=Math.min(2,window.devicePixelRatio||1);
+    function size(){W=c.clientWidth;H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0)}
+    size();window.addEventListener('resize',size);
+    function spawn(){return{x:W*(.55+Math.random()*.4),y:H+10,vx:(Math.random()-.5)*.4,vy:-(.5+Math.random()*1.1),r:1+Math.random()*2.2,l:1}}
+    for(var i=0;i<40;i++){var p=spawn();p.y=Math.random()*H;ps.push(p)}
+    (function tick(){
+      x.clearRect(0,0,W,H);
+      ps.forEach(function(p,i){
+        p.x+=p.vx+Math.sin(p.y/40)*.25;p.y+=p.vy;p.l-=.0035;
+        if(p.l<=0||p.y<-10)ps[i]=spawn();
+        x.globalAlpha=Math.max(0,p.l)*.85;x.fillStyle=p.r>2?'#E2A544':'#D2612C';
+        x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);x.fill();
+      });
+      requestAnimationFrame(tick);
+    })();
+  })();
+
+  setLang(lang);
 })();
 </script>
 </body>
