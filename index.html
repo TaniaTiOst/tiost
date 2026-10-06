@@ -42,7 +42,7 @@ a{color:inherit}
 :focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:8px}
 .it{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0}
 .kicker{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
-.slab{padding-block:clamp(64px,9vw,128px);position:relative}
+.slab{padding-block:clamp(80px,11vw,160px);position:relative}
 
 /* top bar */
 .bar{position:fixed;left:0;right:0;top:0;z-index:30;padding-top:env(safe-area-inset-top,0px);pointer-events:none}
@@ -124,15 +124,17 @@ figure{margin:0}
 .do:hover .g{transform:rotate(-10deg) scale(1.1)}
 .do b{display:block;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.01em}
 .do div > span{color:#5A5366;font-size:14.5px}
-.subhead{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin:clamp(56px,8vw,96px) 0 clamp(22px,3vw,34px)}
+.subhead{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin:clamp(80px,11vw,140px) 0 clamp(28px,4vw,44px)}
 .subhead h3{font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1}
 .subhead h3 .it{font-weight:600;font-size:1.08em}
 .subhead p{max-width:40ch}
 .tidy{font:inherit;font-weight:600;border:0;background:var(--ink);color:var(--white);padding:13px 20px;border-radius:99px;cursor:pointer;font-size:15px}
 .tidy:hover{background:var(--cobalt)}
-.flips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.flips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px;gap:18px}
 @media (max-width:980px){.flips{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.flips{grid-template-columns:1fr}}
+.flip .b .big .cap{display:block;font-family:var(--body);font-size:13.5px;line-height:1.35;margin-top:8px;opacity:.8;letter-spacing:0}
+@media (max-width:520px){.flip{height:240px!important}}
 .flip{perspective:1200px;height:290px;cursor:pointer;border:0;background:none;padding:0;font:inherit;text-align:left;color:inherit}
 .flip .in{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.3,1.3,.5,1);transform-style:preserve-3d}
 .flip.on .in{transform:rotateY(180deg)}
@@ -146,12 +148,12 @@ figure{margin:0}
 .flip .b .big{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.05;margin-top:auto}
 .flip .b p{font-size:15px}
 
-.workwrap{margin-top:clamp(56px,8vw,96px)}
+.workwrap{margin-top:clamp(80px,11vw,140px)}
 .workwrap .subhead{margin-top:0}
 .workwrap .subhead h3 .it{color:var(--cobalt)}
 .workwrap .subhead p{color:#5A5366}
-.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin;scrollbar-color:var(--lilac) transparent}
-.card{scroll-snap-align:start;flex:0 0 min(330px,78vw);border-radius:26px;padding:24px;color:var(--ink);background:var(--c);display:flex;flex-direction:column;gap:12px;min-height:400px}
+.rail{gap:22px!important;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin;scrollbar-color:var(--lilac) transparent}
+.card{scroll-snap-align:start;flex:0 0 min(320px,80vw);border-radius:26px;padding:26px;color:var(--ink);background:var(--c);display:flex;flex-direction:column;gap:12px}
 .card.dark{color:var(--white)}
 .card .tag{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.75}
 .card h4{font-size:26px;font-weight:800;line-height:1}
@@ -161,6 +163,35 @@ figure{margin:0}
 .card li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:50%;background:currentColor}
 .card .big{margin-top:auto;font-family:var(--mono);font-weight:700;font-size:28px}
 .card .big small{display:block;font-family:var(--body);font-size:12.5px;font-weight:500;opacity:.75}
+.shot{position:relative;display:block;margin:auto 0 0;width:100%;padding:0;border:0;border-radius:16px;overflow:hidden;height:190px;cursor:zoom-in;background:#111;box-shadow:0 14px 30px -16px rgba(0,0,0,.6)}
+.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--pos,top);transition:transform .5s}
+.shot:hover img{transform:scale(1.04)}
+.shot > span{position:absolute;right:10px;bottom:10px;font-family:var(--label);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px;border-radius:99px;background:var(--feather);color:var(--ink)}
+.card .shot + .big,.card .shot + .demo{margin-top:14px}
+.card button.demo{border:0;cursor:pointer}
+.gal{position:fixed;inset:0;z-index:100;background:rgba(26,18,14,.94);backdrop-filter:blur(8px);display:flex;flex-direction:column;padding:calc(14px + env(safe-area-inset-top,0px)) 0 calc(14px + env(safe-area-inset-bottom,0px))}
+.gal[hidden]{display:none!important}
+.gal-top{display:flex;align-items:center;gap:14px;padding:0 18px 12px;color:var(--feather)}
+.gal-top b{font-family:var(--display);font-weight:400;font-size:24px}
+.gal-note{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+.gal-x{margin-left:auto;width:42px;height:42px;border-radius:50%;border:0;background:var(--feather);color:var(--ink);font-size:18px;cursor:pointer}
+.gal-strip{flex:1;min-height:0;display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 18px;align-items:center;scrollbar-width:none}
+.gal-strip::-webkit-scrollbar{display:none}
+.gal-strip img{flex:0 0 auto;max-height:100%;max-width:min(92vw,1100px);height:auto;border-radius:18px;scroll-snap-align:center;box-shadow:0 30px 60px -20px rgba(0,0,0,.8);object-fit:contain}
+.gal-nav{display:flex;justify-content:center;align-items:center;gap:18px;padding-top:12px;color:var(--feather);font-family:var(--label);font-size:12px;letter-spacing:.12em}
+.gal-nav button{width:46px;height:46px;border-radius:50%;border:1px solid rgba(241,230,214,.35);background:none;color:var(--feather);font-size:18px;cursor:pointer}
+.gal-nav button:hover{background:var(--cobalt);border-color:var(--cobalt)}
+.mock{margin-top:auto;height:190px;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.mock.tab{background:#0B100C;color:#F2F6F1}
+.mock.tab div{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.06);font-size:13px}
+.mock.tab i{font-style:normal;font-family:var(--mono);font-weight:700;color:#8AF0A8}
+.mock.yoga{background:var(--night);color:var(--feather);align-items:flex-start}
+.mock.yoga > span{font-family:var(--display);font-size:34px;line-height:1}
+.mock.yoga a{font-family:var(--label);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);text-decoration:none;margin-top:8px}
+.mock.note{background:#2E7D5B;color:#fff}
+.mock.note b{font-size:14px}
+.mock.note div{font-size:13.5px;padding:7px 10px;border-radius:9px;background:rgba(255,255,255,.14)}
+.mock.note .done{opacity:.6;text-decoration:line-through}
 .rail-hint{font-family:var(--hand);font-size:22px;color:var(--cobalt)}
 
 .orbit-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center;background:var(--mint);border-radius:36px;padding:clamp(24px,4vw,48px);margin-top:clamp(40px,6vw,64px)}
@@ -325,6 +356,18 @@ figure{margin:0}
 .nowlist b .it{font-weight:500}
 .nowlist em{font-style:normal;font-family:var(--mono);font-size:12.5px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--c);white-space:nowrap;justify-self:start}
 .sign{margin-top:clamp(56px,8vw,96px);display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.contact{margin-top:clamp(48px,7vw,80px);display:grid;grid-template-columns:1fr;gap:20px 40px;align-items:center;padding:clamp(22px,4vw,36px);border-radius:28px;background:var(--cobalt);color:var(--feather)}
+@media (max-width:760px){.contact{grid-template-columns:1fr}}
+.contact h3{font-size:clamp(28px,3.4vw,44px);font-weight:400}
+.contact p{margin-top:10px;font-size:16.5px;max-width:46ch;opacity:.9}
+.contact .links{display:flex;flex-wrap:wrap;gap:10px}
+.contact .links{align-items:center}
+.contact .links a{display:inline-flex;align-items:center;gap:10px;text-decoration:none;border-radius:99px;font-weight:600;transition:transform .2s,background .2s}
+.contact .links a:hover{transform:translateY(-2px)}
+.contact .tg{font-size:18px;padding:16px 26px;background:#2AABEE;color:#fff;box-shadow:0 14px 30px -12px rgba(42,171,238,.7)}
+.contact .tg svg{width:24px;height:24px}
+.contact .mail,.contact .ig{font-size:15px;padding:13px 20px;border:1px solid rgba(241,230,214,.45);color:var(--feather)}
+.contact .mail:hover,.contact .ig:hover{background:var(--feather);color:var(--ink)}
 .fin{max-width:900px}
 .sign .fin h2{font-size:clamp(32px,4.6vw,64px)!important;line-height:1.08}
 .three-lines{margin:26px 0 0;padding:0;list-style:none;display:grid;gap:10px;font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,28px);opacity:.85}
@@ -388,7 +431,7 @@ h1,h2,h3,h4,.chapter h2,.hero h1,.island h3,.sign h2,.dcard h3,.card h4,.subhead
         <a class="t2" href="#write"><span class="u">Слова</span><span class="e">Words</span></a>
         <a class="t3" href="#dream"><span class="u">Мрії</span><span class="e">Dreams</span></a>
       </div>
-      <p class="lead"><span class="u">Вдень розбираю хаос із таблиць і чатів і роблю з нього зручні інструменти. Ввечері пишу вірші.</span><span class="e">By day I untangle spreadsheets and chats into tools people enjoy using. By evening I write poetry.</span></p>
+      <p class="lead"><span class="u">Тут зібрано все, що я створюю: застосунки, які полегшують роботу, тексти й книги, і мрії, які ще чекають свого часу.</span><span class="e">Everything I make lives here: apps that make work easier, texts and books, and dreams still waiting for their time.</span></p>
     </div>
     <div class="board" id="board">
       <div class="vinyl" data-side="Ti Ost · side A" aria-hidden="true"></div>
@@ -408,43 +451,33 @@ h1,h2,h3,h4,.chapter h2,.hero h1,.island h3,.sign h2,.dcard h3,.card h4,.subhead
 <!-- 01 BUILD -->
 <section class="build slab" id="build">
   <div class="wrap">
-    <div class="chapter"><h2>I BUILD</h2><span class="sub"><span class="u">цифрові системи, які полегшують життя</span><span class="e">digital systems that make life easier</span></span></div>
+    <div class="chapter"><h2><span class="u">Створюю</span><span class="e">I build</span></h2><span class="sub"><span class="u">цифрові системи, які полегшують життя</span><span class="e">digital systems that make life easier</span></span></div>
 
     <p class="motto"><span class="u">Від проблеми до інструмента, <span class="it">яким справді користуються.</span></span><span class="e">From a problem to a tool <span class="it">people actually use.</span></span></p>
     <div class="dolist">
       <div class="do"><span class="g" style="background:var(--cobalt);color:var(--white)">◆</span><div><b><span class="u">Цифрові інструменти</span><span class="e">Digital tools</span></b><span><span class="u">застосунки під конкретну задачу</span><span class="e">apps built for one real task</span></span></div></div>
-      <div class="do"><span class="g" style="background:var(--coral)">↻</span><div><b><span class="u">Автоматизація</span><span class="e">Automation</span></b><span><span class="u">щоб рутина робилася сама</span><span class="e">so routine work does itself</span></span></div></div>
       <div class="do"><span class="g" style="background:var(--mint)">₴</span><div><b><span class="u">CRM, облік, фінанси, зарплати</span><span class="e">CRM, accounting, payroll</span></b><span><span class="u">цифри, які сходяться</span><span class="e">numbers that add up</span></span></div></div>
       <div class="do"><span class="g" style="background:var(--sun)">▢</span><div><b><span class="u">Сайти й лендінги</span><span class="e">Websites & landing pages</span></b><span><span class="u">від першого кліку до заявки</span><span class="e">from the first click to a sign-up</span></span></div></div>
-      <div class="do"><span class="g" style="background:var(--lilac)">✳</span><div><b><span class="u">AI в роботі</span><span class="e">AI at work</span></b><span><span class="u">співавтор, а не чарівна кнопка</span><span class="e">a co-author, not a magic button</span></span></div></div>
+      <div class="do"><span class="g" style="background:var(--lilac)">AI</span><div><b><span class="u">AI в роботі</span><span class="e">AI at work</span></b><span><span class="u">співавтор, а не чарівна кнопка</span><span class="e">a co-author, not a magic button</span></span></div></div>
       <div class="do"><span class="g" style="background:var(--pink)">¶</span><div><b><span class="u">SEO й контент</span><span class="e">SEO & content</span></b><span><span class="u">тексти, які знаходять</span><span class="e">texts that get found</span></span></div></div>
       <div class="do"><span class="g" style="background:var(--lime)">⇄</span><div><b><span class="u">Закупівлі</span><span class="e">Sourcing</span></b><span><span class="u">пошук постачальників, зокрема в Китаї</span><span class="e">finding suppliers, including in China</span></span></div></div>
-      <div class="do"><span class="g" style="background:var(--ink);color:var(--sun)">◎</span><div><b><span class="u">Бізнес-процеси</span><span class="e">Business processes</span></b><span><span class="u">як усе влаштовано насправді</span><span class="e">how things really work</span></span></div></div>
     </div>
 
     <div class="subhead">
       <h3><span class="u">Було так. <span class="it">А стало так.</span></span><span class="e">Before. <span class="it">And after.</span></span></h3>
       <div style="display:grid;gap:12px;justify-items:start">
         <p><span class="u">Натисніть на нотатку.</span><span class="e">Tap a note.</span></p>
-        <button class="tidy" id="tidyAll" type="button"><span class="u">✳ Навести лад усюди</span><span class="e">✳ Tidy everything</span></button>
+        <button class="tidy" id="tidyAll" type="button"><span class="u">Навести лад усюди</span><span class="e">Tidy everything</span></button>
       </div>
     </div>
     <div class="flips">
       <button class="flip" type="button" style="--c:var(--lilac)"><div class="in">
         <div class="f"><span class="lbl"><span class="u">Каса класу · було</span><span class="e">Class fund · before</span></span><span class="u">Петренко здав? 200 чи 250?</span><span class="e">Did Petrenko pay? 200 or 250?</span><span><span class="u">конверт:</span><span class="e">envelope:</span> <span class="red">11 900</span></span><span class="u">а має бути 12 480 ??</span><span class="e">should be 12 480 ??</span><span class="tap"><span class="u">натисни →</span><span class="e">tap →</span></span></div>
-        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Звірка сама знаходить розбіжність і показує, кого не позначили.</span><span class="e">Reconciliation finds the gap and shows who wasn't marked.</span></p><span class="big">−580 ₴</span></div>
-      </div></button>
-      <button class="flip" type="button" style="--c:var(--lime)"><div class="in">
-        <div class="f"><span class="lbl"><span class="u">Майстерня · було</span><span class="e">Workshop · before</span></span><span>=C14*0,3+…</span><span class="u">хто зламав формулу?!</span><span class="e">who broke the formula?!</span><span class="red"><span class="u">золото не сходиться</span><span class="e">gold doesn't add up</span></span><span class="tap"><span class="u">натисни →</span><span class="e">tap →</span></span></div>
-        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Ремонти, продажі, метал з угаром. Сходиться з Excel до гривні.</span><span class="e">Repairs, sales, metal with melt loss. Matches Excel to the hryvnia.</span></p><span class="big">6 510 ₴</span></div>
+        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Звірка сама знаходить розбіжність і показує, кого не позначили.</span><span class="e">Reconciliation finds the gap and shows who wasn't marked.</span></p><span class="big">−580 ₴<small class="cap"><span class="u">стільки бракувало в конверті, і видно, чиї внески не позначені</span><span class="e">missing from the envelope, and you can see whose payments weren't marked</span></small></span></div>
       </div></button>
       <button class="flip" type="button" style="--c:var(--mint)"><div class="in">
         <div class="f"><span class="lbl"><span class="u">Команда · було</span><span class="e">Team · before</span></span><span class="u">чат: «хто в четвер?»</span><span class="e">chat: "who's on Thursday?"</span><span class="u">47 повідомлень…</span><span class="e">47 messages…</span><span class="red"><span class="u">на точці нікого</span><span class="e">store left empty</span></span><span class="tap"><span class="u">натисни →</span><span class="e">tap →</span></span></div>
-        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Календар підсвічує порожній день червоним заздалегідь.</span><span class="e">The calendar flags the empty day in red, ahead of time.</span></p><span class="big"><span class="u">11 вересня</span><span class="e">Sept 11</span></span></div>
-      </div></button>
-      <button class="flip" type="button" style="--c:var(--pink)"><div class="in">
-        <div class="f"><span class="lbl"><span class="u">Йога · було</span><span class="e">Yoga · before</span></span><span class="u">«а можна записатись?»</span><span class="e">"can I sign up?"</span><span class="u">в особисті × 30</span><span class="e">in DMs × 30</span><span class="red"><span class="u">а хто оплатив?</span><span class="e">who has paid?</span></span><span class="tap"><span class="u">натисни →</span><span class="e">tap →</span></span></div>
-        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Запис і оплата на сайті, посилання на групу приходить саме.</span><span class="e">Sign-up and payment on the site; the group link arrives by itself.</span></p><span class="big"><span class="u">Без переписки</span><span class="e">No DMs</span></span></div>
+        <div class="b"><span class="lbl"><span class="u">Стало</span><span class="e">After</span></span><p><span class="u">Календар підсвічує порожній день червоним заздалегідь.</span><span class="e">The calendar flags the empty day in red, ahead of time.</span></p><span class="big"><span class="u">11 вересня</span><span class="e">Sept 11</span><small class="cap"><span class="u">цього дня на точці нікого: календар попередив заздалегідь</span><span class="e">nobody on shift that day: the calendar warned in advance</span></small></span></div>
       </div></button>
     </div>
 
@@ -454,12 +487,12 @@ h1,h2,h3,h4,.chapter h2,.hero h1,.island h3,.sign h2,.dcard h3,.card h4,.subhead
         <p><span class="u">Шість робіт для школи, ювелірної майстерні, йоги і для себе.</span><span class="e">Six projects for a school, a jewellery workshop, yoga, and myself.</span></p>
       </div>
       <div class="rail" tabindex="0">
-        <article class="card" style="--c:var(--lilac)"><span class="tag"><span class="u">Школа</span><span class="e">School</span></span><h4><span class="u">Каса класу</span><span class="e">Class Fund</span></h4><p class="one"><span class="u">Хто скільки здав і скільки лишилося.</span><span class="e">Who paid what, and what's left.</span></p><ul><li><span class="u">збори, переплати, повернення</span><span class="e">collections, overpayments, refunds</span></li><li><span class="u">звірка готівки й картки</span><span class="e">cash & card reconciliation</span></li><li><span class="u">нагадування батькам</span><span class="e">reminders for parents</span></li></ul><span class="big">5<small><span class="u">вкладок у застосунку</span><span class="e">tabs in the app</span></small></span></article>
-        <article class="card" style="--c:var(--lime)"><span class="tag"><span class="u">Ювелірна майстерня</span><span class="e">Jewellery workshop</span></span><h4><span class="u">Облік майстерні</span><span class="e">Workshop Ledger</span></h4><p class="one"><span class="u">Місячний розрахунок з майстром.</span><span class="e">Monthly settlement with a jeweller.</span></p><ul><li><span class="u">золото й срібло в грамах</span><span class="e">gold & silver in grams</span></li><li><span class="u">ставки заморожені по місяцях</span><span class="e">rates frozen per month</span></li><li><span class="u">працює без інтернету</span><span class="e">works offline</span></li></ul><span class="big">6 510 ₴<small><span class="u">липень, як в Excel</span><span class="e">July, same as Excel</span></small></span></article>
-        <article class="card dark" style="--c:#33452F"><span class="tag"><span class="u">Команда</span><span class="e">Team</span></span><h4><span class="u">Зарплата команди</span><span class="e">Team Payroll</span></h4><p class="one"><span class="u">Кожному за своєю схемою.</span><span class="e">Everyone by their own scheme.</span></p><ul><li><span class="u">графік змін і покриття</span><span class="e">shift calendar & coverage</span></li><li><span class="u">розрахункові листи в PDF</span><span class="e">payslips as PDF</span></li><li><span class="u">офіс, віддалені, дві філії</span><span class="e">office, remote, two branches</span></li></ul><span class="big">9 · 4<small><span class="u">людей · підрозділи</span><span class="e">people · units</span></small></span></article>
-        <article class="card" style="--c:var(--sun)"><span class="tag"><span class="u">Ювелірна майстерня</span><span class="e">Jewellery workshop</span></span><h4><span class="u">Калькулятор табличок</span><span class="e">Sign Calculator</span></h4><p class="one"><span class="u">Ціна металевої таблички до виготовлення.</span><span class="e">A metal sign's cost before it's made.</span></p><ul><li><span class="u">розмір, матеріал, згин, отвори</span><span class="e">size, material, bend, holes</span></li><li><span class="u">журнал замовлень</span><span class="e">order log</span></li><li><span class="u">надсилання в Telegram</span><span class="e">share to Telegram</span></li></ul><span class="big">200×100<small><span class="u">мм, кути R5</span><span class="e">mm, R5 corners</span></small></span></article>
-        <article class="card" style="--c:var(--coral)"><span class="tag"><span class="u">Йога · у процесі</span><span class="e">Yoga · in progress</span></span><h4><span class="u">Сайт для йоги</span><span class="e">Yoga Website</span></h4><p class="one"><span class="u">Від кліку до місця в групі.</span><span class="e">From a click to a seat in the group.</span></p><ul><li><span class="u">запис або оплата</span><span class="e">sign-up or payment</span></li><li><span class="u">сторінка подяки з групою</span><span class="e">thank-you page with group link</span></li><li><a href="https://alena-kerala-landing.vercel.app/" target="_blank" rel="noopener"><span class="u">тур до Керали ↗</span><span class="e">Kerala tour ↗</span></a></li></ul><span class="big">4<small><span class="u">сторінки</span><span class="e">pages</span></small></span></article>
-        <article class="card" style="--c:var(--white);border:1px solid rgba(23,18,31,.12)"><span class="tag"><span class="u">Для себе · Android</span><span class="e">For me · Android</span></span><h4><span class="u">Нотатник і справи</span><span class="e">Notes & Tasks</span></h4><p class="one"><span class="u">Нотатки просто на головному екрані.</span><span class="e">Notes right on the home screen.</span></p><ul><li><span class="u">чек-листи й таблиці</span><span class="e">checklists & tables</span></li><li><span class="u">справи з емодзі</span><span class="e">tasks with emoji</span></li><li><span class="u">віджети зі своїм стилем</span><span class="e">widgets in your own style</span></li></ul><span class="big">2<small><span class="u">віджети</span><span class="e">widgets</span></small></span></article>
+        <article class="card" style="--c:var(--lilac)"><span class="tag"><span class="u">Школа</span><span class="e">School</span></span><h4><span class="u">Каса класу</span><span class="e">Class Fund</span></h4><p class="one"><span class="u">Хто скільки здав і скільки лишилося.</span><span class="e">Who paid what, and what's left.</span></p><button class="shot" type="button" data-gallery="kasa" style="--pos:top"><img src="img/screens/kasa-1.jpg" alt="" loading="lazy"><span><span class="u">екрани →</span><span class="e">screens →</span></span></button></article>
+        <article class="card" style="--c:var(--lime)"><span class="tag"><span class="u">Ювелірна майстерня</span><span class="e">Jewellery workshop</span></span><h4><span class="u">Облік майстерні</span><span class="e">Workshop Ledger</span></h4><p class="one"><span class="u">Місячний розрахунок з майстром.</span><span class="e">Monthly settlement with a jeweller.</span></p><button class="shot" type="button" data-gallery="oblik" style="--pos:top"><img src="img/screens/oblik-1.jpg" alt="" loading="lazy"><span><span class="u">екрани →</span><span class="e">screens →</span></span></button></article>
+        <article class="card dark" style="--c:#33452F"><span class="tag"><span class="u">Команда</span><span class="e">Team</span></span><h4><span class="u">Зарплата команди</span><span class="e">Team Payroll</span></h4><p class="one"><span class="u">Графік і зарплата, кожному за своєю схемою.</span><span class="e">Schedule and pay, everyone by their own scheme.</span></p><button class="shot" type="button" data-gallery="zp" style="--pos:0 30%"><img src="img/screens/zp-1.jpg" alt="" loading="lazy"><span><span class="u">екрани →</span><span class="e">screens →</span></span></button></article>
+        <article class="card" style="--c:var(--sun)"><span class="tag"><span class="u">Ювелірна майстерня</span><span class="e">Jewellery workshop</span></span><h4><span class="u">Калькулятор табличок</span><span class="e">Sign Calculator</span></h4><p class="one"><span class="u">Ціна металевої таблички ще до виготовлення.</span><span class="e">A metal sign's price before it's made.</span></p><div class="mock tab"><div><b><span class="u">Нержавійка 240×180</span><span class="e">Steel 240×180</span></b><i>860 ₴</i></div><div><b><span class="u">Чорна 300×150 · 5 шт</span><span class="e">Black 300×150 · 5 pcs</span></b><i>2 650 ₴</i></div><div><b><span class="u">Гнута навпіл</span><span class="e">Folded in half</span></b><i>410 ₴</i></div></div></article>
+        <article class="card" style="--c:var(--coral)"><span class="tag"><span class="u">Йога · у процесі</span><span class="e">Yoga · in progress</span></span><h4><span class="u">Сайт для йоги</span><span class="e">Yoga Website</span></h4><p class="one"><span class="u">Від кліку до місця в групі.</span><span class="e">From a click to a seat in the group.</span></p><div class="mock yoga"><span><span class="u">Пн чи Пт?</span><span class="e">Mon or Fri?</span></span><a href="https://alena-kerala-landing.vercel.app/" target="_blank" rel="noopener"><span class="u">тур до Керали ↗</span><span class="e">Kerala tour ↗</span></a></div></article>
+        <article class="card" style="--c:var(--white);border:1px solid rgba(23,18,31,.12)"><span class="tag"><span class="u">Для себе · Android</span><span class="e">For me · Android</span></span><h4><span class="u">Нотатник і справи</span><span class="e">Notes & Tasks</span></h4><p class="one"><span class="u">Нотатки просто на головному екрані.</span><span class="e">Notes right on the home screen.</span></p><div class="mock note"><b><span class="u">Сьогодні</span><span class="e">Today</span></b><div>🌿 <span class="u">полити квіти</span><span class="e">water the plants</span></div><div class="done">✅ <span class="u">звірити касу</span><span class="e">check the fund</span></div><div>💍 <span class="u">забрати замовлення</span><span class="e">pick up the order</span></div></div></article>
       </div>
       <p class="rail-hint"><span class="u">← гортайте →</span><span class="e">← scroll →</span></p>
     </div>
@@ -470,7 +503,7 @@ h1,h2,h3,h4,.chapter h2,.hero h1,.island h3,.sign h2,.dcard h3,.card h4,.subhead
 <!-- 02 WRITE -->
 <section class="write slab" id="write">
   <div class="wrap">
-    <div class="chapter"><h2>I write</h2><span class="sub"><span class="u">поезія, тексти, книги</span><span class="e">poetry, texts, books</span></span></div>
+    <div class="chapter"><h2><span class="u">Пишу</span><span class="e">I write</span></h2><span class="sub"><span class="u">поезія, тексти, книги</span><span class="e">poetry, texts, books</span></span></div>
     <div class="vinyl" data-side="Ti Ost · side B" aria-hidden="true"></div>
     <div class="path"><b>published</b><i>→</i><b>writing</b><i>→</i><span class="becoming">becoming</span></div>
 
@@ -544,7 +577,7 @@ fades.</em></pre>
 <!-- 03 DREAM -->
 <section class="dream slab" id="dream">
   <div class="wrap">
-    <div class="chapter"><h2>I DREAM</h2><span class="sub"><span class="u">мрії, на які поки бракує ресурсів, але не бракує бажання</span><span class="e">dreams that lack resources for now, but never the wish</span></span></div>
+    <div class="chapter"><h2><span class="u">Мрію</span><span class="e">I dream</span></h2><span class="sub"><span class="u">мрії, на які поки бракує ресурсів, але не бракує бажання</span><span class="e">dreams that lack resources for now, but never the wish</span></span></div>
     <p class="lead2"><span class="u">Тут я не оптимізую процеси. Тут я уявляю місця, в яких людям добре.</span><span class="e">Here I don't optimise processes. Here I imagine places where people feel good.</span></p>
 
     <div class="island">
@@ -627,7 +660,7 @@ fades.</em></pre>
 <!-- 05 NOW -->
 <section class="now slab" id="now">
   <div class="wrap">
-    <div class="chapter"><h2>NOW</h2><span class="sub"><span class="u">що відбувається зараз</span><span class="e">what's happening right now</span></span></div>
+    <div class="chapter"><h2><span class="u">Зараз</span><span class="e">Now</span></h2><span class="sub"><span class="u">що відбувається зараз</span><span class="e">what's happening right now</span></span></div>
     <span class="upd"><span class="u">оновлено: жовтень 2026</span><span class="e">updated: October 2026</span></span>
     <div class="nowlist">
       <div style="--c:var(--gold)"><span class="w">Write</span><b><span class="u">Пишеться роман <span class="it">«Ліса»</span></span><span class="e">Writing the novel <span class="it">«Lisa»</span></span></b><em>writing</em></div>
@@ -636,6 +669,17 @@ fades.</em></pre>
       <div style="--c:var(--coral)"><span class="w">Build</span><b><span class="u">Сайт для йоги збирається під одну адресу</span><span class="e">The yoga website comes together under one address</span></b><em>in progress</em></div>
       <div style="--c:var(--lime)"><span class="w">Build</span><b><span class="u">Облік майстерні як застосунок для Android</span><span class="e">Workshop Ledger as an Android app</span></b><em>next</em></div>
       <div style="--c:var(--feather)"><span class="w">Always</span><b><span class="u">Вигадую наступну штуку, яку, мабуть, <span class="it">не планувала робити</span></span><span class="e">Dreaming up the next thing I probably <span class="it">didn't plan to make</span></span></b><em>soon</em></div>
+    </div>
+    <div class="contact" id="contact">
+      <div>
+        <h3><span class="u">Є ідея, питання чи просто хочеться поговорити?</span><span class="e">Have an idea, a question, or just feel like talking?</span></h3>
+        <p><span class="u">Я люблю нові розмови: про застосунки, тексти, книги чи мрії, які ще не мають плану. Найшвидше мене знайти в Telegram.</span><span class="e">I love new conversations: about apps, texts, books, or dreams that don't have a plan yet. Telegram is the fastest way to reach me.</span></p>
+      </div>
+      <div class="links" id="contactLinks">
+        <a class="tg" data-k="telegram" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.4 4.2 2.9 11.3c-1.3.5-1.3 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.4zM8.6 14l9.7-6.1c.5-.3.9-.1.5.2l-8.3 7.5-.3 3.4L8.6 14z"/></svg><span class="u">Написати в Telegram</span><span class="e">Message me on Telegram</span></a>
+        <a class="mail" data-k="email" hidden><span class="u">Написати на пошту</span><span class="e">Send an email</span></a>
+        <a class="ig" data-k="instagram" target="_blank" rel="noopener" hidden>Instagram</a>
+      </div>
     </div>
     <div class="sign">
       <div class="fin">
@@ -651,6 +695,20 @@ fades.</em></pre>
   </div>
 </section>
 </main>
+
+<div class="gal" id="gal" hidden role="dialog" aria-modal="true" aria-labelledby="galTitle">
+  <div class="gal-top">
+    <b id="galTitle"></b>
+    <span class="gal-note"><span class="u">демо · вигадані дані</span><span class="e">demo · made-up data</span></span>
+    <button type="button" class="gal-x" id="galClose" aria-label="Закрити">✕</button>
+  </div>
+  <div class="gal-strip" id="galStrip" tabindex="0"></div>
+  <div class="gal-nav">
+    <button type="button" id="galPrev" aria-label="Назад">←</button>
+    <span id="galCount"></span>
+    <button type="button" id="galNext" aria-label="Далі">→</button>
+  </div>
+</div>
 
 <footer><div class="wrap"><span>Ti Ost · Tetiana · 2026</span><span><span class="u">Системи. Слова. Мрії.</span><span class="e">Systems. Words. Dreams.</span></span></div></footer>
 
@@ -748,6 +806,40 @@ fades.</em></pre>
       });
       requestAnimationFrame(tick);
     })();
+  })();
+
+  // screenshot galleries (demo data)
+  (function(){
+    var G={
+      kasa:{t:{uk:'Каса класу',en:'Class Fund'},img:['kasa-1','kasa-2','kasa-3','kasa-4','kasa-5','kasa-6']},
+      zp:{t:{uk:'Зарплата команди',en:'Team Payroll'},img:['zp-1','zp-2','zp-3']},
+      oblik:{t:{uk:'Облік майстерні',en:'Workshop Ledger'},img:['oblik-1']}
+    };
+    var gal=document.getElementById('gal'),strip=document.getElementById('galStrip'),title=document.getElementById('galTitle'),count=document.getElementById('galCount'),last=null;
+    function idx(){var w=strip.clientWidth,best=0,bd=1e9;[].forEach.call(strip.children,function(im,i){var d=Math.abs(im.offsetLeft+im.offsetWidth/2-strip.scrollLeft-w/2);if(d<bd){bd=d;best=i}});return best}
+    function upd(){count.textContent=(idx()+1)+' / '+strip.children.length}
+    function go(d){var i=Math.max(0,Math.min(strip.children.length-1,idx()+d)),im=strip.children[i];strip.scrollTo({left:im.offsetLeft-(strip.clientWidth-im.offsetWidth)/2,behavior:'smooth'})}
+    function open(k,btn){var g=G[k];last=btn;title.textContent=g.t[lang]||g.t.uk;
+      strip.innerHTML=g.img.map(function(n,i){return '<img src="img/screens/'+n+'.jpg" alt="'+(g.t[lang]||g.t.uk)+', екран '+(i+1)+'">'}).join('');
+      gal.hidden=false;document.body.style.overflow='hidden';strip.scrollLeft=0;setTimeout(upd,50);document.getElementById('galClose').focus()}
+    function close(){gal.hidden=true;document.body.style.overflow='';if(last)last.focus()}
+    document.querySelectorAll('[data-gallery]').forEach(function(b){b.addEventListener('click',function(){open(b.dataset.gallery,b)})});
+    document.getElementById('galClose').addEventListener('click',close);
+    document.getElementById('galPrev').addEventListener('click',function(){go(-1)});
+    document.getElementById('galNext').addEventListener('click',function(){go(1)});
+    strip.addEventListener('scroll',function(){clearTimeout(strip._t);strip._t=setTimeout(upd,80)},{passive:true});
+    gal.addEventListener('click',function(e){if(e.target===gal||e.target===strip)close()});
+    document.addEventListener('keydown',function(e){if(gal.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)});
+  })();
+
+  // contacts — fill these in; empty ones stay hidden
+  var CONTACTS={telegram:'https://t.me/Ti0st',instagram:'',email:'tostroglyad@gmail.com'};
+  (function(){
+    var box=document.getElementById('contactLinks');if(!box)return;
+    ['telegram','instagram'].forEach(function(k){var a=box.querySelector('[data-k="'+k+'"]');if(CONTACTS[k]){a.href=CONTACTS[k];a.hidden=false}});
+    var m=box.querySelector('[data-k="email"]');
+    if(CONTACTS.email){m.href='mailto:'+CONTACTS.email+'?subject='+encodeURIComponent('Привіт, Ti Ost');m.hidden=false}
+    if(!CONTACTS.telegram&&!CONTACTS.instagram&&!CONTACTS.email)document.getElementById('contact').hidden=true;
   })();
 
   setLang(lang);
