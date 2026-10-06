@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Тетяна: перетворюю хаос із таблиць, зошитів і чатів на зручні й гарні застосунки.">
+<meta property="og:title" content="Тетяна">
+<meta property="og:description" content="Беру хаос із таблиць, зошитів і чатів і роблю з нього щось зручне й гарне.">
+<meta name="theme-color" content="#2B3BFF">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232B3BFF'/%3E%3Ctext x='32' y='45' font-size='38' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23FFC83D'%3ET%3C/text%3E%3C/svg%3E">
+<title>Робочий стіл Тетяни</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: colour-blocked chapters, one saturated slab per idea. Chaos → order is the through-line:
+   draggable "chaos" stickers in the hero, flip cards that tidy themselves, a colour scroller of finished work.
+   Deliberately a single bright look in both host themes. */
+:root{
+  --ink:#17121F; --paper:#F6F3FF; --white:#FFFFFF;
+  --cobalt:#2B3BFF; --coral:#FF5B3A; --sun:#FFC83D; --mint:#2FD69A; --pink:#FF9AD5; --lilac:#B9A6FF; --lime:#C6F432;
+  --display:"Unbounded", "Golos Text", system-ui, sans-serif;
+  --serif:"Cormorant Garamond", Georgia, serif;
+  --body:"Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --hand:"Caveat", "Segoe Print", cursive;
+  --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:clamp(16px,4vw,44px)}
+h1,h2,h3,h4{margin:0;font-family:var(--display);text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:8px}
+.it{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.kicker{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+section{position:relative}
+.slab{padding-block:clamp(64px,9vw,128px)}
+
+/* top bar */
+.bar{position:fixed;left:0;right:0;top:0;z-index:20;padding-top:env(safe-area-inset-top,0px);pointer-events:none}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:14px}
+.bar a{pointer-events:auto;text-decoration:none;font-weight:600;font-size:14px;background:var(--white);color:var(--ink);padding:8px 16px;border-radius:99px;box-shadow:0 6px 20px -8px rgba(23,18,31,.35)}
+.bar a.logo{font-family:var(--display);font-weight:800;letter-spacing:-.02em}
+.bar a.go{background:var(--sun)}
+
+/* HERO */
+.hero{background:var(--cobalt);color:var(--white);padding-block:clamp(96px,11vw,140px) 0;overflow:hidden}
+.hero .grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center}
+@media (max-width:900px){.hero .grid{grid-template-columns:1fr}}
+.hero .hi{font-family:var(--hand);font-size:clamp(28px,3vw,38px);color:var(--sun)}
+.hero h1{font-weight:900;font-size:clamp(56px,10.5vw,170px);line-height:.86;margin-top:4px;letter-spacing:-.05em;white-space:nowrap}
+@media (max-width:900px){.hero h1{font-size:min(19vw,170px)}}
+.hero h1 span{display:inline-block;animation:pop .9s cubic-bezier(.2,1.4,.4,1) both}
+.hero h1 span:nth-child(2){animation-delay:.05s}.hero h1 span:nth-child(3){animation-delay:.1s}.hero h1 span:nth-child(4){animation-delay:.15s}.hero h1 span:nth-child(5){animation-delay:.2s}.hero h1 span:nth-child(6){animation-delay:.25s}
+@keyframes pop{from{transform:translateY(.25em) rotate(-6deg)}to{transform:none}}
+.hero h1 .dot{color:var(--coral)}
+.hero .sub{font-size:clamp(26px,3vw,40px);line-height:1.15;margin-top:22px;max-width:18em}
+.hero .sub b{font-family:var(--body);font-style:normal;font-weight:600;background:var(--pink);color:var(--ink);padding:0 .25em;border-radius:.2em}
+.hero .lead{margin-top:20px;font-size:17px;max-width:44ch;color:rgba(255,255,255,.82)}
+
+.board{position:relative;height:clamp(380px,40vw,500px);touch-action:none}
+.board .hint{position:absolute;right:4%;bottom:6%;font-family:var(--hand);font-size:26px;color:var(--sun);transform:rotate(-6deg);pointer-events:none}
+.st{position:absolute;padding:10px 16px;border-radius:14px;font-weight:600;font-size:15px;color:var(--ink);box-shadow:0 14px 30px -12px rgba(0,0,0,.45);cursor:grab;user-select:none;white-space:nowrap;animation:bob 6s ease-in-out infinite;transition:box-shadow .2s}
+.st.drag{cursor:grabbing;animation:none;box-shadow:0 26px 50px -14px rgba(0,0,0,.55);z-index:5}
+.st.hand{font-family:var(--hand);font-size:24px;font-weight:700;padding:6px 16px}
+.st.big{font-family:var(--mono);font-size:22px;font-weight:700}
+.st.round{border-radius:99px}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -8px}}
+
+.ribbon{background:var(--sun);color:var(--ink);transform:rotate(-2deg);margin:clamp(24px,4vw,48px) -20px -14px;padding-block:14px;overflow:hidden;position:relative;z-index:2}
+.ribbon .track{display:flex;gap:36px;width:max-content;animation:run 26s linear infinite;font-family:var(--display);font-weight:800;font-size:clamp(20px,2.4vw,30px);text-transform:uppercase;letter-spacing:-.01em}
+.ribbon .track span::after{content:"✳";margin-left:36px;color:var(--coral)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* HOW I SEE HER */
+.see{background:var(--pink);padding-top:clamp(90px,11vw,150px)}
+.see .q{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(34px,5vw,72px);line-height:1.05;max-width:16em;text-wrap:balance}
+.see .q mark{background:none;color:var(--cobalt)}
+.see .by{margin-top:18px;font-size:14px;max-width:52ch}
+.traits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:clamp(36px,5vw,60px)}
+@media (max-width:980px){.traits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.traits{grid-template-columns:1fr}}
+.trait{background:var(--white);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:10px;transition:transform .35s cubic-bezier(.2,1.4,.4,1)}
+.trait:nth-child(odd){transform:rotate(-1.2deg)}
+.trait:nth-child(even){transform:rotate(1.2deg)}
+.trait:hover{transform:rotate(0) translateY(-6px)}
+.trait .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:20px}
+.trait h3{font-size:18px;line-height:1.2;font-weight:600}
+.trait p{font-size:14.5px;color:#4A4356}
+
+/* CHAOS → ORDER */
+.chaos{background:var(--paper)}
+.head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,48px)}
+.head h2{font-size:clamp(34px,5vw,64px);font-weight:800;line-height:.98}
+.head h2 .it{font-weight:600;font-size:1.08em}
+.head p{max-width:40ch;font-size:16.5px}
+.tidy{font:inherit;font-weight:600;border:0;background:var(--ink);color:var(--white);padding:14px 22px;border-radius:99px;cursor:pointer;font-size:15px;display:inline-flex;gap:10px;align-items:center}
+.tidy:hover{background:var(--cobalt)}
+.flips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+@media (max-width:980px){.flips{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.flips{grid-template-columns:1fr}}
+.flip{perspective:1200px;height:300px;cursor:pointer;border:0;background:none;padding:0;font:inherit;text-align:left;color:inherit}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.3,1.3,.5,1);transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;border-radius:22px;padding:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.flip .f{background:#FFFDF5;background-image:repeating-linear-gradient(transparent 0 31px,#D9E2FF 31px 32px);border:1px solid #E7E1D2;font-family:var(--hand);font-size:23px;line-height:32px;color:#2F2A3A}
+.flip .f .lbl{font-family:var(--body);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#8B8597;line-height:1.3}
+.flip .f s{text-decoration-color:var(--coral);text-decoration-thickness:2px}
+.flip .f .red{color:var(--coral)}
+.flip .f .tap{margin-top:auto;font-family:var(--body);font-size:13px;font-weight:600;color:var(--cobalt);line-height:1.3}
+.flip .b{transform:rotateY(180deg);color:var(--ink);background:var(--c)}
+.flip .b .lbl{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.flip .b .big{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.05;margin-top:auto}
+.flip .b p{font-size:15px}
+.flip .b .ok{display:inline-flex;align-self:flex-start;background:var(--ink);color:var(--white);font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px}
+
+/* WORK */
+.work{background:var(--ink);color:var(--white);overflow:hidden}
+.work .head p{color:rgba(255,255,255,.75)}
+.work .head h2 .it{color:var(--lime)}
+.rail{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px clamp(16px,4vw,44px) 26px;margin-inline:calc(-1 * clamp(16px,4vw,44px));scrollbar-width:thin;scrollbar-color:var(--lilac) transparent}
+.card{scroll-snap-align:start;flex:0 0 min(440px,86vw);border-radius:30px;padding:28px;color:var(--ink);background:var(--c);display:flex;flex-direction:column;gap:14px;min-height:560px;position:relative;overflow:hidden}
+.card .tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.75}
+.card h3{font-size:clamp(28px,3vw,36px);font-weight:800;line-height:1}
+.card .one{font-family:var(--serif);font-style:italic;font-size:23px;line-height:1.2}
+.card ul{margin:0;padding:0;list-style:none;display:grid;gap:7px;font-size:14.5px}
+.card li{padding-left:20px;position:relative}
+.card li::before{content:"";position:absolute;left:0;top:.5em;width:9px;height:9px;border-radius:50%;background:var(--ink)}
+.card .stage{margin-top:auto;display:flex;justify-content:center;align-items:flex-end;min-height:190px}
+.card.dark{color:var(--white)}
+.card.dark li::before{background:var(--white)}
+.rail-hint{font-family:var(--hand);font-size:24px;color:var(--sun);margin-top:6px}
+
+/* mini phone mocks */
+.ph{width:200px;max-width:100%;aspect-ratio:9/12;border-radius:26px 26px 0 0;padding:8px 8px 0;background:#0E0F11;margin-bottom:-28px;box-shadow:0 -10px 40px -10px rgba(0,0,0,.35);transform:rotate(-3deg)}
+.ph .s{height:100%;border-radius:19px 19px 0 0;overflow:hidden;font-size:10px;line-height:1.35;padding:14px 11px}
+.s-kasa{background:#F6F5F1;color:#1E2A38}
+.s-kasa .t{font-family:Georgia,serif;font-weight:600;font-size:14px}
+.s-kasa .m{font-family:var(--mono);font-weight:700;font-size:20px;margin:8px 0 6px}
+.s-kasa .r{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #E1DED6}
+.pill{padding:1px 7px;border-radius:99px;font-size:8.5px;font-weight:600}
+.ok2{background:#E2F2E8;color:#2F8A57}.no2{background:#F8E3DA;color:#BD4318}
+.s-ob{background:linear-gradient(168deg,#8c948e,#6d746f);color:#F6F7F6}
+.s-ob .c{background:rgba(38,40,42,.55);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:9px;margin-bottom:7px}
+.s-ob .v{font-family:var(--mono);font-weight:700;font-size:22px;color:#A8FF1A}
+.s-ob .r{display:flex;justify-content:space-between;padding:2px 0}
+.s-zp{background:linear-gradient(180deg,#123426,#0B1F17);color:#EAF6EF}
+.s-zp .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:8px}
+.s-zp .cal i{aspect-ratio:1;border-radius:4px;background:rgba(255,255,255,.08)}
+.s-zp .cal .o{background:rgba(123,227,158,.6)}.s-zp .cal .g{background:#FF6E5A}.s-zp .cal .b{background:rgba(120,170,255,.55)}
+.s-zp .u{display:flex;gap:3px;flex-wrap:wrap;margin-top:7px}
+.s-zp .u span{font-size:7.5px;padding:2px 5px;border-radius:99px;border:1px solid rgba(255,255,255,.2)}
+.s-zp .u span:first-child{background:#7BE39E;color:#06170F;border-color:transparent}
+
+.plate{width:230px;max-width:100%;aspect-ratio:2/1;border-radius:18px;background:linear-gradient(135deg,#E9ECEF,#B9C0C7 45%,#F4F6F8 60%,#A7AFB7);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 18px 30px -12px rgba(0,0,0,.35);display:grid;place-items:center;position:relative;transform:rotate(-4deg);margin-bottom:10px}
+.plate::before,.plate::after{content:"";position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:#5c636b;box-shadow:inset 0 2px 2px rgba(0,0,0,.5);translate:0 -50%}
+.plate::before{left:14px}.plate::after{right:14px}
+.plate span{font-family:var(--display);font-weight:800;font-size:22px;color:#3d434a;letter-spacing:.02em}
+.plate small{position:absolute;bottom:-26px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:12px}
+
+.pages{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.pages a,.pages div{background:rgba(255,255,255,.55);border-radius:14px;padding:10px 12px;font-size:13px;text-decoration:none;display:flex;flex-direction:column;gap:2px}
+.pages b{font-size:13.5px}
+.pages a b::after{content:" ↗"}
+
+.widget{width:230px;max-width:100%;border-radius:22px;padding:14px;background:rgba(46,125,91,.92);color:#fff;box-shadow:0 18px 34px -14px rgba(0,0,0,.4);transform:rotate(3deg);display:grid;gap:6px;margin-bottom:6px}
+.widget .wh{font-weight:700;font-size:14px;margin-bottom:2px}
+.widget .wr{display:flex;gap:8px;font-size:13.5px;background:rgba(255,255,255,.12);border-radius:10px;padding:6px 9px}
+.widget .wr.done{opacity:.6;text-decoration:line-through}
+.card[style*="--white"]{border:2px solid rgba(255,255,255,.2)}
+
+/* UNITS */
+.units{background:var(--mint)}
+.orbit-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center}
+@media (max-width:900px){.orbit-wrap{grid-template-columns:1fr}}
+.orbit{position:relative;width:min(100%,460px);aspect-ratio:1;margin-inline:auto}
+.orbit .ring{position:absolute;inset:12%;border:2px dashed rgba(23,18,31,.35);border-radius:50%;animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orbit .core{position:absolute;inset:34%;border-radius:50%;background:var(--ink);color:var(--white);display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:clamp(13px,1.6vw,17px);line-height:1.15;padding:10px}
+.sat{position:absolute;width:28%;aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:clamp(12px,1.4vw,14.5px);color:var(--ink);display:grid;place-items:center;text-align:center;padding:8px;transition:transform .3s cubic-bezier(.2,1.5,.4,1),box-shadow .3s;box-shadow:0 10px 24px -10px rgba(23,18,31,.45)}
+.sat:hover,.sat.on{transform:scale(1.12)}
+.sat.on{box-shadow:0 0 0 4px var(--ink),0 14px 30px -10px rgba(23,18,31,.5)}
+.sat small{display:block;font-weight:500;font-size:.85em;opacity:.75}
+.s1{left:36%;top:-2%;background:var(--sun)}
+.s2{right:-2%;top:36%;background:var(--pink)}
+.s3{left:36%;bottom:-2%;background:var(--lilac)}
+.s4{left:-2%;top:36%;background:var(--white)}
+.unit-info{background:var(--white);border-radius:24px;padding:24px;margin-top:22px;min-height:150px}
+.unit-info h3{font-size:20px;font-weight:700}
+.unit-info p{margin-top:8px;color:#4A4356}
+.units .head h2 .it{color:var(--cobalt)}
+
+/* STEPS */
+.steps{background:var(--sun)}
+.stepgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:3px solid var(--ink)}
+@media (max-width:900px){.stepgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.stepgrid{grid-template-columns:1fr}}
+.stepgrid > div{padding:24px 22px 8px 0;display:flex;flex-direction:column;gap:10px}
+.stepgrid .n{font-family:var(--display);font-weight:900;font-size:clamp(60px,7vw,96px);line-height:.9;color:var(--coral);-webkit-text-stroke:2px var(--ink)}
+.stepgrid h3{font-size:20px;font-weight:700}
+.stepgrid p{font-size:15px}
+.weeks{margin-top:clamp(40px,6vw,64px);display:flex;flex-wrap:wrap;gap:10px}
+.weeks span{background:var(--ink);color:var(--white);border-radius:99px;padding:8px 14px;font-size:13.5px}
+.weeks span b{color:var(--sun);font-family:var(--mono);font-weight:700;margin-right:6px}
+
+/* FOR YOU */
+.you{background:var(--coral);color:var(--ink)}
+.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.offers{grid-template-columns:1fr}}
+.offer{background:var(--white);border-radius:28px;padding:26px;display:flex;flex-direction:column;gap:10px}
+.offer.main{background:var(--ink);color:var(--white)}
+.offer .em{font-size:34px;font-family:var(--display);font-weight:900;line-height:1}
+.offer h3{font-size:20px;font-weight:700}
+.offer p{font-size:15px;opacity:.85}
+.offer ul{margin:4px 0 0;padding-left:18px;font-size:14.5px;display:grid;gap:4px;opacity:.85}
+.final{margin-top:clamp(56px,8vw,110px);display:grid;gap:18px}
+.final h2{font-weight:900;font-size:clamp(40px,7.5vw,108px);line-height:.92;letter-spacing:-.04em}
+.final h2 .it{font-weight:600;color:var(--white);font-size:1.05em}
+.final p{font-size:18px;max-width:46ch}
+.final .sig{font-family:var(--hand);font-size:44px;color:var(--white);transform:rotate(-4deg);display:inline-block}
+
+footer{background:var(--ink);color:rgba(255,255,255,.7);padding-block:28px;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap"><a class="logo" href="#top">Тетяна</a><a class="go" href="#work">Мої застосунки</a></div></div>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <span class="hi">Привіт, я</span>
+      <h1 aria-label="Тетяна"><span>Т</span><span>е</span><span>т</span><span>я</span><span>н</span><span>а<i class="dot">.</i></span></h1>
+      <p class="sub it">Беру хаос із таблиць, зошитів і чатів і роблю з нього <b>щось зручне й гарне</b></p>
+      <p class="lead">Застосунки, які самі рахують, нагадують і не дають нічому загубитися. Для класу, для майстерні, для йоги і для себе.</p>
+    </div>
+    <div class="board" id="board" aria-label="Наліпки з хаосом, їх можна перетягувати">
+      <span class="st hand" style="left:4%;top:4%;background:var(--sun);rotate:-6deg">хто здав на екскурсію?</span>
+      <span class="st big round" style="left:56%;top:8%;background:var(--lime);rotate:5deg;animation-delay:-1s">6 510 ₴</span>
+      <span class="st" style="left:14%;top:26%;background:var(--pink);rotate:3deg;animation-delay:-2s">24,86 г золота</span>
+      <span class="st hand" style="left:52%;top:30%;background:var(--white);rotate:-4deg;animation-delay:-3s">Пн чи Пт?</span>
+      <span class="st" style="left:2%;top:48%;background:var(--coral);rotate:-3deg;animation-delay:-1.5s">четвер: на зміні нікого</span>
+      <span class="st round" style="left:58%;top:52%;background:var(--mint);rotate:6deg;animation-delay:-4s">+ новий учень</span>
+      <span class="st big" style="left:22%;top:68%;background:var(--lilac);rotate:-5deg;animation-delay:-2.5s">угар 3%</span>
+      <span class="st hand" style="left:56%;top:72%;background:var(--sun);rotate:3deg;animation-delay:-3.5s">переплата 200 ₴ ??</span>
+      <span class="hint">потягни мене ↖</span>
+    </div>
+  </div>
+  <div class="ribbon" aria-hidden="true"><div class="track">
+    <span>простіше</span><span>зручніше</span><span>красивіше</span><span>без табличок</span><span>з любов'ю до деталей</span>
+    <span>простіше</span><span>зручніше</span><span>красивіше</span><span>без табличок</span><span>з любов'ю до деталей</span>
+  </div></div>
+</section>
+
+<!-- HOW I'M SEEN -->
+<section class="see slab" id="see">
+  <div class="wrap">
+    <p class="kicker">Погляд збоку</p>
+    <p class="q" style="margin-top:16px">Тетяна не програміст. Вона <mark>перекладачка</mark> з мови «у нас так заведено» на мову, яку розуміє телефон.</p>
+    <p class="by">Так мене описав Claude, штучний інтелект, разом з яким я будую всі ці застосунки. Після шести тижнів спільної роботи він помітив ось що.</p>
+    <div class="traits">
+      <div class="trait"><span class="ic" style="background:var(--cobalt);color:var(--white)">∑</span><h3>Бачить систему в купі папірців</h3><p>Перевіряє кожну формулу з Excel, поки застосунок не порахує до гривні так само.</p></div>
+      <div class="trait"><span class="ic" style="background:var(--sun)">✦</span><h3>Вимагає краси навіть від бухгалтерії</h3><p>У кожного застосунку свій характер: спокійна синя каса, темний облік з лаймовим, зелене скло для зарплати.</p></div>
+      <div class="trait"><span class="ic" style="background:var(--mint)">♡</span><h3>Думає про людей за цифрами</h3><p>Щоб колега не втратив дані, щоб нагадування батькам звучало по-людськи, щоб ніхто не переписав чужий місяць.</p></div>
+      <div class="trait"><span class="ic" style="background:var(--coral)">↻</span><h3>Не зупиняється на першій версії</h3><p>Каса класу за два тижні пройшла п'ять великих оновлень. Для йоги є два різні дизайни.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAOS → ORDER -->
+<section class="chaos slab" id="chaos">
+  <div class="wrap">
+    <div class="head">
+      <h2>Було так. <span class="it">А стало так.</span></h2>
+      <div style="display:grid;gap:14px;justify-items:start">
+        <p>Кожен застосунок почався з конкретного безладу. Натисніть на нотатку.</p>
+        <button class="tidy" id="tidyAll" type="button">✳ Навести лад усюди</button>
+      </div>
+    </div>
+    <div class="flips">
+      <button class="flip" type="button" style="--c:var(--lilac)" aria-label="Каса класу: було і стало">
+        <div class="in">
+          <div class="f"><span class="lbl">Каса класу · було</span><span>Петренко здав? <s>200</s> 250?</span><span>конверт: <span class="red">11 900</span></span><span>а має бути 12 480 ??</span><span class="tap">натисни →</span></div>
+          <div class="b"><span class="lbl">Стало</span><p>Звірка сама знаходить розбіжність і показує, кого не позначили.</p><span class="big">−580 ₴<br>3 учні</span><span class="ok">знайдено за секунду</span></div>
+        </div>
+      </button>
+      <button class="flip" type="button" style="--c:var(--lime)" aria-label="Облік майстерні: було і стало">
+        <div class="in">
+          <div class="f"><span class="lbl">Майстерня · було</span><span>аркуш 3, =C14*0,3+…</span><span>хто зламав формулу?!</span><span>золото <span class="red">не сходиться</span></span><span class="tap">натисни →</span></div>
+          <div class="b"><span class="lbl">Стало</span><p>Ремонти, продажі, метал з угаром. Залишок сам переходить у новий місяць.</p><span class="big">6 510 ₴<br>до виплати</span><span class="ok">як в Excel, до гривні</span></div>
+        </div>
+      </button>
+      <button class="flip" type="button" style="--c:var(--mint)" aria-label="Зарплата команди: було і стало">
+        <div class="in">
+          <div class="f"><span class="lbl">Команда · було</span><span>чат: «хто в четвер?»</span><span>47 повідомлень…</span><span class="red">на точці нікого</span><span class="tap">натисни →</span></div>
+          <div class="b"><span class="lbl">Стало</span><p>Календар змін підсвічує порожній день червоним ще до того, як він настане.</p><span class="big">11 вересня:<br>увага</span><span class="ok">видно заздалегідь</span></div>
+        </div>
+      </button>
+      <button class="flip" type="button" style="--c:var(--pink)" aria-label="Йога: було і стало">
+        <div class="in">
+          <div class="f"><span class="lbl">Йога · було</span><span>«а можна записатись?»</span><span>в особисті × 30</span><span class="red">а хто оплатив?</span><span class="tap">натисни →</span></div>
+          <div class="b"><span class="lbl">Стало</span><p>Сторінка із записом і оплатою, а після неї посилання на групу приходить саме.</p><span class="big">Заявка →<br>група</span><span class="ok">без переписки</span></div>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work slab" id="work">
+  <div class="wrap">
+    <div class="head">
+      <h2>Що вже <span class="it">працює</span></h2>
+      <p>Шість робіт: для школи, ювелірної майстерні, йоги і для себе. Гортайте вбік.</p>
+    </div>
+    <div class="rail" tabindex="0" aria-label="Роботи">
+      <article class="card" style="--c:var(--lilac)">
+        <span class="tag">Школа · батьківський комітет</span>
+        <h3>Каса класу</h3>
+        <p class="one">Хто скільки здав, на що витрачено і скільки лишилося.</p>
+        <ul><li>збори на кожного або порівну</li><li>переплати, повернення, звірка конверта</li><li>нагадування батькам одним текстом</li></ul>
+        <div class="stage"><div class="ph"><div class="s s-kasa">
+          <div class="t">Каса класу</div><div class="m">12 480 ₴</div>
+          <div class="r"><span>Подарунок</span><span class="pill ok2">зібрано</span></div>
+          <div class="r"><span>Екскурсія</span><span class="pill no2">8 боргів</span></div>
+          <div class="r"><span>Канцтовари</span><span>−1 250</span></div>
+        </div></div></div>
+      </article>
+      <article class="card" style="--c:var(--lime)">
+        <span class="tag">Ювелірна майстерня</span>
+        <h3>Облік майстерні</h3>
+        <p class="one">Місячний розрахунок з майстром-ювеліром.</p>
+        <ul><li>метал у грамах з угаром</li><li>ставки заморожені для кожного місяця</li><li>працює без інтернету, ставиться як застосунок</li></ul>
+        <div class="stage"><div class="ph"><div class="s s-ob">
+          <div class="c"><div style="font-size:8.5px;opacity:.75">ДО ВИПЛАТИ</div><div class="v">6 510 ₴</div></div>
+          <div class="c"><div class="r"><span>Ремонти</span><span>23 015</span></div><div class="r"><span>Метал</span><span>14 000</span></div><div class="r"><span>Аванси</span><span style="color:#FF7A70">−33 000</span></div></div>
+        </div></div></div>
+      </article>
+      <article class="card dark" style="--c:#0F5C40">
+        <span class="tag">Команда · 4 підрозділи</span>
+        <h3>Зарплата команди</h3>
+        <p class="one">Графік і зарплата, кожному за своєю схемою.</p>
+        <ul><li>офіс, віддалені, дві філії</li><li>розрахунковий лист у PDF</li><li>кілька людей редагують одночасно</li></ul>
+        <div class="stage"><div class="ph"><div class="s s-zp">
+          <div style="font-weight:700;font-size:11px">Вересень</div>
+          <div class="u"><span>Усі</span><span>Офіс</span><span>Віддалено</span><span>Філії</span></div>
+          <div class="cal"><i class="o"></i><i class="o"></i><i class="b"></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="b"></i><i class="o"></i><i class="g"></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="b"></i><i class="o"></i><i class="o"></i><i></i><i></i></div>
+        </div></div></div>
+      </article>
+      <article class="card" style="--c:var(--sun)">
+        <span class="tag">Ювелірна майстерня</span>
+        <h3>Калькулятор табличок</h3>
+        <p class="one">Скільки коштує металева табличка, ще до того, як її зробили.</p>
+        <ul><li>розмір, матеріал, кути, згин, отвори</li><li>журнал замовлень з оплатами</li><li>пересилання в Telegram одним натиском</li></ul>
+        <div class="stage" style="padding-bottom:28px"><div class="plate"><span>КАБІНЕТ 12</span><small>200 × 100 мм · R5</small></div></div>
+      </article>
+      <article class="card" style="--c:var(--coral)">
+        <span class="tag">Йога · у процесі</span>
+        <h3>Сайт для йоги</h3>
+        <p class="one">Від першого кліку до місця в групі.</p>
+        <ul><li>запис на заняття або одразу оплата</li><li>сторінка подяки з посиланням на групу</li><li>сторінки поступово збираються в один сайт</li></ul>
+        <div class="stage"><div class="pages">
+          <div><b>Головна</b><span>у роботі</span></div>
+          <div><b>Кундаліні онлайн</b><span>Пн або Пт</span></div>
+          <a href="https://alena-kerala-landing.vercel.app/" target="_blank" rel="noopener"><b>Тур до Керали</b><span>опубліковано</span></a>
+          <div><b>Панчакарма</b><span>чернетка</span></div>
+        </div></div>
+      </article>
+      <article class="card" style="--c:var(--white)">
+        <span class="tag">Для себе · тільки Android</span>
+        <h3>Нотатник і справи</h3>
+        <p class="one">Нотатки і списки справ прямо на головному екрані.</p>
+        <ul><li>жирний, курсив, чек-листи й таблиці</li><li>справи з власним емодзі замість пункту</li><li>віджети: свій колір, прозорість, розмір</li></ul>
+        <div class="stage"><div class="widget">
+          <div class="wh">Сьогодні</div>
+          <div class="wr"><span>🌿</span>полити квіти</div>
+          <div class="wr done"><span>✅</span>звірити касу</div>
+          <div class="wr"><span>💍</span>забрати замовлення</div>
+          <div class="wr"><span>🧘</span>заняття о 19:00</div>
+        </div></div>
+      </article>
+    </div>
+    <p class="rail-hint">← гортайте →</p>
+  </div>
+</section>
+
+<!-- UNITS -->
+<section class="units slab" id="units">
+  <div class="wrap">
+    <div class="head">
+      <h2>Кілька підрозділів, <span class="it">один застосунок</span></h2>
+      <p>Так влаштована зарплата команди з дев'яти людей. Натисніть на підрозділ.</p>
+    </div>
+    <div class="orbit-wrap">
+      <div class="orbit">
+        <div class="ring"></div>
+        <div class="core">Один<br>розрахунок</div>
+        <button class="sat s1 on" type="button" data-u="0">Офіс<small>3 людини</small></button>
+        <button class="sat s2" type="button" data-u="1">Віддалено<small>3 людини</small></button>
+        <button class="sat s3" type="button" data-u="2">Філія 1<small>1 людина</small></button>
+        <button class="sat s4" type="button" data-u="3">Філія 2<small>2 людини</small></button>
+      </div>
+      <div>
+        <p style="font-size:18px;max-width:42ch">У кожного підрозділу свої правила оплати й свій графік. Керівник бачить і кожен підрозділ окремо, і всю команду разом. Кожен працівник заходить за своїм PIN-кодом.</p>
+        <div class="unit-info" id="unitInfo" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps slab" id="how">
+  <div class="wrap">
+    <div class="head">
+      <h2>Як я <span class="it">працюю</span></h2>
+      <p>Найдовший крок перший: зрозуміти, як усе влаштовано насправді.</p>
+    </div>
+    <div class="stepgrid">
+      <div><span class="n">1</span><h3>Слухаю</h3><p>Дивлюся на Excel, зошит чи чат і розпитую людей, де незручно і що губиться.</p></div>
+      <div><span class="n">2</span><h3>Переношу логіку</h3><p>Формули, відсотки й винятки стають правилами застосунку, без зайвих спрощень.</p></div>
+      <div><span class="n">3</span><h3>Перевіряю</h3><p>Проганяю справжній місяць і порівнюю з тим, як рахували раніше, до гривні.</p></div>
+      <div><span class="n">4</span><h3>Допрацьовую</h3><p>Ставлю на телефон, дивлюся, як ним користуються, і покращую далі.</p></div>
+    </div>
+    <div class="weeks">
+      <span><b>26.08</b>каса класу і облік майстерні</span>
+      <span><b>27.08</b>зарплата команди</span>
+      <span><b>10.09</b>звірка і нагадування</span>
+      <span><b>13.09</b>профілі й заморожені ставки</span>
+      <span><b>22.09</b>сайт для йоги</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="you slab" id="you">
+  <div class="wrap">
+    <div class="head">
+      <h2>Що далі <span class="it" style="color:var(--white)">у роботі</span></h2>
+      <p>Усе це живе і постійно змінюється. Ось над чим я працюю зараз.</p>
+    </div>
+    <div class="offers">
+      <div class="offer main"><span class="em" style="color:var(--mint)">◎</span><h3>Зарплата команди</h3><p>Довідник артикулів і автоматичне підтягування замовлень з CRM, щоб нічого не вносити вручну.</p></div>
+      <div class="offer"><span class="em" style="color:var(--coral)">✳</span><h3>Сайт для йоги</h3><p>Усі сторінки під однією адресою, нові напрями: заняття наживо, консультації, медитації.</p></div>
+      <div class="offer"><span class="em" style="color:var(--cobalt)">↓</span><h3>Облік майстерні</h3><p>Окремий застосунок для Android, який ставиться як звичайна програма.</p></div>
+    </div>
+    <div class="final">
+      <h2>Робити простіше,<br><span class="it">зручніше й красивіше</span></h2>
+      <p>Для мене це не про код. Це про те, щоб людям навколо було легше: батькам, майстрам, команді і мені самій.</p>
+      <span class="sig">Тетяна</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>Тетяна · 2026</span><span>Простіше. Зручніше. Красивіше.</span></div></footer>
+
+<script>
+(function(){
+  // draggable chaos stickers
+  var board=document.getElementById('board');
+  board.querySelectorAll('.st').forEach(function(el){
+    var sx,sy,ox,oy,z=10;
+    el.addEventListener('pointerdown',function(e){
+      el.setPointerCapture(e.pointerId);el.classList.add('drag');
+      sx=e.clientX;sy=e.clientY;ox=el.offsetLeft;oy=el.offsetTop;
+      el.style.zIndex=++board._z||(board._z=10);
+    });
+    el.addEventListener('pointermove',function(e){
+      if(!el.classList.contains('drag'))return;
+      var x=ox+e.clientX-sx,y=oy+e.clientY-sy;
+      x=Math.max(-20,Math.min(board.clientWidth-el.offsetWidth+20,x));
+      y=Math.max(-10,Math.min(board.clientHeight-el.offsetHeight+10,y));
+      el.style.left=x+'px';el.style.top=y+'px';
+    });
+    ['pointerup','pointercancel'].forEach(function(t){el.addEventListener(t,function(){el.classList.remove('drag')})});
+  });
+
+  // flip cards
+  var flips=[].slice.call(document.querySelectorAll('.flip'));
+  flips.forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')})});
+  var tidy=document.getElementById('tidyAll'),tidied=false;
+  tidy.addEventListener('click',function(){
+    tidied=!tidied;
+    flips.forEach(function(f,i){setTimeout(function(){f.classList.toggle('on',tidied)},i*140)});
+    tidy.textContent=tidied?'↺ Повернути хаос':'✳ Навести лад усюди';
+  });
+
+  // units orbit
+  var units=[
+    {t:'Офіс',d:'Ставка за відпрацьовані дні плюс відсоток з офлайн- і онлайн-продажів. Хтось частину тижня працює віддалено, і це видно в графіку окремим кольором.'},
+    {t:'Віддалено',d:'Відсоток з онлайн-продажів за джерелами: соцмережі, маркетплейси, опт. У кожної людини своя схема.'},
+    {t:'Філія 1',d:'Свій графік змін і своя точка, яку треба покривати щодня. Порожні дні підсвічуються червоним.'},
+    {t:'Філія 2',d:'Денна ставка без відсотків. Застосунок рахує дні й аванси і видає розрахунковий лист.'}
+  ];
+  var info=document.getElementById('unitInfo'),sats=document.querySelectorAll('.sat');
+  function show(i){
+    sats.forEach(function(s){s.classList.toggle('on',+s.dataset.u===i)});
+    info.innerHTML='<h3>'+units[i].t+'</h3><p>'+units[i].d+'</p>';
+  }
+  sats.forEach(function(s){s.addEventListener('click',function(){show(+s.dataset.u)})});
+  show(0);
+})();
+</script>
+</body>
+</html>
