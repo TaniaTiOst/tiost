@@ -303,6 +303,9 @@ figure{margin:0}
 .seen{background:rgba(0,0,0,.28);border:1px solid rgba(241,230,214,.12);color:var(--white);border-radius:28px;padding:26px;display:grid;gap:14px}
 .seen .q{font-family:var(--serif);font-style:italic;font-size:26px;line-height:1.2}
 .seen .q mark{background:none;color:var(--lime)}
+.seen .own{font-size:16px;line-height:1.6;opacity:.9}
+.seen .claude{margin-top:6px;padding-top:14px;border-top:1px solid rgba(241,230,214,.15);font-family:var(--serif);font-style:italic;font-size:18px;opacity:.8}
+.seen .claude small{display:block;font-family:var(--body);font-style:normal;font-size:12.5px;margin-top:4px;opacity:.8}
 .seen .by{font-size:13px;color:rgba(255,255,255,.65)}
 .seen ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
 .seen li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;font-size:14.5px}
@@ -322,6 +325,10 @@ figure{margin:0}
 .nowlist b .it{font-weight:500}
 .nowlist em{font-style:normal;font-family:var(--mono);font-size:12.5px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--c);white-space:nowrap;justify-self:start}
 .sign{margin-top:clamp(56px,8vw,96px);display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.fin{max-width:900px}
+.sign .fin h2{font-size:clamp(32px,4.6vw,64px)!important;line-height:1.08}
+.three-lines{margin:26px 0 0;padding:0;list-style:none;display:grid;gap:10px;font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,28px);opacity:.85}
+.three-lines li::before{content:"— ";color:var(--sun)}
 .sign h2{font-weight:900;font-size:clamp(40px,7vw,100px);line-height:.92;letter-spacing:-.04em}
 .sign h2 .it{color:var(--pink);font-weight:500}
 .sign .sig{font-family:var(--hand);font-size:44px;color:var(--sun);transform:rotate(-4deg)}
@@ -607,15 +614,10 @@ fades.</em></pre>
       <div>
       <figure class="about-ph"><img class="ph-img" src="img/stool.jpg" alt="Ti Ost, чорно-біле фото на стільці" loading="lazy"></figure>
       <div class="seen">
-        <span class="kicker" style="color:var(--sun)"><span class="u">Погляд збоку</span><span class="e">A view from the side</span></span>
-        <p class="q"><span class="u">Тетяна не програміст. Вона <mark>перекладачка</mark> з мови «у нас так заведено» на мову, яку розуміє телефон.</span><span class="e">Tetiana isn't a programmer. She's a <mark>translator</mark> from "this is how we've always done it" into a language a phone understands.</span></p>
-        <p class="by"><span class="u">Так мене описав Claude, AI, з яким я будую свої застосунки.</span><span class="e">That's how Claude, the AI I build my apps with, described me.</span></p>
-        <ul>
-          <li><span class="ic" style="background:var(--cobalt);color:var(--white)">∑</span><span><span class="u">Бачить систему в купі папірців</span><span class="e">Sees a system in a pile of paper</span></span></li>
-          <li><span class="ic" style="background:var(--sun)">✦</span><span><span class="u">Вимагає краси навіть від бухгалтерії</span><span class="e">Demands beauty even from bookkeeping</span></span></li>
-          <li><span class="ic" style="background:var(--mint)">♡</span><span><span class="u">Думає про людей за цифрами</span><span class="e">Thinks of the people behind the numbers</span></span></li>
-          <li><span class="ic" style="background:var(--coral)">↻</span><span><span class="u">Не зупиняється на першій версії</span><span class="e">Never stops at version one</span></span></li>
-        </ul>
+        <span class="kicker" style="color:var(--lime)"><span class="u">Погляд збоку</span><span class="e">A view from the side</span></span>
+        <p class="q"><span class="u">Я не програміст. Я людина, яка спочатку розбирається, як працює процес, а вже потім думає, що з ним можна зробити.</span><span class="e">I'm not a programmer. I'm someone who first figures out how a process really works, and only then thinks about what can be done with it.</span></p>
+        <p class="own"><span class="u">Код у моїх проєктах лише інструмент. Мені цікавіше інше: знайти логіку, прибрати зайве і зробити так, щоб людина просто натиснула кнопку, і все запрацювало.</span><span class="e">Code in my projects is just a tool. What interests me more is finding the logic, removing the excess, and making it so a person can simply press a button and everything works.</span></p>
+        <p class="claude"><span class="u">«Перекладачка з мови „у нас так заведено“ на мову, яку розуміє телефон.»</span><span class="e">“A translator from ‘this is how we've always done it’ into a language a phone understands.”</span><small><span class="u">— Claude, AI, з яким я будую застосунки</span><span class="e">— Claude, the AI I build my apps with</span></small></p>
       </div>
       </div>
     </div>
@@ -633,9 +635,17 @@ fades.</em></pre>
       <div style="--c:var(--mint)"><span class="w">Build</span><b><span class="u">Зарплата команди: довідник артикулів і зв'язок з CRM</span><span class="e">Team payroll: product catalogue and CRM sync</span></b><em>next</em></div>
       <div style="--c:var(--coral)"><span class="w">Build</span><b><span class="u">Сайт для йоги збирається під одну адресу</span><span class="e">The yoga website comes together under one address</span></b><em>in progress</em></div>
       <div style="--c:var(--lime)"><span class="w">Build</span><b><span class="u">Облік майстерні як застосунок для Android</span><span class="e">Workshop Ledger as an Android app</span></b><em>next</em></div>
+      <div style="--c:var(--feather)"><span class="w">Always</span><b><span class="u">Вигадую наступну штуку, яку, мабуть, <span class="it">не планувала робити</span></span><span class="e">Dreaming up the next thing I probably <span class="it">didn't plan to make</span></span></b><em>soon</em></div>
     </div>
     <div class="sign">
-      <h2><span class="u">Створюю.<br><span class="it">І далі буде.</span></span><span class="e">I make things.<br><span class="it">More to come.</span></span></h2>
+      <div class="fin">
+        <h2><span class="u">Я люблю створювати речі, які залишають після себе <span class="it">щось більше, ніж просто функцію.</span></span><span class="e">I love making things that leave behind <span class="it">something more than a function.</span></span></h2>
+        <ul class="three-lines">
+          <li><span class="u">Застосунок, який полегшує комусь роботу.</span><span class="e">An app that makes someone's work easier.</span></li>
+          <li><span class="u">Текст, у якому хтось раптом впізнає себе.</span><span class="e">A text in which someone suddenly recognises themselves.</span></li>
+          <li><span class="u">Книгу, до якої захочеться повернутися.</span><span class="e">A book you'll want to come back to.</span></li>
+        </ul>
+      </div>
       <span class="sig">Ti Ost</span>
     </div>
   </div>
