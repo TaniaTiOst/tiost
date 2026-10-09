@@ -161,7 +161,7 @@ html.anim .typing.in{display:flex}
 @keyframes blink{50%{opacity:0}}
 .yours .send{margin-left:auto;width:34px;height:34px;border-radius:50%;background:var(--ember);color:var(--espresso);display:grid;place-items:center;font:600 18px/1 var(--sans)}
 html.anim .yours:not(.in){opacity:0;translate:0 14px}
-html.anim .btns:not(.in){opacity:0;translate:0 20px}
+
 .mag{transition:transform .25s ease-out,background .3s}
 #sideB .disc{animation-duration:var(--spd,3s)}
 @media (prefers-reduced-motion:reduce){.notif.in,.seal.in,.typing i,.caret{animation:none}[data-tilt]{transform:none}}
@@ -210,7 +210,12 @@ html.anim .talk p:not(.in){opacity:0;translate:30px 0}
 /* sparks stay inside the card on phones */
 @media (max-width:640px){.spark{font-size:18px}}
 /* Contact */
-.flipper{width:150px;height:150px;perspective:900px}
+.flipper{width:150px;height:150px;perspective:900px;animation:bob 6s ease-in-out infinite}
+.end{position:relative;overflow:hidden}
+.end.roam .flipper{position:absolute;left:0;top:0;margin:0;animation:none;z-index:0;will-change:transform}
+.end.roam .turn{margin-top:0}
+.end.roam{padding-top:12vh}
+.end>*:not(.flipper){position:relative;z-index:1}
 .fl-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 1.4s cubic-bezier(.5,0,.2,1)}
 .flipper.go .fl-in{transform:rotateY(180deg)}
 .flipper .mini{position:absolute;inset:0;backface-visibility:hidden}
@@ -263,7 +268,7 @@ html.anim .aside:not(.in){opacity:0}
 /* Contact input */
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 form.yours{padding:6px 6px 6px 18px;align-items:flex-end}
-form.yours textarea{flex:1;min-width:0;background:transparent;border:0;outline:0;resize:none;color:var(--oat);font:400 16px/1.4 var(--sans);padding:9px 0;max-height:140px}
+form.yours textarea{flex:1;min-width:0;background:transparent;border:0;outline:0;resize:none;overflow:hidden;scrollbar-width:none;-webkit-appearance:none;appearance:none;color:var(--oat);font:400 16px/1.4 var(--sans);padding:9px 0;max-height:140px}
 form.yours textarea::placeholder{color:var(--dust)}
 form.yours:focus-within{border-color:var(--crust)}
 form.yours .send{flex:none;width:38px;height:38px;border-radius:50%;background:var(--ember);color:var(--espresso);display:grid;place-items:center;font:600 18px/1 var(--sans);text-decoration:none;transition:transform .2s,background .3s}
@@ -1144,6 +1149,24 @@ a:focus-visible{outline:2px solid var(--crust);outline-offset:4px}
       b.style.setProperty('--bi',cl((p-.48)/.16).toFixed(4));b.style.setProperty('--b',cl((p-.5)/.5).toFixed(4));
       b.classList.toggle('wave2',p>.5)}
     window.addEventListener('scroll',function(){requestAnimationFrame(f)},{passive:true});f();
+  })();
+
+
+  /* side B record wanders around the free space, never over the text */
+  (function(){var sec=document.getElementById('contact'),fl=document.getElementById('flipper');if(!sec||!fl||reduce)return;
+    var on=false,t=0,last=0,box=null,R=75;
+    function measure(){var wide=innerWidth>=900;sec.classList.toggle('roam',wide);on=wide;if(!wide){fl.style.transform='';return}
+      var sr=sec.getBoundingClientRect(),els=[sec.querySelector('.turn'),sec.querySelector('.chat'),sec.querySelector('.btns')],L=1e9,T=1e9,Rr=-1e9,B=-1e9;
+      els.forEach(function(e){if(!e)return;var b=e.getBoundingClientRect();L=Math.min(L,b.left-sr.left);T=Math.min(T,b.top-sr.top);Rr=Math.max(Rr,b.right-sr.left);B=Math.max(B,b.bottom-sr.top)});
+      var m=R+36;box={l:Math.max(R+10,L-m),t:Math.max(R+10,T-m*.6),r:Math.min(sr.width-R-10,Rr+m),b:Math.min(sr.height-R-10,B+m*.7)}}
+    function pt(u){var w=box.r-box.l,h=box.b-box.t,P=2*(w+h),d=(u%1)*P;
+      if(d<w)return[box.l+d,box.t];d-=w;if(d<h)return[box.r,box.t+d];d-=h;if(d<w)return[box.r-d,box.b];d-=w;return[box.l,box.b-d]}
+    function step(now){var dt=last?Math.min(.05,(now-last)/1000):0;last=now;
+      if(on&&box){var r=sec.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){var P=2*((box.r-box.l)+(box.b-box.t));t+=dt*55/P;
+        var a=pt(t),b=pt(t+.004),ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
+        fl.style.transform='translate('+(a[0]-R).toFixed(1)+'px,'+(a[1]-R).toFixed(1)+'px) rotate('+(ang*.08).toFixed(1)+'deg)';}}
+      requestAnimationFrame(step)}
+    measure();window.addEventListener('resize',measure);setInterval(measure,1500);requestAnimationFrame(step);
   })();
 
   /* side A: auto-playing tracklist */
