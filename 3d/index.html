@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Ti Ost: застосунки з хаосу таблиць, вірші, книга й мрії.">
+<meta property="og:title" content="Ti Ost · Хаос став ритмом">
+<meta property="og:description" content="Застосунки з хаосу таблиць, вірші, книга й мрії.">
+<meta property="og:image" content="https://taniatiost.github.io/tiost/3d/img/cover.jpg">
+<!-- Microsoft Clarity: статистика відвідувань -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "yuxuvdm3pi");
+</script>
+<title>Ti Ost</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Oranienbaum&family=Jost:wght@300;400;500;600&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: a glossy fashion-magazine issue (late 80s / 90s) — cover with masthead, off-centre vinyl and live 3D "thoughts"; then spreads where objects move with scroll (--p) */
+:root{
+  --espresso:#1A120E; --espresso-2:#24170F; --cherry:#8E2433; --cherry-d:#4A1019;
+  --ember:#D2612C; --crust:#E2A544; --lime:#C4D15C; --mint:#A3B34A; --rose:#C9907F; --oat:#F3E8D6; --cream:#FBF5EA; --dust:#A8957F; --forest:#33452F;
+  --mast:"Playfair Display",Didot,"Bodoni 72",Georgia,serif;      /* masthead + headlines: Didone contrast */
+  --tall:"Oranienbaum","Playfair Display",Georgia,serif;          /* condensed fashion headings */
+  --sans:"Jost","Futura","Century Gothic","Segoe UI",sans-serif;  /* Futura-style cover lines + body */
+  --hand:"Caveat","Segoe Print",cursive;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--espresso);color:var(--oat);font-family:var(--sans);font-weight:400;margin:0;overflow-x:clip}
+img{max-width:100%;display:block}
+html[data-lang="ua"] .e,html[data-lang="en"] .u{display:none}
+.kick{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--crust)}
+
+/* HERO — chaos → system → words → rhythm (scroll film) */
+.hero{position:relative;height:520vh;--p:0;background:radial-gradient(90% 60% at 50% 110%,rgba(210,97,44,.32),transparent 60%),radial-gradient(70% 50% at 85% 10%,rgba(142,36,51,.28),transparent 65%),var(--espresso)}
+.hero .stage{display:block}
+.cap{position:absolute;left:0;right:0;top:calc(64px + env(safe-area-inset-top,0px));display:grid;justify-items:center;text-align:center;padding-inline:20px;z-index:6;pointer-events:none}
+.cap>div{grid-area:1/1;display:flex;flex-direction:column;gap:10px;align-items:center;opacity:0;transform:translateY(16px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.cap>div.on{opacity:1;transform:none}
+.cap h1,.cap h2{margin:0;font-family:var(--mast);font-weight:900;font-style:italic;font-size:clamp(54px,9vw,128px);line-height:.9;letter-spacing:-.03em;color:var(--oat)}
+.cap h2{font-size:clamp(40px,6.4vw,92px)}
+.cap p{margin:0;font-size:clamp(14px,1.4vw,17px);line-height:1.5;color:#d9c9b2;max-width:44ch}
+.cap .q{font-family:var(--mast);font-style:italic;font-size:clamp(17px,1.8vw,22px);color:var(--crust)}
+.cap .hand{font-family:var(--hand);font-size:clamp(21px,2.2vw,27px);color:var(--crust)}
+.field{position:absolute;inset:0;perspective:1100px;transform-style:preserve-3d;z-index:3}
+.bit{position:absolute;left:50%;top:var(--cy);width:var(--rw);height:36px;margin-left:calc(var(--rw) / -2);margin-top:-18px;will-change:transform,opacity;transform-style:preserve-3d}
+.bit .ch,.bit .rw{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.bit .ch>span{display:inline-block;white-space:nowrap;padding:9px 15px;border-radius:12px;background:var(--bg);color:var(--fg);font:500 15px/1 var(--sans);
+  --edge:color-mix(in srgb,var(--bg) 62%,#000);box-shadow:0 1px 0 var(--edge),0 2px 0 var(--edge),0 3px 0 var(--edge),0 4px 0 var(--edge),0 16px 26px rgba(0,0,0,.45);
+  background-image:linear-gradient(160deg,rgba(255,255,255,.25),rgba(255,255,255,0) 45%)}
+.bit .ch>span.hand{font:700 22px/1 var(--hand);padding:6px 15px}
+.bit .ch>span.cell{font:500 14px/1 ui-monospace,"Cascadia Mono",Consolas,monospace;border-radius:2px;padding:9px 12px}
+.bit .ch>span.rcpt{font:500 14px/1.2 ui-monospace,"Cascadia Mono",Consolas,monospace;border-radius:2px;padding:12px 14px 16px;clip-path:polygon(0 0,100% 0,100% 88%,92% 100%,84% 88%,76% 100%,68% 88%,60% 100%,52% 88%,44% 100%,36% 88%,28% 100%,20% 88%,12% 100%,4% 88%,0 100%)}
+.bit .ch>span.serif{font:italic 400 18px/1 var(--mast)}
+.bit .rw{justify-content:space-between;gap:10px;padding:0 12px;border-radius:10px;background:rgba(251,245,234,.96);color:var(--espresso);font:500 13px/1 var(--sans);opacity:0;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.bit .rw em{font-style:normal;font-weight:600;font-variant-numeric:tabular-nums}
+.bit .rw em.ok{color:#3c7a3a}.bit .rw em.warn{color:var(--cherry)}
+.phone{position:absolute;left:50%;top:var(--py);width:var(--pw);height:var(--ph);margin-left:calc(var(--pw) / -2);margin-top:calc(var(--ph) / -2);z-index:2;transform-style:preserve-3d;will-change:transform}
+.phone .face{position:absolute;inset:0;border-radius:var(--pr,34px);backface-visibility:hidden;overflow:hidden}
+.phone .front{background:#0d0907;padding:7px;box-shadow:0 40px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08);opacity:var(--fo,0)}
+.phone .front .scr{position:absolute;inset:7px;border-radius:calc(var(--pr,34px) - 6px);background:linear-gradient(180deg,#F3E8D6,#EADBC4)}
+.phone .front .island{position:absolute;left:50%;top:13px;width:34%;height:20px;margin-left:-17%;border-radius:12px;background:#0d0907;z-index:2}
+.phone .front .status{position:absolute;left:0;right:0;top:15px;display:flex;justify-content:space-between;padding:0 24px;font:600 10px/1 var(--sans);color:var(--espresso);letter-spacing:.04em}
+.phone .front .top{position:absolute;left:0;right:0;top:44px;display:flex;justify-content:space-between;padding:0 20px;font:600 13px/1 var(--sans);color:var(--espresso)}
+.phone .front .top small{font-weight:500;color:var(--cherry)}
+.phone .back{transform:rotateY(180deg);border-radius:6px 14px 14px 6px!important;background:linear-gradient(90deg,rgba(36,23,15,.12),transparent 8%),var(--cream);color:var(--espresso);box-shadow:0 40px 80px rgba(0,0,0,.55);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:28px 26px}
+.phone .back small{font:500 10px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--cherry)}
+.phone .back b{font:italic 900 22px/1.05 var(--mast);margin-bottom:8px}
+.phone .back p{margin:0;font:400 16px/1.45 var(--mast)}
+.phone .back p em{color:var(--cherry)}
+.rec{position:absolute;left:50%;top:var(--py);width:var(--rd);height:var(--rd);margin-left:calc(var(--rd) / -2);margin-top:calc(var(--rd) / -2);z-index:1;opacity:var(--ro,0);transform:scale(var(--rs,.6))}
+.rec .disc{animation-duration:3.4s}
+.hero .hint{position:absolute;left:0;right:0;max-width:none;margin:0;font-family:var(--sans);bottom:max(4vh,22px);text-align:center;font:500 10px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--dust);z-index:6;opacity:calc(1 - var(--p) * 8)}
+.hero .hint i{display:block;margin:10px auto 0;width:1px;height:38px;background:linear-gradient(var(--crust),transparent)}
+.dots{position:absolute;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:6}
+.dots i{width:6px;height:6px;border-radius:50%;background:rgba(243,232,214,.25);transition:background .3s,transform .3s}
+.dots i.on{background:var(--crust);transform:scale(1.4)}
+@media (max-width:640px){.bit .ch>span{font-size:13px;padding:8px 12px}.bit .ch>span.hand{font-size:19px}.bit .rw{font-size:12px}.dots{right:8px}}
+@media (prefers-reduced-motion:reduce){.hero{height:auto}.hero .stage{position:relative;height:100svh}}
+
+
+/* ===== motion layer (only when JS adds html.anim) ===== */
+html.anim [data-at]{transition:opacity .8s ease,translate .9s cubic-bezier(.2,.8,.2,1),scale .9s cubic-bezier(.2,.8,.2,1),rotate .9s cubic-bezier(.2,.8,.2,1)}
+[data-tilt]{transition:transform .4s ease-out;transform:perspective(900px) rotateX(var(--tx,0deg)) rotateY(var(--ty,0deg))}
+/* Lisa */
+.lisa .vert .l{display:inline-block}
+html.anim .lisa .vert .l{--k:clamp(0,calc((var(--p) - var(--d)) * 5),1);opacity:var(--k);translate:0 calc((1 - var(--k)) * -70px);rotate:calc((1 - var(--k)) * -14deg)}
+html.anim .lisa figure{--k:min(calc(var(--p) * 2.4),1);translate:calc((1 - var(--k)) * -50px) 0;rotate:calc((1 - var(--k)) * -5deg)}
+.lfig{position:relative}
+.notif{position:absolute;right:-14px;top:18px;display:flex;gap:10px;align-items:center;padding:10px 14px 10px 10px;border-radius:16px;background:rgba(251,245,234,.92);backdrop-filter:blur(8px);box-shadow:0 14px 30px rgba(36,23,15,.3);color:var(--espresso);max-width:230px}
+.notif i{flex:none;width:30px;height:30px;border-radius:9px;background:var(--cherry);position:relative}
+.notif i::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;color:var(--cream);font:700 15px/1 var(--sans)}
+.notif b{display:block;font:600 13px/1.2 var(--sans)}
+.notif small{display:block;font-size:12px;color:#6a5a4e}
+html.anim .notif:not(.in){opacity:0;translate:0 -16px;scale:.9}
+.notif.in{animation:buzz 4s 1.2s ease-in-out infinite}
+@keyframes buzz{0%,86%,100%{rotate:0deg}89%{rotate:-3deg}92%{rotate:3deg}95%{rotate:-2deg}}
+html.anim .seal:not(.in){opacity:0;scale:2.4;rotate:-40deg}
+.seal.in{animation:slam .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes slam{from{scale:2.4;opacity:0}}
+@media (max-width:760px){.notif{right:-6px;top:10px;max-width:200px}}
+/* Dreams */
+.dreams{padding:9vh clamp(16px,4vw,48px) 9vh;position:relative;overflow:hidden}
+.dreams::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(226,165,68,.28));opacity:calc(var(--p) * .6);pointer-events:none}
+.dreams>*{position:relative}
+.dream p{font-size:14px}
+html.anim .dream:not(.in){opacity:0;translate:0 60px;scale:.94}
+/* About */
+html.anim .afig img{translate:0 calc((var(--p) - .5) * -50px)}
+#aboutQ .w{transition:opacity .4s,color .4s}
+html.anim #aboutQ .w{opacity:.22}
+html.anim #aboutQ .w.on{opacity:1}
+html.anim .cv .row:not(.in){opacity:0;translate:-40px 0}
+html.anim .side:not(.in){opacity:0;translate:0 40px}
+/* Next card */
+.next{position:relative;overflow:visible}
+html.anim .next:not(.in){opacity:0;rotate:-14deg;translate:0 60px}
+html.anim .next.in{rotate:-1deg}
+.next{transform-origin:20% 80%}
+.spark{position:absolute;z-index:3;pointer-events:none;white-space:nowrap;font:700 21px/1 var(--hand);padding:6px 13px;border-radius:12px;background:var(--cream);color:var(--espresso);box-shadow:0 10px 22px rgba(0,0,0,.35);animation:spark 2.6s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes spark{0%{opacity:0;scale:.5;translate:0 10px}15%{opacity:1;scale:1}75%{opacity:1}100%{opacity:0;translate:var(--sx) var(--sy);rotate:var(--sr)}}
+/* Contact chat */
+.end{gap:30px}
+.chat{width:min(440px,100%);display:flex;flex-direction:column;gap:10px;text-align:left}
+.who{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.ava{width:42px;height:42px;border-radius:50%;background:var(--cherry);display:grid;place-items:center;font:italic 900 15px/1 var(--mast);color:var(--cream)}
+.who b{display:block;font-family:var(--mast);font-size:18px}
+.who small{font-size:12px;color:var(--dust)}
+.bub{margin:0;align-self:flex-start;max-width:88%;padding:12px 16px;border-radius:18px 18px 18px 6px;background:#2c1e17;color:var(--oat);font-size:16px;line-height:1.45}
+html.anim .bub:not(.in){opacity:0;translate:0 14px;scale:.96}
+.typing{display:none;align-self:flex-start;gap:5px;padding:14px 16px;border-radius:18px 18px 18px 6px;background:#2c1e17}
+html.anim .typing.in{display:flex}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--dust);animation:dot 1s ease-in-out infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{translate:0 -5px;opacity:.5}}
+.yours{align-self:stretch;margin-top:8px;display:flex;align-items:center;gap:4px;padding:12px 8px 12px 18px;border-radius:99px;border:1px solid rgba(243,232,214,.3);color:var(--dust);text-decoration:none;font-size:15px;transition:border-color .3s,background .3s}
+.yours:hover{border-color:var(--crust);background:rgba(243,232,214,.05)}
+.yours:focus-visible{outline:2px solid var(--crust);outline-offset:3px}
+.caret{width:1.5px;height:18px;background:var(--crust);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.yours .send{margin-left:auto;width:34px;height:34px;border-radius:50%;background:var(--ember);color:var(--espresso);display:grid;place-items:center;font:600 18px/1 var(--sans)}
+html.anim .yours:not(.in){opacity:0;translate:0 14px}
+html.anim .btns:not(.in){opacity:0;translate:0 20px}
+.mag{transition:transform .25s ease-out,background .3s}
+#sideB .disc{animation-duration:var(--spd,3s)}
+@media (prefers-reduced-motion:reduce){.notif.in,.seal.in,.typing i,.caret{animation:none}[data-tilt]{transform:none}}
+
+
+/* Lisa flood */
+.lisa{position:relative}
+.lisa>*:not(.flood){position:relative;z-index:1}
+.flood{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.flood span{position:absolute;left:0;top:0;white-space:nowrap;font-family:var(--mast);font-style:italic;color:var(--cherry);will-change:transform,opacity,filter}
+.flood span.s{font-family:var(--hand);font-style:normal;color:var(--espresso)}
+.flood span.m{font-family:var(--sans);font-style:normal;font-size:12px!important;letter-spacing:.2em;text-transform:uppercase;color:#7a6a5c}
+.honest{margin:0;font-family:var(--hand);font-size:clamp(21px,2.2vw,26px);line-height:1.2;color:var(--cherry);max-width:30ch}
+/* Dreams: airy */
+.dreams{background:linear-gradient(180deg,#2a1a22 0%,#6b3a4a 35%,#c27a68 70%,#e9b48a 100%);padding:12vh clamp(16px,4vw,48px);display:flex;flex-direction:column;align-items:center;gap:36px;overflow:hidden}
+.dreams::before{display:none}
+.haze{position:absolute;inset:0;pointer-events:none}
+.haze i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:drift 18s ease-in-out infinite alternate}
+.haze i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:10%;background:#f3c9a8}
+.haze i:nth-child(2){width:38vw;height:38vw;right:-8vw;top:30%;background:#d99ab0;animation-duration:22s}
+.haze i:nth-child(3){width:30vw;height:30vw;left:30%;bottom:-10%;background:#fbe3c0;animation-duration:26s}
+.haze i:nth-child(4){width:24vw;height:24vw;left:55%;top:-5%;background:#b8a0d8;opacity:.3;animation-duration:20s}
+@keyframes drift{to{translate:6vw -4vh;scale:1.15}}
+.dreams .maybe{margin:0;font-family:var(--hand);font-size:clamp(21px,2.3vw,28px);line-height:1.2;color:#fbe9d6;max-width:34ch;text-align:center}
+.bubbles{position:relative;width:min(1100px,100%);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,40px);align-items:start}
+.bubbles .dream{border-radius:44% 56% 52% 48% / 48% 44% 56% 52%;padding:clamp(34px,4vw,54px) clamp(26px,3vw,42px);background:radial-gradient(120% 100% at 30% 20%,rgba(255,250,244,.42),rgba(255,250,244,.12) 60%,rgba(255,250,244,.06));border:1px solid rgba(255,250,244,.45);
+  box-shadow:inset 0 0 40px rgba(255,255,255,.25),0 20px 50px rgba(60,20,30,.25);backdrop-filter:blur(6px);text-align:center;color:#fff8ef;animation:bob 7s ease-in-out infinite;filter:blur(.4px)}
+.bubbles .dream:hover{filter:none}
+.bubbles .dream.b2{margin-top:70px;animation-duration:8.5s;animation-delay:-2s;border-radius:56% 44% 48% 52% / 52% 56% 44% 48%}
+.bubbles .dream.b3{margin-top:20px;animation-duration:9.5s;animation-delay:-4s}
+@keyframes bob{0%,100%{translate:0 0;rotate:-1deg}50%{translate:0 -18px;rotate:1.2deg}}
+.bubbles .dream h3{margin:0 0 10px;font-family:var(--mast);font-weight:400;font-style:italic;font-size:clamp(24px,2.4vw,32px);line-height:1.1}
+.bubbles .dream p{margin:0;font-size:15px;line-height:1.5;color:#fff3e6}
+html.anim .dream:not(.in){opacity:1;translate:0 0;scale:1}
+.whisper{margin:0;font-family:var(--hand);font-size:clamp(24px,2.6vw,32px);color:#fff8ef;opacity:.85;animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.35}}
+@media (max-width:820px){.bubbles{grid-template-columns:1fr;gap:26px}.bubbles .dream.b2{margin-top:0;margin-left:10%}.bubbles .dream.b1{margin-right:8%}.bubbles .dream.b3{margin-right:12%;margin-top:0}}
+/* About: her voice */
+.talk{display:flex;flex-direction:column;gap:14px;max-width:46ch}
+.talk p{margin:0;font-size:17px;line-height:1.55;color:#3c2e25;padding-left:18px;border-left:2px solid var(--ember)}
+.talk b{font-weight:600;color:var(--cherry)}
+html.anim .talk p:not(.in){opacity:0;translate:30px 0}
+.cv{position:relative}
+.cv::before{content:"";position:absolute;left:-14px;top:30px;width:2px;height:calc((100% - 40px) * var(--cvp,0));background:var(--cherry);transition:height .3s linear}
+@media (max-width:820px){.cv::before{left:-8px}}
+/* sparks stay inside the card on phones */
+@media (max-width:640px){.spark{font-size:18px}}
+/* Contact */
+.flipper{width:150px;height:150px;perspective:900px}
+.fl-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 1.4s cubic-bezier(.5,0,.2,1)}
+.flipper.go .fl-in{transform:rotateY(180deg)}
+.flipper .mini{position:absolute;inset:0;backface-visibility:hidden}
+.flipper .fb{transform:rotateY(180deg)}
+.flipper .fb .lab{background:var(--ember)}
+.turn{margin:-8px 0 0;font-size:15px;color:var(--dust)}
+.turn b{color:var(--oat);font-weight:500}
+html.anim .turn{opacity:0;transition:opacity .8s .9s}
+html.anim .turn.in{opacity:1}
+html.anim [data-step]{transition:opacity .6s,translate .6s}
+html.anim .bub[data-step]:not(.in),html.anim .yours[data-step]:not(.in),html.anim .btns[data-step]:not(.in){opacity:0;translate:0 14px}
+html.anim .typing[data-step]{display:none}
+html.anim .typing[data-step].in{display:flex}
+@media (prefers-reduced-motion:reduce){.haze i,.dream,.whisper{animation:none}}
+
+
+/* ===== flowing background ===== */
+.flowbg{position:fixed;inset:0;z-index:-1;background:var(--flow,#1A120E);pointer-events:none}
+html.flow body{background:#1A120E}
+html.flow section[data-bg]{background-color:transparent!important}
+html.flow #build,html.flow #dreams{background:transparent!important}
+form.yours{border-radius:24px}
+html.flow .lisa,html.flow .about{background:linear-gradient(180deg,rgba(243,232,214,0) 0,var(--oat) 13vh,var(--oat) calc(100% - 13vh),rgba(243,232,214,0) 100%)!important}
+/* Dreams in the site palette: bonfire dusk */
+.dreams .haze i:nth-child(1){background:#E2A544}
+.dreams .haze i:nth-child(2){background:#D2612C}
+.dreams .haze i:nth-child(3){background:#C9907F}
+.dreams .haze i:nth-child(4){background:#8E2433;opacity:.35}
+.dreams .haze i{opacity:.32}
+/* About: interview */
+.iv{width:min(1100px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:start}
+.iv .afig{margin:0;display:flex;flex-direction:column;gap:10px;position:sticky;top:90px}
+.iv .afig img{width:100%;filter:grayscale(1) contrast(1.05) sepia(.22)}
+.iv figcaption{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#7a6a5c}
+.iv-txt{display:flex;flex-direction:column;gap:22px;min-width:0}
+.iv-txt h2{margin:0;font-family:var(--tall);font-weight:400;font-size:clamp(76px,10vw,150px);line-height:.82;color:var(--cherry);text-transform:uppercase}
+.pull{margin:0;font-family:var(--mast);font-style:italic;font-size:clamp(24px,2.8vw,36px);line-height:1.2;max-width:24ch}
+.pull em{color:var(--cherry);font-weight:700}
+.qa{margin:0;display:flex;flex-direction:column}
+.qa>div{display:block;padding:16px 0;border-top:1px solid rgba(36,23,15,.18)}
+.qa dt{font-family:var(--mast);font-style:italic;font-size:clamp(18px,1.7vw,21px);color:var(--cherry);margin-bottom:6px}
+.qa dd{margin:0;font-size:16px;line-height:1.6;color:#3c2e25;max-width:56ch}
+.qa mark{background:linear-gradient(transparent 58%,rgba(226,165,68,.55) 58%) no-repeat 0 0/0% 100%;color:inherit;font-weight:600;transition:background-size 1s cubic-bezier(.2,.8,.2,1) .35s}
+.qa .in mark,html:not(.anim) .qa mark{background-size:100% 100%}
+html.anim .qa>div:not(.in){opacity:0;translate:0 24px}
+html.anim .pull:not(.in){opacity:0;translate:0 20px}
+.aside{margin:6px 0 0;font-size:13px;line-height:1.55;color:#7a6a5c;font-style:italic;max-width:56ch}
+html.anim .aside:not(.in){opacity:0}
+@media (max-width:820px){.iv{grid-template-columns:1fr}.iv .afig{position:static;max-width:220px}}
+/* Contact input */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+form.yours{padding:6px 6px 6px 18px;align-items:flex-end}
+form.yours textarea{flex:1;min-width:0;background:transparent;border:0;outline:0;resize:none;color:var(--oat);font:400 16px/1.4 var(--sans);padding:9px 0;max-height:140px}
+form.yours textarea::placeholder{color:var(--dust)}
+form.yours:focus-within{border-color:var(--crust)}
+form.yours .send{flex:none;width:38px;height:38px;border-radius:50%;background:var(--ember);color:var(--espresso);display:grid;place-items:center;font:600 18px/1 var(--sans);text-decoration:none;transition:transform .2s,background .3s}
+form.yours .send:hover{transform:translateY(-2px)}
+form.yours .send:focus-visible{outline:2px solid var(--crust);outline-offset:3px}
+form.yours.ready .send{background:var(--crust);animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-3px)}}
+.how{margin:2px 4px 0;font-size:12px;line-height:1.5;color:var(--dust)}
+html.anim .how[data-step]:not(.in){opacity:0}
+.copied{margin:0;font-size:13px;color:var(--crust);min-height:1.2em}
+@media (prefers-reduced-motion:reduce){form.yours.ready .send{animation:none}}
+
+
+/* mock-ups */
+.mk{position:relative;border-radius:16px;overflow:hidden;background:#F6EEE1;color:#24170F;padding:14px;display:flex;flex-direction:column;gap:8px;font-family:var(--sans);min-height:210px;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.mk-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.mk-h b{font:700 15px/1 var(--sans)}
+.mk-h small{font-size:11px;color:#8E2433}
+.mk-r{display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:9px 10px;font-size:13px}
+.mk-r>span{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mk-r small{font-size:11px;color:#7a6a5c}
+.mk-r em{font-style:normal;font-size:11px;font-weight:600;padding:4px 8px;border-radius:99px;background:#F3E3C8;color:#8a5a12;white-space:nowrap}
+.mk-r em.ok{background:#E3EED8;color:#3c7a3a}
+.mk-r .f{flex:none;width:22px;height:28px;border-radius:3px;background:linear-gradient(135deg,transparent 70%,#d9cbb4 70%),#efe4d1;border:1px solid #d9cbb4}
+.mk-btn{margin-top:auto;text-align:center;background:#D2612C;color:#fff;border-radius:99px;padding:9px;font-size:12px;font-weight:600}
+.mk-note{background:#3a2a22;padding:0;min-height:230px}
+.mk-wall{position:absolute;inset:0;background:radial-gradient(80% 60% at 30% 20%,#C9907F,transparent 60%),radial-gradient(70% 60% at 80% 90%,#E2A544,transparent 60%),linear-gradient(160deg,#5a2a1c,#24170F)}
+.mk-w{position:relative;margin:18px;display:flex;flex-direction:column;gap:6px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);font-size:14px}
+.mk-w b{font-size:17px;margin-bottom:2px}
+.mk-w .dim{opacity:.6;text-decoration:line-through}
+.mk-icons{position:absolute;left:18px;right:18px;bottom:16px;display:flex;justify-content:space-between}
+.mk-icons i{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.22);backdrop-filter:blur(4px)}
+.mockwrap{max-width:340px}
+
+
+/* two waves of phones */
+#build{height:540vh!important}
+.ph1:not(.w2){transform:translate3d(0,calc((.2 - var(--a,0)) * 60vh - var(--x,0) * 115vh),0) rotateY(calc(28deg - var(--a,0) * 40deg)) rotateZ(-8deg)}
+.ph2:not(.w2){transform:translate3d(0,calc((.45 - var(--a,0)) * 40vh - var(--x,0) * 125vh),120px) rotateY(calc(-14deg + var(--a,0) * 28deg)) rotateX(6deg)}
+.ph3:not(.w2){transform:translate3d(0,calc((.1 - var(--a,0)) * 80vh - var(--x,0) * 135vh),0) rotateY(calc(-30deg + var(--a,0) * 44deg)) rotateZ(7deg)}
+.ph1.w2{transform:translate3d(0,calc((1 - var(--bi,0)) * 120vh + (.2 - var(--b,0)) * 50vh),0) rotateY(calc(24deg - var(--b,0) * 36deg)) rotateZ(-6deg)}
+.ph2.w2{transform:translate3d(0,calc((1 - var(--bi,0)) * 110vh + (.4 - var(--b,0)) * 36vh),120px) rotateY(calc(-12deg + var(--b,0) * 24deg)) rotateX(6deg)}
+.ph3.w2{transform:translate3d(0,calc((1 - var(--bi,0)) * 130vh + (.15 - var(--b,0)) * 60vh),0) rotateY(calc(-26deg + var(--b,0) * 40deg)) rotateZ(6deg)}
+.ph .mk-w{margin:14px 12px;font-size:clamp(10px,1vw,13px);gap:4px;white-space:nowrap}.ph .mk-w b{font-size:clamp(12px,1.2vw,15px)}.ph .mk-icons i{width:24px;height:24px;border-radius:7px}
+.ph .mk{height:100%;min-height:0;border-radius:calc(clamp(18px,2.4vw,32px) - 5px);box-shadow:none}
+.caps{transition:opacity .5s,translate .5s}
+#build .caps.w2{opacity:0;translate:0 20px;pointer-events:none}
+#build.wave2 .caps.w1{opacity:0;translate:0 -20px;pointer-events:none}
+#build.wave2 .caps.w2{opacity:1;translate:0 0;pointer-events:auto}
+
+/* nav */
+.bar{transition:background .3s;gap:10px}
+.bar.solid{background:rgba(26,18,14,.86);backdrop-filter:blur(10px)}
+.logo{pointer-events:auto;font-family:var(--mast);font-weight:900;font-style:italic;font-size:20px;color:var(--oat);text-decoration:none;display:none}
+.bar.solid .logo{display:inline}
+.bar.solid .issue{display:none}
+.nav{pointer-events:auto;display:flex;gap:4px;margin-left:auto}
+.nav a{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--oat);text-decoration:none;padding:9px 11px;border-radius:99px;opacity:.78}
+.nav a i{font-style:normal;color:var(--crust);margin-right:6px}
+.nav a.on{opacity:1;background:rgba(243,232,214,.14)}
+.nav a:hover{opacity:1}
+.menu-btn{all:unset;pointer-events:auto;display:none;cursor:pointer;font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--oat);padding:9px 13px;border:1px solid rgba(243,232,214,.4);border-radius:99px;background:rgba(26,18,14,.55)}
+.toc{position:fixed;inset:0;z-index:70;background:var(--espresso);padding:calc(70px + env(safe-area-inset-top,0px)) 24px 30px;display:flex;flex-direction:column;gap:6px}
+.toc .kick{margin-bottom:14px}
+.toc a{display:flex;align-items:baseline;gap:16px;color:var(--oat);text-decoration:none;font-family:var(--mast);font-style:italic;font-size:clamp(34px,9vw,52px);line-height:1.15;border-bottom:1px solid rgba(243,232,214,.14);padding:10px 0}
+.toc a i{font:500 12px/1 var(--sans);font-style:normal;letter-spacing:.2em;color:var(--crust)}
+.toc .x{all:unset;position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:18px;cursor:pointer;color:var(--oat);font-size:30px;line-height:1;padding:6px 10px}
+.nav a:focus-visible,.menu-btn:focus-visible,.toc a:focus-visible,.toc .x:focus-visible,.logo:focus-visible{outline:2px solid var(--crust);outline-offset:2px}
+@media (max-width:820px){.bar .issue,.bar.solid .logo{display:none}.nav{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;gap:2px;margin-left:0;-webkit-mask:linear-gradient(90deg,#000 85%,transparent);mask:linear-gradient(90deg,#000 85%,transparent)}.nav::-webkit-scrollbar{display:none}.nav a{flex:none;padding:9px 9px;font-size:10px;letter-spacing:.14em}.nav a i{margin-right:4px}.menu-btn{display:none}}
+
+/* scroll cue */
+.cue{position:relative;z-index:5;justify-self:center;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--oat);text-decoration:none;font:500 10px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase}
+.cue .line{width:1px;height:44px;background:linear-gradient(var(--crust),transparent);position:relative;overflow:hidden}
+.cue .line::after{content:"";position:absolute;left:-2px;width:5px;height:12px;border-radius:3px;background:var(--crust);animation:drip 1.6s ease-in infinite}
+@keyframes drip{from{top:-12px}to{top:44px}}
+.lines a.cl{text-decoration:none;color:inherit}
+.lines a.cl:hover span{color:var(--cream);text-decoration:underline;text-underline-offset:4px}
+.lines a.cl:focus-visible{outline:2px solid var(--crust);outline-offset:4px}
+
+/* app sheet */
+.ph{cursor:pointer;border:0;font:inherit;color:inherit}
+.ph::after{content:"";position:absolute;inset:-8px;border-radius:calc(clamp(18px,2.4vw,32px) + 8px);border:1.5px solid var(--crust);opacity:0;animation:ring 2.8s ease-out infinite;pointer-events:none}
+.ph2::after{animation-delay:.9s}.ph3::after{animation-delay:1.8s}
+@keyframes ring{0%{opacity:.8;transform:scale(.96)}100%{opacity:0;transform:scale(1.12)}}
+.ph:focus-visible{outline:2px solid var(--crust);outline-offset:6px}
+.tap{position:absolute;z-index:3;left:50%;bottom:calc(6vh + 64px);transform:translateX(-50%);font:500 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;background:var(--oat);color:var(--espresso);padding:10px 16px;border-radius:99px;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.caps button{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-width:0}
+.caps button:focus-visible{outline:2px solid var(--crust);outline-offset:4px}
+.caps button b::after{content:" →";color:var(--crust)}
+.sheet{position:fixed;inset:0;z-index:80;display:flex;justify-content:flex-end}
+.sheet .bg{position:absolute;inset:0;background:rgba(10,6,4,.6);backdrop-filter:blur(4px)}
+.panel{position:relative;width:min(560px,100%);height:100%;overflow-y:auto;overscroll-behavior:contain;background:var(--cream);color:var(--espresso);
+  padding:calc(26px + env(safe-area-inset-top,0px)) clamp(20px,4vw,40px) calc(40px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:20px;animation:slidein .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes slidein{from{transform:translateX(40px);opacity:0}}
+.panel .close{all:unset;cursor:pointer;align-self:flex-end;font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;padding:10px 14px;border:1px solid rgba(36,23,15,.3);border-radius:99px}
+.panel .close:focus-visible{outline:2px solid var(--cherry);outline-offset:2px}
+.panel .kick{color:var(--cherry)}
+.panel h3{margin:0;font-family:var(--mast);font-weight:900;font-style:italic;font-size:clamp(30px,4.2vw,44px);line-height:1.02;letter-spacing:-.015em;text-wrap:balance}
+.panel .story{margin:0;font-size:16px;line-height:1.65;color:#3c2e25}
+.panel .story::first-letter{font-family:var(--mast);font-weight:900;font-size:3.4em;float:left;line-height:.82;margin:.06em .1em 0 0;color:var(--cherry)}
+.hi{list-style:none;margin:0;padding:0;counter-reset:h;display:flex;flex-direction:column}
+.panel .hi li{counter-increment:h;display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;row-gap:4px;padding:14px 0;border-top:1px solid rgba(36,23,15,.16)}
+.panel .hi li::before{content:counter(h);position:static;width:auto;height:auto;background:none;grid-column:1;grid-row:1/3;font-family:var(--tall);font-size:46px;line-height:.85;color:var(--ember)}
+.panel .hi li b,.panel .hi li span{grid-column:2}
+.hi b{font-family:var(--mast);font-weight:700;font-size:19px;line-height:1.2}
+.hi span{font-size:15px;line-height:1.5;color:#4a3a30}
+.panel .tie{margin:0;font-family:var(--hand);font-size:24px;line-height:1.15;color:var(--cherry)}
+.panel .lead{margin:0;font-family:var(--mast);font-style:italic;font-size:clamp(19px,2vw,23px);line-height:1.35}
+.panel h4{margin:6px 0 0;font:600 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--cherry)}
+.panel ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.panel li{font-size:15px;line-height:1.5;padding-left:22px;position:relative}
+.panel li::before{content:"";position:absolute;left:0;top:.65em;width:10px;height:1.5px;background:var(--ember)}
+.panel p.t{margin:0;font-size:15px;line-height:1.6}
+.shots{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin-inline:calc(-1 * clamp(20px,4vw,40px));padding-inline:clamp(20px,4vw,40px);flex-shrink:0}
+.shots img{height:min(48vh,400px);width:auto;max-width:none;border-radius:14px;scroll-snap-align:start;box-shadow:0 10px 24px rgba(36,23,15,.2);background:#e9dfcf}
+.panel .note{margin:0;font-size:12px;color:#7a6a5c}
+html.lock{overflow:hidden}
+@media (max-width:640px){.sheet{align-items:flex-end}.panel{height:auto;max-height:92vh;border-radius:18px 18px 0 0;animation-name:slideup}.shots img{height:min(42vh,340px)}}
+@keyframes slideup{from{transform:translateY(60px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.ph::after,.cue .line::after{animation:none}.panel{animation:none}}
+
+/* bar */
+.bar{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 20px 12px;pointer-events:none}
+.bar .issue{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--oat);mix-blend-mode:difference}
+.lang{pointer-events:auto;display:flex;border:1px solid rgba(243,232,214,.4);border-radius:99px;overflow:hidden;background:rgba(26,18,14,.55);backdrop-filter:blur(6px)}
+.lang button{all:unset;cursor:pointer;font:500 11px/1 var(--sans);letter-spacing:.2em;padding:8px 12px;color:var(--oat)}
+.lang button[aria-pressed="true"]{background:var(--oat);color:var(--espresso)}
+.lang button:focus-visible{outline:2px solid var(--crust);outline-offset:-2px}
+.prog{position:fixed;left:0;top:0;height:2px;background:var(--ember);z-index:60;width:calc(var(--sp,0)*100%)}
+
+/* ── COVER ── */
+.cover{position:relative;--p:0;min-height:100vh;min-height:100svh;overflow:hidden;padding:calc(54px + env(safe-area-inset-top,0px)) clamp(16px,4vw,48px) 28px;
+  background:radial-gradient(90% 60% at 80% 20%,rgba(142,36,51,.35),transparent 65%),radial-gradient(120% 60% at 30% 115%,rgba(210,97,44,.35),transparent 60%),var(--espresso);
+  display:grid;grid-template-rows:auto 1fr auto;gap:10px}
+.mast{position:relative;z-index:1;margin:0;font-family:var(--mast);font-weight:900;font-size:clamp(104px,25vw,330px);line-height:.78;letter-spacing:-.045em;color:var(--oat)}
+.mast em{font-style:italic;font-weight:400;letter-spacing:-.06em}
+.vinyl-cover{position:absolute;z-index:2;width:min(64vw,620px);aspect-ratio:1;right:calc(min(64vw,620px) * -.3);top:clamp(70px,13vh,140px);
+  transform:translateY(calc(var(--p) * 18vh)) rotate(calc(var(--p) * 120deg))}
+.disc{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle,transparent 0 17%,#120b08 17.5% 19%,transparent 19.5%),repeating-radial-gradient(circle,#140d0a 0 1.3px,#21150f 1.7px 2.8px),#140d0a;
+  box-shadow:0 30px 70px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.06);animation:spin 6s linear infinite}
+.disc::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,transparent 0 8%,rgba(255,235,210,.14) 12%,transparent 18% 50%,rgba(255,235,210,.1) 60%,transparent 66%)}
+.disc .lab{position:absolute;left:33%;top:33%;width:34%;height:34%;border-radius:50%;background:var(--cherry);display:grid;place-items:center;text-align:center}
+.disc .lab::after{content:"";position:absolute;width:6%;height:6%;border-radius:50%;background:var(--espresso)}
+.disc .lab span{font-family:var(--hand);font-size:clamp(14px,2.2vw,24px);color:var(--oat);line-height:1;transform:translateY(-34%) rotate(-12deg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.cover-mid{position:relative;display:flex;flex-direction:column;gap:10px;min-height:0}
+.stagewrap{position:relative;min-height:46vh;flex:1}
+.hint{position:relative;z-index:5;margin:0;align-self:center;text-align:center;font-family:var(--hand);font-size:clamp(20px,2.2vw,27px);line-height:1.15;color:var(--crust);max-width:32ch}
+/* SIDE A */
+.sidea{position:relative;background:radial-gradient(70% 60% at 30% 50%,rgba(210,97,44,.16),transparent 70%),var(--espresso);padding:12vh clamp(16px,5vw,64px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center}
+.sa-stage{position:relative;aspect-ratio:1;width:min(100%,560px);justify-self:center;perspective:900px}
+.sa-ring{position:absolute;inset:6%;border-radius:50%;background:repeating-radial-gradient(circle,rgba(243,232,214,.05) 0 1px,transparent 1.5px 7px);animation:spin 40s linear infinite;
+  -webkit-mask:radial-gradient(circle,transparent 30%,#000 31%,#000 70%,transparent 71%);mask:radial-gradient(circle,transparent 30%,#000 31%,#000 70%,transparent 71%)}
+.sa-obj{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:translateY(30px) scale(.94) rotateX(8deg);
+  transition:opacity .9s ease,transform 1.2s cubic-bezier(.2,.8,.2,1);
+  -webkit-mask:radial-gradient(closest-side,#000 62%,transparent 100%);mask:radial-gradient(closest-side,#000 62%,transparent 100%)}
+.sa-obj.on{opacity:1;transform:translateY(0) scale(1) rotateX(0);animation:floaty 6s ease-in-out infinite}
+@keyframes floaty{50%{translate:0 -14px;rotate:1.5deg}}
+.sa-list{display:flex;flex-direction:column;gap:22px;min-width:0}
+.sa-head{display:flex;flex-direction:column;gap:10px}
+.sa-head h2{margin:0;font-family:var(--mast);font-weight:400;font-style:italic;font-size:clamp(32px,4.2vw,56px);line-height:1}
+.tracks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tracks a{display:grid;grid-template-columns:44px minmax(0,1fr) 22px 44px;gap:14px;align-items:center;padding:16px 4px;border-top:1px solid rgba(243,232,214,.14);color:var(--oat);text-decoration:none;transition:background .3s,padding .3s}
+.tracks li:last-child a{border-bottom:1px solid rgba(243,232,214,.14)}
+.tracks .no{font:500 12px/1 var(--sans);letter-spacing:.18em;color:var(--dust)}
+.tracks b{display:block;font-family:var(--mast);font-weight:700;font-size:clamp(20px,2vw,26px);line-height:1.15}
+.tracks small{display:block;margin-top:4px;font-size:13px;color:var(--dust)}
+.tracks .len{font:500 12px/1 var(--sans);letter-spacing:.08em;color:var(--dust);text-align:right;font-variant-numeric:tabular-nums}
+.eq{display:flex;align-items:flex-end;gap:2px;height:16px;opacity:0;transition:opacity .3s}
+.eq i{display:block;width:4px;background:var(--crust);height:30%;animation:eq .9s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.6s}
+@keyframes eq{50%{height:100%}}
+.tracks a.on{background:rgba(243,232,214,.06);padding-left:12px}
+.tracks a.on .no{color:var(--crust)}
+.tracks a.on b{color:var(--cream)}
+.tracks a.on .eq{opacity:1}
+.tracks a:focus-visible{outline:2px solid var(--crust);outline-offset:2px}
+.sa-note{margin:0;font-family:var(--hand);font-size:22px;color:var(--crust)}
+@media (max-width:820px){.sidea{grid-template-columns:1fr;padding-top:8vh}.sa-stage{width:min(78vw,400px)}}
+@media (prefers-reduced-motion:reduce){.sa-ring,.sa-obj.on,.eq i{animation:none}}
+.cover-foot{position:relative;z-index:3;display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:20px}
+.cover-foot .barcode{justify-self:end}
+@media (max-width:760px){.cover-foot{grid-template-columns:1fr auto}.cover-foot p{grid-column:1/-1}.cue{justify-self:start}}
+.cover-foot p{margin:0;max-width:44ch;font-size:15px;line-height:1.5;color:#e6d8c4}
+.barcode{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--cream);color:var(--espresso);padding:8px 10px 6px;border-radius:2px}
+.barcode i{display:block;width:96px;height:38px;background:repeating-linear-gradient(90deg,#111 0 2px,transparent 2px 3px,#111 3px 4px,transparent 4px 7px,#111 7px 10px,transparent 10px 11px)}
+.barcode small{font:500 9px/1 var(--sans);letter-spacing:.2em}
+
+/* live 3D thoughts */
+.thoughts{position:absolute;inset:0;perspective:900px;z-index:4}
+.th{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:auto}
+.card{display:block;cursor:pointer;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis;padding:12px 20px;border-radius:16px;background:var(--bg);color:var(--fg);
+  font-family:var(--sans);font-weight:500;font-size:clamp(14px,1.6vw,19px);letter-spacing:.01em;
+  --edge:color-mix(in srgb,var(--bg) 62%,#000);
+  box-shadow:0 1px 0 var(--edge),0 2px 0 var(--edge),0 3px 0 var(--edge),0 4px 0 var(--edge),0 5px 0 var(--edge),0 6px 0 var(--edge),0 22px 34px rgba(0,0,0,.5);
+  background-image:linear-gradient(160deg,rgba(255,255,255,.28),rgba(255,255,255,0) 45%);
+  animation:life var(--life) cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s);will-change:transform,opacity,filter}
+.card.hand{font-family:var(--hand);font-size:clamp(22px,2.4vw,30px);font-weight:700;padding:8px 20px}
+.card.serif{font-family:var(--mast);font-style:italic;font-weight:400;font-size:clamp(17px,1.9vw,23px)}
+.card.num{font-weight:500;font-size:clamp(22px,2.6vw,34px);letter-spacing:.06em;border-radius:22px}
+.card.pop{animation:popout .35s ease-in forwards}
+.card:focus-visible{outline:2px solid var(--crust);outline-offset:4px}
+@keyframes life{
+  0%{opacity:0;filter:blur(10px);transform:translateZ(-520px) rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(var(--rz)) scale(.8)}
+  14%{opacity:1;filter:blur(0);transform:translateZ(var(--z)) rotateX(calc(var(--rx) * .5)) rotateY(calc(var(--ry) * .5)) rotateZ(var(--rz))}
+  78%{opacity:1;filter:blur(0);transform:translateZ(calc(var(--z) + 40px)) translateY(-14px) rotateX(calc(var(--rx) * -.3)) rotateY(calc(var(--ry) * -.4)) rotateZ(var(--rz))}
+  100%{opacity:0;filter:blur(8px);transform:translateZ(calc(var(--z) + 260px)) translateY(-40px) rotateX(calc(var(--rx) * -.6)) rotateY(calc(var(--ry) * -.8)) rotateZ(var(--rz))}}
+@keyframes popout{to{opacity:0;filter:blur(6px);transform:translateZ(200px) scale(1.15)}}
+
+@media (max-width:760px){
+  .stagewrap{min-height:44vh}
+  .vinyl-cover{top:clamp(90px,15vh,140px)}
+  .card{padding:9px 14px}
+}
+
+/* ── spread chrome ── */
+.folio{display:flex;justify-content:space-between;gap:12px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dust);border-top:1px solid rgba(243,232,214,.18);padding-top:10px}
+.scene{position:relative;--p:0}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
+
+/* BUILD */
+#build{height:330vh;background:linear-gradient(var(--espresso),var(--espresso-2))}
+.runword{position:absolute;top:52%;left:0;white-space:nowrap;font-family:var(--tall);font-size:clamp(140px,30vw,420px);line-height:1;color:var(--cherry);
+  transform:translate(calc(8vw - var(--p) * 150vw),-50%);text-transform:uppercase;letter-spacing:.01em}
+.phones{position:relative;width:min(1100px,100%);height:100%;perspective:1400px;transform-style:preserve-3d}
+.ph{position:absolute;width:clamp(120px,18vw,230px);aspect-ratio:9/19;border-radius:clamp(18px,2.4vw,32px);padding:6px;background:#0d0907;
+  box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08);will-change:transform}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:calc(clamp(18px,2.4vw,32px) - 5px)}
+.ph1{left:8%;top:24%;transform:translate3d(0,calc((.2 - var(--p)) * 60vh),0) rotateY(calc(28deg - var(--p) * 40deg)) rotateZ(-8deg)}
+.ph2{left:calc(50% - clamp(60px,9vw,115px));top:16%;transform:translate3d(0,calc((.45 - var(--p)) * 40vh),120px) rotateY(calc(-14deg + var(--p) * 28deg)) rotateX(6deg)}
+.ph3{right:8%;top:28%;transform:translate3d(0,calc((.1 - var(--p)) * 80vh),0) rotateY(calc(-30deg + var(--p) * 44deg)) rotateZ(7deg)}
+.spread-head{position:absolute;top:calc(64px + env(safe-area-inset-top,0px));left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);display:flex;flex-direction:column;gap:14px;z-index:2}
+.spread-head h2{margin:0;font-family:var(--mast);font-weight:400;font-style:italic;font-size:clamp(26px,3.4vw,46px);line-height:1.05;max-width:22ch}
+.caps{position:absolute;left:0;right:0;bottom:6vh;display:flex;justify-content:center;gap:clamp(16px,4vw,56px);flex-wrap:wrap;padding-inline:20px;text-align:center;z-index:2}
+.caps div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.caps b{font-family:var(--mast);font-size:clamp(18px,2vw,24px);font-weight:700}
+.caps span{font-size:13px;color:var(--dust)}
+@media (max-width:640px){.ph{width:clamp(108px,31vw,150px)}.ph1{left:3%;top:34%}.ph2{top:29%;left:calc(50% - clamp(54px,15.5vw,75px))}.ph3{right:3%;top:38%}.caps button>span{display:none}.runword{top:62%}.spread-head h2{font-size:24px}}
+
+/* WRITE */
+#write{height:310vh;background:radial-gradient(90% 60% at 30% 50%,rgba(142,36,51,.55),transparent 70%),var(--cherry-d)}
+#write .stage{grid-template-columns:1fr 1fr;gap:4vw;padding-inline:max(20px,6vw)}
+.bookbox{perspective:1500px;display:grid;place-items:center}
+.book{--w:clamp(170px,24vw,300px);--h:calc(var(--w) * 1.5);--d:calc(var(--w) * .045);position:relative;width:var(--w);height:var(--h);transform-style:preserve-3d;
+  transform:rotateY(calc(-75deg + var(--p) * 100deg)) rotateX(calc(12deg - var(--p) * 10deg)) rotateZ(calc(-6deg + var(--p) * 6deg))}
+.book>*{position:absolute;inset:0;backface-visibility:hidden}
+.book .front{background:url(img/cover.jpg) center/cover,#2a1a14;transform:translateZ(calc(var(--d) / 2));box-shadow:inset 3px 0 6px rgba(0,0,0,.35)}
+.book .back{background:#1d1310;transform:rotateY(180deg) translateZ(calc(var(--d) / 2))}
+.book .spine{width:var(--d);left:calc(50% - var(--d) / 2);background:linear-gradient(90deg,#0f0a08,#2b1d17 40%,#0f0a08);transform:rotateY(-90deg) translateZ(calc(var(--w) / 2));display:grid;place-items:center}
+.book .spine i{writing-mode:vertical-rl;font-family:var(--mast);font-style:normal;font-size:calc(var(--w) * .055);letter-spacing:.12em;color:var(--oat);white-space:nowrap}
+.book .pages{width:var(--d);left:calc(50% - var(--d) / 2);background:repeating-linear-gradient(90deg,#efe4d1 0 1px,#d9cbb4 1px 2px);transform:rotateY(90deg) translateZ(calc(var(--w) / 2))}
+.book .top{height:var(--d);top:calc(50% - var(--d) / 2);background:#e8dcc6;transform:rotateX(90deg) translateZ(calc(var(--h) / 2))}
+.bookbox{position:relative}
+.fall{position:absolute;left:50%;top:50%;pointer-events:none;z-index:3}
+.fall span{position:absolute;white-space:nowrap;font-family:var(--mast);font-style:italic;font-size:clamp(18px,2vw,26px);color:var(--cream);
+  --t:clamp(0,calc((var(--p) - var(--s)) * 2.6),1);
+  transform:translate(-50%,-50%) translate(calc(var(--dx) * var(--t)),calc(var(--t) * 72vh)) rotate(calc(var(--r) * var(--t)));
+  opacity:min(calc(var(--t) * 8),calc((1 - var(--t)) * 3))}
+.fall span:nth-child(odd){color:var(--crust)}
+.wtext{display:flex;flex-direction:column;gap:18px;min-width:0;max-width:30em}
+.wtext h2{margin:0;font-family:var(--mast);font-weight:900;font-style:italic;font-size:clamp(38px,5vw,76px);line-height:.95;letter-spacing:-.02em}
+.wtext blockquote{margin:0;font-family:var(--mast);font-style:italic;font-size:clamp(20px,2.2vw,28px);line-height:1.25;color:var(--crust);opacity:clamp(.3,calc((var(--p) - .3) * 3),1)}
+.wtext p{margin:0;font-size:15px;line-height:1.6;color:#e2d2bb}
+.wtext a{align-self:flex-start;color:var(--oat);font-size:11px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--ember);padding-bottom:4px}
+a:focus-visible{outline:2px solid var(--crust);outline-offset:4px}
+@media (max-width:760px){#write .stage{grid-template-columns:1fr;align-content:center;gap:28px}.wtext{text-align:center;align-items:center}.wtext a{align-self:center}.book{--w:150px}}
+
+.poem{padding:18vh 20px;background:var(--cherry-d);display:flex;justify-content:center}
+.poem pre{margin:0;font-family:var(--mast);font-size:clamp(24px,3.2vw,44px);line-height:1.4;white-space:pre-wrap;max-width:20ch}
+.poem .ln{display:block;opacity:.28;transform:translateY(-22px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.poem .ln.on{opacity:1;transform:none}
+.poem em{color:var(--crust)}
+.poem .src{display:block;margin-top:28px;font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dust)}
+
+/* LISA */
+.lisa{background:var(--oat);color:var(--espresso);padding:16vh max(20px,6vw);display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:5vw;align-items:center;overflow:hidden}
+.lisa .vert{writing-mode:vertical-rl;font-family:var(--tall);font-size:clamp(110px,16vw,240px);line-height:.85;color:var(--cherry)}
+.lisa figure{margin:0;position:relative;max-width:300px;width:100%}
+.lisa figure img{filter:grayscale(1) contrast(1.05) sepia(.25);width:100%}
+.lisa .txt{display:flex;flex-direction:column;gap:14px;max-width:28em;min-width:0}
+.lisa .txt h3{margin:0;font-family:var(--mast);font-style:italic;font-weight:400;font-size:clamp(24px,2.8vw,38px);line-height:1.15}
+.lisa .txt p{margin:0;font-size:15px;line-height:1.6;color:#4a3a30}
+.lisa .kick{color:var(--cherry)}
+.seal{width:132px;height:132px;color:var(--cherry);transform:rotate(-12deg);opacity:.86;mix-blend-mode:multiply}
+.seal svg{width:100%;height:100%;overflow:visible}
+.seal text{fill:currentColor;font-family:var(--sans);font-weight:600;text-transform:uppercase}
+@media (max-width:760px){.lisa{grid-template-columns:1fr;justify-items:center;text-align:center}.lisa .vert{writing-mode:horizontal-tb;font-size:clamp(90px,30vw,160px)}.lisa .txt{align-items:center}.lisa figure{max-width:220px}}
+
+/* DREAMS (compact, one screen) */
+.dreams{background:linear-gradient(180deg,var(--espresso) 0%,#3a2030 30%,#9c4e47 70%,#c9774f 100%);padding:14vh clamp(16px,4vw,48px) 12vh;display:flex;flex-direction:column;gap:42px;align-items:center}
+.dreams .head{display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+.dreams .head h2{margin:0;font-family:var(--mast);font-weight:400;font-style:italic;font-size:clamp(34px,5vw,64px);line-height:1}
+.dreams .grid{width:min(1100px,100%);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
+.dream{display:flex;flex-direction:column;gap:10px;padding:clamp(20px,2.4vw,30px);border-radius:4px;background:rgba(251,245,234,.08);border:1px solid rgba(251,245,234,.18);min-width:0}
+.dream b{font-family:var(--tall);font-weight:400;font-size:clamp(44px,5vw,72px);line-height:.9;color:var(--crust)}
+.dream h3{margin:0;font-family:var(--mast);font-weight:700;font-style:italic;font-size:clamp(22px,2.2vw,28px);line-height:1.1}
+.dream p{margin:0;font-size:15px;line-height:1.55;color:#eadccb}
+@media (max-width:820px){.dreams .grid{grid-template-columns:1fr}}
+
+/* ABOUT — magazine profile */
+.about{background:var(--oat);color:var(--espresso);padding:14vh clamp(16px,5vw,64px)}
+.about .in{width:min(1160px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,72px);align-items:start}
+.about .kick{color:var(--cherry)}
+.about figure{margin:0;display:flex;flex-direction:column;gap:10px;position:sticky;top:90px;max-width:340px;justify-self:center;width:100%}
+.about figure img{width:100%;filter:grayscale(1) contrast(1.05) sepia(.22)}
+.about figcaption{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#7a6a5c}
+.about .txt{display:flex;flex-direction:column;gap:26px;min-width:0}
+.about h2{margin:0;font-family:var(--tall);font-weight:400;font-size:clamp(84px,12vw,170px);line-height:.82;color:var(--cherry);text-transform:uppercase}
+.about .q{margin:0;font-family:var(--mast);font-style:italic;font-size:clamp(24px,2.8vw,36px);line-height:1.2;max-width:24ch}
+.about .q mark{background:none;color:var(--cherry);font-weight:700}
+.dn{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(36,23,15,.2);border:1px solid rgba(36,23,15,.2)}
+.dn div{background:var(--oat);padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.dn div:last-child{background:var(--espresso);color:var(--oat)}
+.dn b{font:600 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--ember)}
+.dn div:last-child b{color:var(--crust)}
+.dn p{margin:0;font-size:15px;line-height:1.5}
+.dn div:last-child p{font-family:var(--mast);font-style:italic;font-size:20px}
+.about p.t{margin:0;font-size:16px;line-height:1.65;max-width:56ch;color:#3c2e25}
+.cv{display:flex;flex-direction:column}
+.cv h3{margin:0 0 6px;font:600 11px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--cherry)}
+.cv .row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:18px;padding:16px 0;border-top:1px solid rgba(36,23,15,.22)}
+.cv .row:last-child{border-bottom:1px solid rgba(36,23,15,.22)}
+.cv .when{font:500 11px/1.4 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#7a6a5c;padding-top:4px}
+.cv .what b{display:block;font-family:var(--mast);font-weight:700;font-size:clamp(19px,1.9vw,23px);line-height:1.2}
+.cv .what span.d{display:block;margin-top:4px;font-size:14px;line-height:1.5;color:#5a4a3e}
+.cv .more{padding:14px 0 0;font-family:var(--mast);font-style:italic;font-size:17px;color:#5a4a3e}
+.side{display:flex;flex-direction:column;gap:12px;padding:22px 24px;background:var(--forest);color:var(--oat);border-radius:2px}
+.side .kick{color:var(--lime)}
+.side p{margin:0}
+.side .mine{font-family:var(--mast);font-style:italic;font-size:clamp(19px,1.9vw,23px);line-height:1.3}
+.side .own{font-size:15px;line-height:1.55;color:#dfe3cf}
+.side .cl{font-size:13px;line-height:1.5;color:#c9cfb6;border-top:1px solid rgba(243,232,214,.2);padding-top:12px}
+.side .cl small{display:block;margin-top:4px;font-size:11px;letter-spacing:.06em;opacity:.8}
+@media (max-width:820px){.about .in{grid-template-columns:1fr}.about figure{position:static;max-width:230px;justify-self:start}.cv .row{grid-template-columns:1fr;gap:6px}.dn{grid-template-columns:1fr}}
+
+/* NOW */
+.now{background:var(--espresso-2);padding:14vh clamp(16px,5vw,64px) 6vh}
+.now .in{width:min(1000px,100%);margin:0 auto;display:flex;flex-direction:column;gap:26px}
+.now .top{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.now h2{margin:0;font-family:var(--mast);font-weight:400;font-style:italic;font-size:clamp(40px,6vw,80px);line-height:1;color:var(--oat)}
+.next{margin-top:30px;display:flex;flex-direction:column;gap:12px;padding:clamp(26px,4vw,48px);background:var(--crust);color:var(--espresso);border-radius:2px;transform:rotate(-1deg)}
+.next .kick{color:var(--cherry)}
+.next b{font-family:var(--mast);font-weight:900;font-style:italic;font-size:clamp(30px,4.4vw,58px);line-height:1.02;letter-spacing:-.015em;max-width:20ch}
+.next p{margin:0;font-family:var(--hand);font-size:clamp(22px,2.4vw,30px);line-height:1.15}
+.now .upd{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dust)}
+.nl{display:flex;flex-direction:column}
+.nl div{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:18px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(243,232,214,.16)}
+.nl div:last-child{border-bottom:1px solid rgba(243,232,214,.16)}
+.nl .w{font:500 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--dust)}
+.nl b{font-family:var(--mast);font-weight:400;font-size:clamp(19px,2.1vw,26px);line-height:1.25}
+.nl b i{color:var(--crust)}
+.nl em{font:500 10px/1 var(--sans);font-style:normal;letter-spacing:.2em;text-transform:uppercase;padding:7px 11px;border-radius:99px;border:1px solid rgba(243,232,214,.3);white-space:nowrap}
+@media (max-width:640px){.nl div{grid-template-columns:1fr auto;gap:8px 12px}.nl .w{grid-column:1/-1}}
+
+/* END */
+.end{background:var(--espresso);padding:16vh 20px;display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center}
+.mini{width:150px;height:150px;position:relative}
+.end h2{margin:0;font-family:var(--mast);font-weight:400;font-style:italic;font-size:clamp(30px,4.6vw,60px);max-width:20ch;line-height:1.05}
+.tg{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:16px 26px;border-radius:99px;background:var(--ember);color:var(--espresso)}
+.ml{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:15px 26px;border-radius:99px;border:1px solid rgba(243,232,214,.4);color:var(--oat)}
+.end .btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+@media (prefers-reduced-motion:reduce){
+  .disc{animation:none}
+  .card{animation:none!important;opacity:1;transform:rotateZ(var(--rz))}
+  .scene,.cover{--p:.5!important}
+  .poem .ln{opacity:1}
+}
+</style>
+</head>
+<body>
+
+
+<div class="prog" aria-hidden="true"></div>
+<div class="flowbg" aria-hidden="true"></div>
+<header class="bar" id="bar">
+  <a class="logo" href="#cover">Ti Ost</a>
+  <span class="issue"><span class="u">Випуск 01 · Осінь 2026</span><span class="e">Issue 01 · Autumn 2026</span></span>
+  <nav class="nav" aria-label="Розділи"><a href="#build"><i>01</i><span class="u">Створюю</span><span class="e">Build</span></a><a href="#write"><i>02</i><span class="u">Пишу</span><span class="e">Write</span></a><a href="#dreams"><i>03</i><span class="u">Мрію</span><span class="e">Dream</span></a><a href="#about"><i>04</i><span class="u">Про мене</span><span class="e">About</span></a><a href="#now"><i>05</i><span class="u">Зараз</span><span class="e">Now</span></a></nav>
+  <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="toc"><span class="u">Зміст</span><span class="e">Contents</span></button>
+  <div class="lang" role="group" aria-label="Мова / Language"><button type="button" id="lang-ua" data-l="ua" aria-pressed="true">UA</button><button type="button" id="lang-en" data-l="en" aria-pressed="false">EN</button></div>
+</header>
+<div class="toc" id="toc" hidden>
+  <button class="x" type="button" id="tocClose" aria-label="Закрити">×</button>
+  <span class="kick"><span class="u">У цьому випуску</span><span class="e">In this issue</span></span>
+  <a href="#build"><i>01</i><span class="u">Створюю</span><span class="e">I build</span></a>
+  <a href="#write"><i>02</i><span class="u">Пишу</span><span class="e">I write</span></a>
+  <a href="#dreams"><i>03</i><span class="u">Мрію</span><span class="e">I dream</span></a>
+  <a href="#about"><i>04</i><span class="u">Про мене</span><span class="e">About me</span></a>
+  <a href="#now"><i>05</i><span class="u">Зараз</span><span class="e">Now</span></a>
+</div>
+
+<!-- HERO -->
+<section data-bg="#1A120E" class="hero scene" id="cover">
+  <div class="stage">
+    <div class="cap">
+      <div class="on" data-s="0"><span class="kick">Ti Ost</span><h1><span class="u">Хаос.</span><span class="e">Chaos.</span></h1><p><span class="u">Таблиці, чати, чеки, «хто здав?» і формула, яка знову зламалась.</span><span class="e">Spreadsheets, chats, receipts, "who paid?" and the formula that broke again.</span></p></div>
+      <div data-s="1"><span class="kick"><span class="u">Створюю</span><span class="e">I build</span></span><h2><span class="u">Я складаю його в систему.</span><span class="e">I put it into a system.</span></h2><p><span class="u">Застосунки, які рахують самі: каса класу, облік майстерні, зарплата команди.</span><span class="e">Apps that do the counting: a class fund, a workshop ledger, team payroll.</span></p></div>
+      <div data-s="2"><span class="kick"><span class="u">Пишу</span><span class="e">I write</span></span><h2><span class="u">…і в слова.</span><span class="e">…and into words.</span></h2><p><span class="u">Вірші, книга «Echoes of Silence» і роман, який пишеться.</span><span class="e">Poems, the book «Echoes of Silence» and a novel in progress.</span></p></div>
+      <div data-s="3"><span class="kick">Ti Ost · side A</span><h2><span class="u">Хаос став ритмом.</span><span class="e">Chaos became rhythm.</span></h2><p class="q">“To watch chaos transform into rhythm.”</p><p class="hand"><span class="u">рядок з моєї книги «Echoes of Silence»</span><span class="e">a line from my book «Echoes of Silence»</span></p></div>
+    </div>
+    <div class="field" id="field"></div>
+    <div class="phone" id="phone">
+      <div class="face front"><div class="scr"></div><div class="island"></div><div class="status"><span>9:41</span><span>●●● ▮</span></div><div class="top"><span><span class="u">Мій день</span><span class="e">My day</span></span><small><span class="u">все сходиться</span><span class="e">all adds up</span></small></div></div>
+      <div class="face back"><small>Echoes of Silence</small><b>I Am</b><p>I am not my pain.<br>I am not my past.<br>I am not my thoughts.<br><br>I am<br><em>the breath in between.</em></p></div>
+    </div>
+    <div class="rec" id="rec" aria-hidden="true"><div class="disc"><div class="lab"><span>Ti Ost · side A</span></div></div></div>
+    <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+    <p class="hint"><span class="u">гортайте, і подивіться, що я з ним роблю</span><span class="e">scroll and watch what I do with it</span><i></i></p>
+  </div>
+</section>
+
+<!-- BUILD -->
+<section data-bg="#21160F" class="scene" id="build">
+  <div class="stage">
+    <div class="runword" aria-hidden="true"><span class="u">Створюю · Створюю ·</span><span class="e">I build · I build ·</span></div>
+    <div class="spread-head">
+      <div class="folio"><span><span class="u">Рубрика · Створюю</span><span class="e">Section · I build</span></span><span>Ti Ost</span></div>
+      <h2><span class="u">Таблиці й рутина стають зручними застосунками в телефоні</span><span class="e">Spreadsheets and routine turn into handy phone apps</span></h2>
+    </div>
+    <div class="phones">
+      <button type="button" class="ph ph1" data-app="kasa" aria-label="Каса класу: детальніше"><img src="img/screens/kasa-1.jpg" alt=""></button>
+      <button type="button" class="ph ph2" data-app="oblik" aria-label="Облік майстерні: детальніше"><img src="img/screens/oblik-1.jpg" alt=""></button>
+      <button type="button" class="ph ph3" data-app="zp" aria-label="Зарплата команди: детальніше"><img src="img/screens/zp-3.jpg" alt="" style="object-position:left top"></button>
+      <button type="button" class="ph ph1 w2" data-app="tab" aria-label="Таблички: детальніше"><img src="img/screens/tab-1.jpg" alt=""></button>
+      <button type="button" class="ph ph2 w2" data-app="alena" aria-label="Сайт Альони Ткачової: детальніше"><img src="img/screens/alena-home.jpg" alt=""></button>
+      <button type="button" class="ph ph3 w2" data-app="note" aria-label="Нотатник з віджетом: детальніше"><div class="mk mk-note"><div class="mk-wall"></div><div class="mk-w"><b><span class="u">Сьогодні</span><span class="e">Today</span></b><span>🌿 <span class="u">полити квіти</span><span class="e">water the plants</span></span><span>☕ <span class="u">купити каву</span><span class="e">buy coffee</span></span><span>💍 <span class="u">забрати замовлення</span><span class="e">pick up the order</span></span><span class="dim">✅ <span class="u">звірити касу</span><span class="e">check the fund</span></span></div><div class="mk-icons"><i></i><i></i><i></i><i></i></div></div></button>
+    </div>
+    <span class="tap"><span class="u">Натисніть на телефон</span><span class="e">Tap a phone</span></span>
+    <div class="caps w1">
+      <button type="button" data-app="kasa"><b><span class="u">Каса класу</span><span class="e">Class Fund</span></b><span><span class="u">«а я ж здавала!»</span><span class="e">“but I did pay!”</span></span></button>
+      <button type="button" data-app="oblik"><b><span class="u">Облік майстерні</span><span class="e">Workshop Ledger</span></b><span><span class="u">метал до грама</span><span class="e">metal to the gram</span></span></button>
+      <button type="button" data-app="zp"><b><span class="u">Зарплата команди</span><span class="e">Team Payroll</span></b><span><span class="u">у кожного своя формула</span><span class="e">everyone has a formula</span></span></button>
+    </div>
+    <div class="caps w2">
+      <button type="button" data-app="tab"><b><span class="u">Таблички</span><span class="e">Signs</span></b><span><span class="u">«що я вам привіз?»</span><span class="e">“what did I bring you?”</span></span></button>
+      <button type="button" data-app="alena"><b><span class="u">Сайт Альони Ткачової</span><span class="e">Alena Tkachova's site</span></b><span><span class="u">один дім для всіх напрямів</span><span class="e">one home for every direction</span></span></button>
+      <button type="button" data-app="note"><b><span class="u">Нотатник</span><span class="e">Notes</span></b><span><span class="u">просто на екрані</span><span class="e">right on the screen</span></span></button>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- WRITE -->
+<section data-bg="#4A1019" class="scene" id="write">
+  <div class="stage">
+    <div class="bookbox"><div class="fall" aria-hidden="true"><span style="--s:.42;--dx:-60px;--r:-18deg">silence</span><span style="--s:.48;--dx:40px;--r:12deg">I am</span><span style="--s:.53;--dx:-20px;--r:24deg">breath</span><span style="--s:.58;--dx:70px;--r:-10deg">the space</span><span style="--s:.63;--dx:-80px;--r:8deg">presence</span><span style="--s:.68;--dx:10px;--r:-22deg">remains</span><span style="--s:.73;--dx:55px;--r:16deg">fades</span></div><div class="book" aria-label="Echoes of Silence"><div class="front"></div><div class="back"></div><div class="spine"><i>Echoes of Silence · Ti Ost</i></div><div class="pages"></div><div class="top"></div></div></div>
+    <div class="wtext">
+      <span class="kick"><span class="u">Рубрика · Пишу</span><span class="e">Section · I write</span></span>
+      <h2>Echoes of Silence</h2>
+      <blockquote>Within silence, I found myself again.</blockquote>
+      <p><span class="u">Моя перша поетична збірка, англійською. Чотири розділи: The Missing Piece → The Tremble → The Edge → Becoming.</span><span class="e">My first poetry collection. Four chapters: The Missing Piece → The Tremble → The Edge → Becoming.</span></p>
+      <a href="https://www.amazon.com/dp/B0F67QDHLL" target="_blank" rel="noopener"><span class="u">Читати на Amazon ↗</span><span class="e">Read on Amazon Kindle ↗</span></a>
+    </div>
+  </div>
+</section>
+
+<section data-bg="#4A1019" class="poem">
+<pre lang="en" id="poem"><span class="ln">I am not my pain.</span><span class="ln">I am not my past.</span><span class="ln">I am not my thoughts.</span>
+<span class="ln">I am</span><span class="ln">the breath in between —</span>
+<span class="ln">the space</span><span class="ln">that holds it all,</span>
+<span class="ln"><em>the presence that remains</em></span><span class="ln"><em>when everything else</em></span><span class="ln"><em>fades.</em></span><span class="src"><span class="u">«I Am» · вірш мовою оригіналу</span><span class="e">«I Am» · Echoes of Silence</span></span></pre>
+</section>
+
+<section data-bg="#4A1019" class="lisa scene" id="lisa" data-mode="in">
+  <div class="flood" id="flood" aria-hidden="true"></div>
+  <div class="vert" aria-hidden="true"><span class="u">Ліса</span><span class="e">Lisa</span></div>
+  <figure class="lfig">
+    <img src="img/cafe-look.jpg" alt="Ti Ost, чорно-біле фото" loading="lazy">
+    <div class="notif" data-at=".38"><i></i><span><b><span class="u">Невідомий номер</span><span class="e">Unknown number</span></b><small><span class="u">1 нове повідомлення</span><span class="e">1 new message</span></small></span></div>
+  </figure>
+  <div class="txt">
+    <span class="kick"><span class="u">Книга в роботі</span><span class="e">Book in progress</span></span>
+    <h3><span class="u">Роман про жінку, яка все контролює і дуже хоче, щоб її побачили.</span><span class="e">A novel about a woman who controls everything and badly wants to be seen.</span></h3>
+    <p><span class="u">Робоча назва «Ліса». Всесвіт іронічно коментує її життя, а з невідомого номера приходять повідомлення.</span><span class="e">Working title «Lisa». The Universe comments on her life with irony, and messages arrive from an unknown number.</span></p>
+    <p class="honest"><span class="u">Почала залпом: думки летіли швидше, ніж я встигала записувати. Потім закинула і половину забула. Коли допишу, сама не знаю.</span><span class="e">I started in one breath: thoughts came faster than I could write them down. Then I put it aside and forgot half of it. When will I finish? I honestly don't know.</span></p>
+    <div class="seal" data-at=".5" aria-label="Роман пишеться"><svg viewBox="0 0 140 140" aria-hidden="true">
+      <defs><filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.5"/><feComposite in="SourceGraphic" operator="in"/></filter>
+      <path id="ring" d="M70 70 m-50 0 a50 50 0 1 1 100 0 a50 50 0 1 1 -100 0"/></defs>
+      <g filter="url(#ink)">
+        <circle cx="70" cy="70" r="66" fill="none" stroke="currentColor" stroke-width="3"/>
+        <circle cx="70" cy="70" r="60" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="70" cy="70" r="38" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <g class="u"><text font-size="10"><textPath href="#ring" textLength="306" lengthAdjust="spacing">Ti Ost · роман · в роботі · 2026 ·</textPath></text><text x="70" y="75" text-anchor="middle" font-size="13" letter-spacing="1.5">пишеться</text></g>
+        <g class="e"><text font-size="10"><textPath href="#ring" textLength="306" lengthAdjust="spacing">Ti Ost · a novel · in progress · 2026 ·</textPath></text><text x="70" y="75" text-anchor="middle" font-size="13" letter-spacing="1.5">writing</text></g>
+      </g></svg></div>
+  </div>
+</section>
+
+<section data-bg="#3B1F17" class="dreams scene" id="dreams" data-mode="in">
+  <div class="haze" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="head"><span class="kick"><span class="u">Рубрика · Просто мрії</span><span class="e">Section · Just dreams</span></span>
+    <h2><span class="u">Про що я мрію</span><span class="e">What I dream about</span></h2>
+    <p class="maybe"><span class="u">Не знаю, чи вдасться. Це величезний шлях: кошти, люди, дозволи, місце. Але мріяти ж можна.</span><span class="e">I don't know if it will happen. It's a huge road: money, people, permits, a place. But dreaming is allowed.</span></p></div>
+  <div class="bubbles">
+    <article class="dream b1" data-tilt><h3><span class="u">Острів</span><span class="e">An island</span></h3><p><span class="u">Де кожен робить те, що любить, і разом будують життя: хтось будує, хтось лікує, хтось вчить, хтось пече хліб.</span><span class="e">Where everyone does what they love and builds a life together: someone builds, someone heals, someone teaches, someone bakes bread.</span></p></article>
+    <article class="dream b2" data-tilt><h3><span class="u">Теплий дім для людей у віці</span><span class="e">A warm home for older people</span></h3><p><span class="u">Лікар, гарячий душ і їжа, шахи, лото з бочечками, театр і танці. І люди, яким справді цікаво слухати.</span><span class="e">A doctor, a hot shower and meals, chess, bingo with barrels, theatre and dancing. And people who truly love to listen.</span></p></article>
+    <article class="dream b3" data-tilt><h3><span class="u">Школа, в яку хочеться</span><span class="e">A school kids want to go to</span></h3><p><span class="u">Безоплатна, з вчителями з покликання, басейном і тенісними кортами.</span><span class="e">Free, with teachers by calling, a pool and tennis courts.</span></p></article>
+  </div>
+  <p class="whisper"><span class="u">…а може, колись</span><span class="e">…maybe, someday</span></p>
+</section>
+
+<section data-bg="#3B1F17" class="about scene" id="about" data-mode="in">
+  <div class="iv">
+    <figure class="afig" data-tilt><img src="img/stool.jpg" alt="Ti Ost, чорно-біле фото" loading="lazy"><figcaption>Ti Ost · <span class="u">Тетяна</span><span class="e">Tetiana</span></figcaption></figure>
+    <div class="iv-txt">
+      <span class="kick"><span class="u">Рубрика · Інтерв'ю на хвилину</span><span class="e">Section · A one-minute interview</span></span>
+      <h2><span class="u">Про мене</span><span class="e">About</span></h2>
+      <blockquote class="pull" data-at=".1"><span class="u">«Я люблю креативні речі й люблю, коли все працює <em>зручно</em>.»</span><span class="e">“I love creative things, and I love it when everything works <em>easily</em>.”</span></blockquote>
+      <dl class="qa">
+        <div data-at=".15"><dt><span class="u">— Ви програміст?</span><span class="e">— Are you a programmer?</span></dt><dd><span class="u">Ні. Я спершу <mark>розбираюсь, як влаштований процес</mark>, а вже потім думаю, що з ним можна зробити.</span><span class="e">No. First I <mark>figure out how the process works</mark>, and only then think about what to do with it.</span></dd></div>
+        <div data-at=".2"><dt><span class="u">— Чим займаєтесь зараз?</span><span class="e">— What do you do now?</span></dt><dd><span class="u">Я <mark>операційний менеджер</mark> у приватній компанії: процеси, команда, зарплати, постачальники.</span><span class="e">I'm an <mark>operations manager</mark> at a private company: processes, the team, payroll, suppliers.</span></dd></div>
+        <div data-at=".25"><dt><span class="u">— А до того?</span><span class="e">— And before that?</span></dt><dd><span class="u">Була <mark>адміністратором школи польської мови</mark> у Варшаві, дистанційно. А ще раніше <mark>керувала філією школи англійської</mark> в Житомирі.</span><span class="e">I was a <mark>remote administrator at a Polish language school</mark> in Warsaw. Before that I <mark>ran a branch of an English school</mark> in Zhytomyr.</span></dd></div>
+        <div data-at=".3"><dt><span class="u">— Що для вас головне?</span><span class="e">— What matters most to you?</span></dt><dd><span class="u">Щоб <mark>людині досить було натиснути кнопку</mark>. А наостанок трохи кольору і краси, бо зручне має бути ще й приємним.</span><span class="e">That <mark>a person only has to press a button</mark>. And then a little colour and beauty, because useful should also feel good.</span></dd></div>
+        <div data-at=".35"><dt><span class="u">— А ввечері?</span><span class="e">— And in the evening?</span></dt><dd><span class="u"><mark>Пишу.</mark> Письмо — мій спосіб дихати.</span><span class="e"><mark>I write.</mark> Writing is my way of breathing.</span></dd></div>
+      </dl>
+      <p class="aside" data-at=".4"><span class="u">«Перекладачка з мови „у нас так заведено“ на мову, яку розуміє телефон.» Так мене описав Claude, AI, з яким я будую застосунки.</span><span class="e">“A translator from ‘this is how we've always done it’ into a language a phone understands.” That's how Claude, the AI I build apps with, described me.</span></p>
+    </div>
+  </div>
+</section>
+
+<section data-bg="#24170F" class="now scene" id="now" data-mode="in">
+  <div class="in">
+    <div class="top"><div style="display:flex;flex-direction:column;gap:12px"><span class="kick"><span class="u">Рубрика · Зараз</span><span class="e">Section · Now</span></span><h2><span class="u">Над чим я працюю</span><span class="e">What I'm working on</span></h2></div><span class="upd"><span class="u">оновлено: жовтень 2026</span><span class="e">updated: October 2026</span></span></div>
+    <div class="nl">
+      <div><span class="w"><span class="u">Пишу</span><span class="e">Write</span></span><b><span class="u">Пишеться роман <i>«Ліса»</i></span><span class="e">Writing the novel <i>«Lisa»</i></span></b><em><span class="u">пишеться</span><span class="e">writing</span></em></div>
+      <div><span class="w"><span class="u">Пишу</span><span class="e">Write</span></span><b><span class="u">Збираю двомовну <i>поетичну збірку</i> для сайту</span><span class="e">Gathering a bilingual <i>poetry collection</i> for this site</span></b><em><span class="u">у процесі</span><span class="e">in progress</span></em></div>
+      <div><span class="w"><span class="u">Створюю</span><span class="e">Build</span></span><b><span class="u">Зарплата команди: довідник артикулів і зв'язок з CRM</span><span class="e">Team payroll: product catalogue and CRM sync</span></b><em><span class="u">далі</span><span class="e">next</span></em></div>
+      <div><span class="w"><span class="u">Створюю</span><span class="e">Build</span></span><b><span class="u">Сайт для йоги збирається під одну адресу</span><span class="e">The yoga website comes together under one address</span></b><em><span class="u">у процесі</span><span class="e">in progress</span></em></div>
+      <div><span class="w"><span class="u">Створюю</span><span class="e">Build</span></span><b><span class="u">Облік майстерні як застосунок для Android</span><span class="e">Workshop Ledger as an Android app</span></b><em><span class="u">далі</span><span class="e">next</span></em></div>
+    </div>
+    <div class="next" id="nextCard" data-at=".45" data-tilt><span class="kick"><span class="u">Завжди</span><span class="e">Always</span></span><b><span class="u">Вигадую наступну штуку, яку, мабуть, не планувала робити.</span><span class="e">Dreaming up the next thing I probably didn't plan to make.</span></b><p><span class="u">Так з'явився і цей сайт: несподівано й раптово.</span><span class="e">That's how this site happened too: out of the blue.</span></p></div>
+  </div>
+</section>
+
+<section data-bg="#1A120E" class="end scene" id="contact" data-mode="in">
+  <div class="flipper" id="flipper" aria-hidden="true"><div class="fl-in"><div class="mini fa"><div class="disc"><div class="lab"><span>side A</span></div></div></div><div class="mini fb"><div class="disc"><div class="lab"><span>side B</span></div></div></div></div></div>
+  <p class="turn"><span class="u">Side A була моя. <b>Side B — ваша черга.</b></span><span class="e">Side A was mine. <b>Side B is your turn.</b></span></p>
+  <div class="chat" aria-live="polite">
+    <div class="who"><span class="ava">TO</span><span><b>Ti Ost</b><small><span class="u">зазвичай відповідає в Telegram</span><span class="e">usually replies on Telegram</span></small></span></div>
+    <div class="typing" data-step="0" data-stop="1"><i></i><i></i><i></i></div>
+    <p class="bub" data-step="1"><span class="u">Привіт! Є ідея, питання чи просто хочеться поговорити?</span><span class="e">Hi! Got an idea, a question, or just want to talk?</span></p>
+    <div class="typing" data-step="2" data-stop="3"><i></i><i></i><i></i></div>
+    <p class="bub" data-step="3"><span class="u">Пишіть. Навіть якщо ідея ще сира.</span><span class="e">Write to me. Even if the idea is still raw.</span></p>
+    <form class="yours" data-step="4" id="msgForm" autocomplete="off">
+      <label for="msgText" class="sr"><span class="u">Ваше повідомлення</span><span class="e">Your message</span></label>
+      <textarea id="msgText" rows="1" placeholder=""></textarea>
+      <a class="send" id="msgSend" href="https://t.me/Ti0st" target="_blank" rel="noopener" aria-label="Надіслати в Telegram">↑</a>
+    </form>
+    <p class="how" data-step="4"><span class="u">Напишіть тут і натисніть стрілку: відкриється мій Telegram. Текст також скопіюється, тож якщо він не підставився, просто вставте його.</span><span class="e">Type here and tap the arrow: my Telegram opens. Your text is copied too, so if it doesn't appear, just paste it.</span></p>
+  </div>
+  <div class="btns" data-step="4"><a class="tg mag" href="https://t.me/Ti0st" target="_blank" rel="noopener"><span class="u">Написати в Telegram</span><span class="e">Message me on Telegram</span></a>
+  <a class="ml mag" id="mailBtn" href="mailto:tostroglyad@gmail.com"><span class="u">Написати на пошту</span><span class="e">Send an email</span></a></div>
+</section>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="bg" data-close></div>
+  <div class="panel" id="panel" tabindex="-1"></div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* language */
+  var lang='ua';try{lang=localStorage.getItem('tiost-lang')||'ua'}catch(e){}
+  function setLang(l){lang=l;root.setAttribute('data-lang',l);root.lang=l==='ua'?'uk':'en';
+    document.querySelectorAll('.lang button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.l===l))});
+    try{localStorage.setItem('tiost-lang',l)}catch(e){}
+    document.querySelectorAll('.card').forEach(function(c){var t=c._t;if(t)c.textContent=t[l]||t.ua});}
+  document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l)})});
+  setLang(lang);
+
+  /* live 3D thoughts */
+  var T=[
+    {go:'app:kasa',ua:'хто здав на екскурсію?',en:'who paid for the trip?',k:'hand',bg:'#E2A544',fg:'#24170F'},
+    {go:'app:kasa',ua:'6 510 ₴',en:'6 510 ₴',k:'num',bg:'#C4D15C',fg:'#24170F'},
+    {go:'#write',ua:'Echoes of Silence',en:'Echoes of Silence',k:'serif',bg:'#140d0a',fg:'#F3E8D6'},
+    {go:'#now',ua:'Пн чи Пт?',en:'Mon or Fri?',k:'hand',bg:'#FBF5EA',fg:'#24170F'},
+    {go:'app:zp',ua:'четвер: на зміні нікого',en:'Thursday: nobody on shift',k:'',bg:'#D2612C',fg:'#FBF5EA'},
+    {go:'#about',ua:'постачальник з Китаю',en:'supplier in China',k:'',bg:'#A3B34A',fg:'#24170F'},
+    {go:'app:oblik',ua:'24,86 г',en:'24.86 g',k:'num',bg:'#C9907F',fg:'#24170F'},
+    {go:'#write',ua:'новий рядок вірша…',en:'a new line of a poem…',k:'serif',bg:'#140d0a',fg:'#F3E8D6'},
+    {go:'#build',ua:'знову зламалась формула',en:'the formula broke again',k:'hand',bg:'#8E2433',fg:'#FBF5EA'},
+    {go:'#build',ua:'а якщо зробити це в телефоні?',en:'what if it lived on a phone?',k:'',bg:'#FBF5EA',fg:'#24170F'},
+    {go:'#build',ua:'де той файл?',en:'where is that file?',k:'hand',bg:'#C4D15C',fg:'#24170F'},
+    {go:'#dreams',ua:'острів…',en:'an island…',k:'serif',bg:'#E2A544',fg:'#24170F'}
+  ];
+  var MAX=window.innerWidth<700?5:7;
+  var SLOTS=window.innerWidth<700?[[30,8],[70,24],[34,42],[66,60],[36,80],[64,94]]:[[22,12],[70,10],[42,30],[82,34],[16,46],[58,52],[30,70],[78,72],[48,88],[12,86]];
+  var box=document.getElementById('thoughts'),busy={},shown={},queue=0;
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  function spawn(delay){if(!box)return;
+    var free=SLOTS.map(function(_,i){return i}).filter(function(i){return !busy[i]});
+    var pool=T.map(function(_,i){return i}).filter(function(i){return !shown[i]});
+    if(!free.length||!pool.length)return;
+    var si=free[Math.floor(Math.random()*free.length)],ti=pool[Math.floor(Math.random()*pool.length)],t=T[ti],s=SLOTS[si];
+    busy[si]=1;shown[ti]=1;
+    var w=document.createElement('div');w.className='th';
+    w.style.setProperty('--x',(s[0]+rnd(-4,4))+'%');w.style.setProperty('--y',(s[1]+rnd(-3,3))+'%');
+    var c=document.createElement('button');c.type='button';c.className='card '+t.k;c._t=t;c.textContent=t[lang];
+    c.style.cssText='--bg:'+t.bg+';--fg:'+t.fg+';--rx:'+rnd(-35,35).toFixed(1)+'deg;--ry:'+rnd(-45,45).toFixed(1)+'deg;--rz:'+rnd(-8,8).toFixed(1)+'deg;--z:'+rnd(-60,90).toFixed(0)+'px;--life:'+rnd(5.2,7.4).toFixed(2)+'s;--d:'+(delay||0)+'s';
+    function done(){if(!w.parentNode)return;w.remove();delete busy[si];delete shown[ti];if(!reduce)spawn(rnd(.1,.6))}
+    c.addEventListener('animationend',done);
+    c.addEventListener('click',function(){c.classList.add('pop');var g=t.go;setTimeout(function(){if(g.indexOf('app:')===0)openApp(g.slice(4),c);else{var el=document.querySelector(g);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth'})}},260)});
+    w.appendChild(c);box.appendChild(w);
+    var bw=box.clientWidth,cw=c.offsetWidth,cx=bw*parseFloat(w.style.getPropertyValue('--x'))/100;
+    cx=Math.max(cw/2+6,Math.min(bw-cw/2-6,cx));w.style.setProperty('--x',cx+'px');
+  }
+  if(reduce){for(var i=0;i<8;i++)spawn(0)}
+  else{
+    for(var j=0;j<Math.min(6,MAX);j++)spawn(-rnd(.8,4));         /* board is already full at first frame */
+    setInterval(function(){if(box&&box.children.length<MAX)spawn(0)},1100);
+  }
+
+  /* scroll scenes */
+  var scenes=[].slice.call(document.querySelectorAll('.scene,.cover'));
+  var prog=document.querySelector('.prog'),lines=[].slice.call(document.querySelectorAll('#poem .ln')),tick=false;
+  function cl(v){return v<0?0:v>1?1:v}
+  function update(){
+    tick=false;var vh=window.innerHeight;
+    prog.style.setProperty('--sp',cl(window.scrollY/(root.scrollHeight-vh)));
+    bar.classList.toggle('solid',window.scrollY>vh*.6);spy();
+    if(reduce)return;
+    scenes.forEach(function(s){var r=s.getBoundingClientRect(),p;
+      if(s.querySelector('.stage'))p=cl(-r.top/Math.max(1,r.height-vh));
+      else if(s.id==='cover')p=cl(-r.top/r.height);
+      else p=cl((vh-r.top)/(r.height+vh)*1.6);
+      s.style.setProperty('--p',p.toFixed(4))});
+    lines.forEach(function(l){l.classList.toggle('on',l.getBoundingClientRect().top<vh*.62)});
+  }
+  window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update)}},{passive:true});
+  window.addEventListener('resize',update);
+
+
+  /* hero: chaos → system → words → rhythm */
+  (function(){
+    var hero=document.getElementById('cover'),field=document.getElementById('field'),phone=document.getElementById('phone'),rec=document.getElementById('rec');
+    if(!hero||!field)return;
+    var caps=[].slice.call(hero.querySelectorAll('.cap>div')),dots=[].slice.call(hero.querySelectorAll('.dots i'));
+    // chaos items that become app rows (row: label | value | state)
+    var ROWS=[
+      {c:{ua:'хто здав на екскурсію?',en:'who paid for the trip?'},k:'hand',bg:'#E2A544',fg:'#24170F',r:{ua:['Екскурсія','27 з 30'],en:['School trip','27 of 30']},s:'ok'},
+      {c:{ua:'6 510 ₴',en:'6 510 ₴'},k:'',bg:'#C4D15C',fg:'#24170F',r:{ua:['Каса класу','6 510 ₴'],en:['Class fund','6 510 ₴']},s:''},
+      {c:{ua:'=SUM(B2:B9)',en:'=SUM(B2:B9)'},k:'cell',bg:'#FBF5EA',fg:'#24170F',r:{ua:['Разом за місяць','18 240 ₴'],en:['Month total','18 240 ₴']},s:''},
+      {c:{ua:'24,86 г',en:'24.86 g'},k:'',bg:'#C9907F',fg:'#24170F',r:{ua:['Срібло, залишок','24,86 г'],en:['Silver left','24.86 g']},s:''},
+      {c:{ua:'четвер: на зміні нікого',en:'Thursday: nobody on shift'},k:'',bg:'#D2612C',fg:'#FBF5EA',r:{ua:['Четвер','2 на зміні'],en:['Thursday','2 on shift']},s:'ok'},
+      {c:{ua:'#REF!',en:'#REF!'},k:'cell',bg:'#8E2433',fg:'#FBF5EA',r:{ua:['Формули','працюють'],en:['Formulas','working']},s:'ok'},
+      {c:{ua:'Пн чи Пт?',en:'Mon or Fri?'},k:'hand',bg:'#FBF5EA',fg:'#24170F',r:{ua:['Йога','Пн і Пт'],en:['Yoga','Mon & Fri']},s:''},
+      {c:{ua:'постачальник з Китаю',en:'supplier in China'},k:'',bg:'#A3B34A',fg:'#24170F',r:{ua:['Постачальник','знайдено'],en:['Supplier','found']},s:'ok'}
+    ];
+    // chaos items that scatter away when order appears
+    var EXTRA=[
+      {c:{ua:'знову зламалась формула',en:'the formula broke again'},k:'hand',bg:'#8E2433',fg:'#FBF5EA'},
+      {c:{ua:'де той файл?',en:'where is that file?'},k:'hand',bg:'#C4D15C',fg:'#24170F'},
+      {c:{ua:'ЧЕК\n340,00 ₴',en:'RECEIPT\n340.00 ₴'},k:'rcpt',bg:'#F6EFE3',fg:'#24170F'},
+      {c:{ua:'ЧЕК\n1 190,00 ₴',en:'RECEIPT\n1 190.00 ₴'},k:'rcpt',bg:'#F6EFE3',fg:'#24170F'},
+      {c:{ua:'Viber · 312 нових',en:'Viber · 312 new'},k:'',bg:'#6E5FA8',fg:'#FBF5EA'},
+      {c:{ua:'новий рядок вірша…',en:'a new line of a poem…'},k:'serif',bg:'#140d0a',fg:'#F3E8D6'},
+      {c:{ua:'аванс?',en:'advance?'},k:'hand',bg:'#E2A544',fg:'#24170F'},
+      {c:{ua:'A1',en:'A1'},k:'cell',bg:'#FBF5EA',fg:'#24170F'}
+    ];
+    function rnd(a,b){return a+Math.random()*(b-a)}
+    var items=[];
+    function mk(d,isRow,i){
+      var el=document.createElement('div');el.className='bit';
+      var ch=document.createElement('div');ch.className='ch';var sp=document.createElement('span');sp.className=d.k;sp.style.cssText='--bg:'+d.bg+';--fg:'+d.fg;if(d.k==='rcpt')sp.style.whiteSpace='pre';ch.appendChild(sp);el.appendChild(ch);
+      var rw=null;if(isRow){rw=document.createElement('div');rw.className='rw';rw.innerHTML='<span></span><em class="'+d.s+'"></em>';el.appendChild(rw)}
+      field.appendChild(el);
+      var it={el:el,ch:ch,sp:sp,rw:rw,d:d,row:isRow?i:-1,
+        x:rnd(-.46,.46),y:rnd(-.18,.40),z:rnd(-260,160),rx:rnd(-40,40),ry:rnd(-50,50),rz:rnd(-24,24),
+        ph:rnd(0,6.28),sp2:rnd(.4,.9),ox:rnd(-1,1),oy:rnd(-1,1)};
+      items.push(it);return it;
+    }
+    ROWS.forEach(function(d,i){mk(d,true,i)});
+    EXTRA.forEach(function(d){mk(d,false)});
+    function text(){items.forEach(function(it){it.sp.textContent=it.d.c[lang]||it.d.c.ua;if(it.rw){var r=it.d.r[lang]||it.d.r.ua;it.rw.children[0].textContent=r[0];it.rw.children[1].textContent=r[1]}})}
+    text();
+    document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',text)});
+
+    var W,H,pw,ph,rd,py;
+    function geo(){var st=hero.querySelector('.stage');W=st.clientWidth;H=st.clientHeight;
+      pw=Math.min(290,W*.6);ph=Math.min(pw*2.05,H*.6);py=H*.62;rd=Math.min(pw*1.25,W*.82,H*.5);
+      hero.style.setProperty('--pw',pw+'px');hero.style.setProperty('--ph',ph+'px');hero.style.setProperty('--py',py+'px');hero.style.setProperty('--rd',rd+'px');
+      var rowW=pw-34;items.forEach(function(it){it.el.style.setProperty('--rw',(it.row>=0?rowW:rowW)+'px');it.el.style.setProperty('--cy',py+'px')});
+    }
+    geo();window.addEventListener('resize',geo);
+
+    function cl(v){return v<0?0:v>1?1:v}
+    function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+    function seg(p,a,b){return cl((p-a)/(b-a))}
+    var t0=performance.now(),stage=-1;
+    function frame(now){
+      var p=reduce?1:(parseFloat(hero.style.getPropertyValue('--p'))||0),time=(now-t0)/1000;
+      var a=ease(seg(p,.08,.36));          // chaos → rows
+      var flip=ease(seg(p,.46,.64));       // phone flips to the poem
+      var m=ease(seg(p,.74,.92));          // phone → record
+      var rowTop=-ph/2+84,rowGap=Math.min(44,(ph-110)/ROWS.length);
+      items.forEach(function(it){
+        var fx=it.x*W+Math.sin(time*it.sp2+it.ph)*14*it.ox,fy=it.y*H-(py-H/2)+Math.cos(time*it.sp2+it.ph)*12*it.oy;
+        var tx,ty,tz,rx,ry,rz,sc,op,co;
+        if(it.row>=0){
+          var ty2=rowTop+it.row*rowGap+18;
+          tx=fx*(1-a);ty=fy*(1-a)+ty2*a;tz=it.z*(1-a);rx=it.rx*(1-a);ry=it.ry*(1-a);rz=it.rz*(1-a);sc=1;
+          co=seg(a,.7,1);op=a>=1&&flip>0?0:1;
+        }else{
+          var out=ease(seg(p,.12,.34));
+          tx=fx+it.ox*W*.7*out;ty=fy+it.oy*H*.6*out;tz=it.z+400*out;rx=it.rx;ry=it.ry;rz=it.rz+40*out*it.ox;sc=1;op=1-out;co=0;
+        }
+        it.el.style.transform='translate3d('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px,'+tz.toFixed(1)+'px) rotateX('+rx.toFixed(1)+'deg) rotateY('+ry.toFixed(1)+'deg) rotateZ('+rz.toFixed(1)+'deg) scale('+sc+')';
+        it.el.style.opacity=op;it.ch.style.opacity=1-co;if(it.rw)it.rw.style.opacity=co;
+      });
+      // phone body fades in under the rows, then flips, then melts into the record
+      var fo=seg(a,.55,1);phone.style.setProperty('--fo',fo);
+      var morph=m;phone.style.transform='rotateY('+(flip*180).toFixed(1)+'deg) scale('+(1-morph*.55).toFixed(3)+')';
+      phone.style.opacity=fo>0?(1-seg(m,.35,.8)):0;
+      phone.style.setProperty('--pr',(34+morph*160)+'px');
+      rec.style.setProperty('--ro',seg(m,.3,.9));rec.style.setProperty('--rs',(.55+.45*m).toFixed(3));
+      var s=p<.3?0:p<.5?1:p<.76?2:3;
+      if(s!==stage){stage=s;caps.forEach(function(c,i){c.classList.toggle('on',i===s)});dots.forEach(function(d,i){d.classList.toggle('on',i===s)})}
+      if(!reduce)requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+
+
+  /* ===== motion layer ===== */
+  if(!reduce)root.classList.add('anim');
+  // Lisa letters
+  document.querySelectorAll('.lisa .vert .u,.lisa .vert .e').forEach(function(el){
+    var t=el.textContent;el.textContent='';t.split('').forEach(function(ch,i){var sp=document.createElement('span');sp.className='l';sp.style.setProperty('--d',(.06+i*.07).toFixed(2));sp.textContent=ch;el.appendChild(sp)})});
+  // About quote: words light up with scroll
+  function splitWords(el){[].slice.call(el.childNodes).forEach(function(n){
+    if(n.nodeType===3){var f=document.createDocumentFragment();n.textContent.split(/(\s+)/).forEach(function(w){if(!w)return;if(/^\s+$/.test(w)){f.appendChild(document.createTextNode(w))}else{var sp=document.createElement('span');sp.className='w';sp.textContent=w;f.appendChild(sp)}});n.replaceWith(f)}
+    else if(n.nodeType===1&&n.tagName!=='MARK')splitWords(n);
+    else if(n.nodeType===1){n.classList.add('w')}})}
+  var aq=null;
+  var mScenes=[].slice.call(document.querySelectorAll('[data-mode="in"]'));
+  function motion(){
+    mScenes.forEach(function(sc){var p=parseFloat(sc.style.getPropertyValue('--p'))||0;
+      var vh=innerHeight;sc.querySelectorAll('[data-at]').forEach(function(el){var a=parseFloat(el.dataset.at),u=el.dataset.until?parseFloat(el.dataset.until):9,on;if(sc.id==='contact')on=p>=a&&p<u;else on=el.getBoundingClientRect().top<vh*(.92-a*.25);el.classList.toggle('in',reduce||on)});
+      if(sc.id==='about'&&aq){var qp=Math.max(0,Math.min(1,(innerHeight*.85-aq.getBoundingClientRect().top)/(innerHeight*.45)));aq.querySelectorAll('.u,.e').forEach(function(g){var ws=g.querySelectorAll('.w');ws.forEach(function(w,i){w.classList.toggle('on',reduce||qp>i/ws.length)})})}
+    });
+  }
+  // keep finished items shown once revealed (except typing dots)
+  var shown=new WeakSet();
+  var _motion=motion;motion=function(){_motion();document.querySelectorAll('[data-at].in').forEach(function(el){if(!el.dataset.until)shown.add(el)});document.querySelectorAll('[data-at]').forEach(function(el){if(shown.has(el))el.classList.add('in')})};
+  window.addEventListener('scroll',function(){requestAnimationFrame(motion)},{passive:true});
+  motion();
+  // pointer tilt
+  if(!reduce&&window.matchMedia('(hover:hover)').matches){
+    document.querySelectorAll('[data-tilt]').forEach(function(el){
+      el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.setProperty('--ty',(x*10).toFixed(2)+'deg');el.style.setProperty('--tx',(-y*10).toFixed(2)+'deg')});
+      el.addEventListener('pointerleave',function(){el.style.setProperty('--ty','0deg');el.style.setProperty('--tx','0deg')});
+    });
+    // magnetic buttons + side B speeds up
+    var sideB=document.getElementById('sideB');
+    document.querySelectorAll('.mag').forEach(function(b){
+      b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)*.25).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*.35).toFixed(1)+'px)';});
+      b.addEventListener('pointerleave',function(){b.style.transform='';});
+    });
+  }
+  // idea sparks around the "next thing" card
+  var nc=document.getElementById('nextCard');
+  var IDEAS={ua:['а давай?','трошечки кольору','прям кайфушно','коротше…','а що як…?','давай подумаємо','тикнув — і все','ой, прикольно'],en:['why not?','a little colour','so good','long story short…','what if…?','let’s think','one tap and done','oh, that’s fun']};
+  if(nc&&!reduce){var ii=0;setInterval(function(){
+    var r=nc.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight||!nc.classList.contains('in'))return;
+    var sp=document.createElement('span');sp.className='spark';var list=IDEAS[lang]||IDEAS.ua;sp.textContent=list[ii++%list.length];
+    var side=Math.random()<.5,x=side?4+Math.random()*20:38+Math.random()*14;sp.style.left=x+'%';sp.style.top=(Math.random()*50+5)+'%';
+    sp.style.setProperty('--sx',(side?-1:1)*(6+Math.random()*16)+'px');sp.style.setProperty('--sy',-(50+Math.random()*60)+'px');sp.style.setProperty('--sr',(Math.random()*20-10).toFixed(0)+'deg');
+    nc.appendChild(sp);setTimeout(function(){sp.remove()},2700)},1500)}
+
+
+  /* Lisa: a flood of thoughts that later gets forgotten */
+  (function(){
+    var fl=document.getElementById('flood'),sec=document.getElementById('lisa');if(!fl||!sec)return;
+    var W={ua:['контроль','побачте мене','сама','Всесвіт сміється','невідомий номер','розділ 1','а далі?','ідея!','записати, швидше','не встигаю','структура…','що я хотіла?','забула…','…'],
+           en:['control','see me','alone','the Universe laughs','unknown number','chapter 1','and then?','an idea!','write it, quick','can’t keep up','structure…','what did I want?','forgot…','…']};
+    var els=[];
+    function rnd(a,b){return a+Math.random()*(b-a)}
+    function build(){fl.innerHTML='';els=[];var list=W[lang]||W.ua;
+      list.forEach(function(t,i){var sp=document.createElement('span');var k=i%5===0?'s':i%7===0?'m':'';if(k)sp.className=k;sp.textContent=t;
+        sp.style.fontSize=(k==='s'?rnd(20,28):rnd(16,28)).toFixed(0)+'px';fl.appendChild(sp);
+        els.push({el:sp,x:rnd(.02,.88),y:rnd(.04,.92),fx:rnd(-.5,.5),fy:rnd(-.4,.4),r:rnd(-8,8),d:rnd(0,.3),f:rnd(0,.3),op:rnd(.18,.42)})})}
+    build();document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',build)});
+    function cl(v){return v<0?0:v>1?1:v}
+    function tick(){
+      var p=reduce?1:(parseFloat(sec.style.getPropertyValue('--p'))||0),w=sec.clientWidth,h=sec.clientHeight;
+      els.forEach(function(e){
+        var a=cl((p-.04-e.d*.5)/.36);           // rush in
+        var g=cl((p-.52-e.f*.6)/.22);           // forgotten
+        var ea=1-Math.pow(1-a,3);
+        var x=(e.x+e.fx*(1-ea))*w,y=(e.y+e.fy*(1-ea))*h-g*60;
+        e.el.style.transform='translate('+x.toFixed(0)+'px,'+y.toFixed(0)+'px) rotate('+(e.r*(1-ea*.5)).toFixed(1)+'deg) scale('+(1.15-.15*ea).toFixed(2)+')';
+        e.el.style.opacity=(e.op*ea*(1-g)).toFixed(3);
+        e.el.style.filter='blur('+((1-ea)*3+g*6).toFixed(1)+'px)';
+      });
+      if(!reduce)requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+  /* About: timeline line grows with scroll */
+  (function(){var cv=document.getElementById('cv');if(!cv)return;
+    function f(){var r=cv.getBoundingClientRect(),v=(innerHeight*.85-r.top)/(r.height);cv.style.setProperty('--cvp',Math.max(0,Math.min(1,reduce?1:v)).toFixed(3))}
+    window.addEventListener('scroll',f,{passive:true});f()})();
+
+  /* Contact: once visible, the record flips to side B and the chat plays in time */
+  (function(){var sec=document.getElementById('contact');if(!sec)return;var started=false;
+    var steps=[].slice.call(sec.querySelectorAll('[data-step]')),flip=document.getElementById('flipper'),turn=sec.querySelector('.turn');
+    function show(n){steps.forEach(function(el){var a=+el.dataset.step,stop=el.dataset.stop!=null?+el.dataset.stop:99;el.classList.toggle('in',n>=a&&n<stop)})}
+    function go(){if(started)return;started=true;flip.classList.add('go');turn.classList.add('in');
+      if(reduce){show(9);return}
+      var t=[1400,2600,3600,4900,6000];t.forEach(function(ms,i){setTimeout(function(){show(i)},ms)})}
+    function chk(){if(sec.getBoundingClientRect().top<innerHeight*.7)go()}
+    window.addEventListener('scroll',chk,{passive:true});chk();
+  })();
+
+
+  /* flowing background between sections */
+  (function(){
+    var secs=[].slice.call(document.querySelectorAll('section[data-bg]'));if(!secs.length)return;
+    root.classList.add('flow');
+    function hex(h){return [parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)]}
+    var cols=secs.map(function(sc){return hex(sc.dataset.bg)});
+    function mix(a,b,t){return 'rgb('+a.map(function(v,i){return Math.round(v+(b[i]-v)*t)}).join(',')+')'}
+    function f(){var mid=innerHeight*.5,zone=innerHeight*.45,i=0;
+      for(var k=0;k<secs.length;k++){if(secs[k].getBoundingClientRect().top<=mid)i=k}
+      var c=cols[i];
+      if(i<secs.length-1){var b=secs[i+1].getBoundingClientRect().top-mid;if(b<zone){var t=1-b/zone;t=t*t*(3-2*t);c=null;root.style.setProperty('--flow',mix(cols[i],cols[i+1],reduce?(t>.5?1:0):t));return}}
+      root.style.setProperty('--flow',mix(c,c,0));
+    }
+    window.addEventListener('scroll',function(){requestAnimationFrame(f)},{passive:true});window.addEventListener('resize',f);f();
+  })();
+
+  /* contact: write here → open Telegram with the text */
+  (function(){var ta=document.getElementById('msgText'),send=document.getElementById('msgSend'),form=document.getElementById('msgForm'),mail=document.getElementById('mailBtn');if(!ta)return;
+    var PH={ua:'Ваше повідомлення…',en:'Your message…'};
+    function ph(){ta.placeholder=PH[lang]||PH.ua}ph();document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',ph)});
+    function upd(){var t=ta.value.trim();send.href='https://t.me/Ti0st'+(t?'?text='+encodeURIComponent(t):'');
+      if(mail)mail.href='mailto:tostroglyad@gmail.com'+(t?'?body='+encodeURIComponent(t):'');
+      form.classList.toggle('ready',!!t);ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,140)+'px'}
+    ta.addEventListener('input',upd);upd();
+    function copy(){var t=ta.value.trim();if(!t)return;try{navigator.clipboard.writeText(t).catch(function(){})}catch(e){}}
+    send.addEventListener('click',copy);if(mail)mail.addEventListener('click',copy);
+    form.addEventListener('submit',function(e){e.preventDefault();send.click()});
+    ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();copy();send.click()}});
+  })();
+
+
+  /* build scene: two waves of phones */
+  (function(){var b=document.getElementById('build');if(!b)return;
+    function cl(v){return v<0?0:v>1?1:v}
+    function f(){var p=reduce?0.3:(parseFloat(b.style.getPropertyValue('--p'))||0);
+      b.style.setProperty('--a',cl(p/.46).toFixed(4));b.style.setProperty('--x',cl((p-.4)/.16).toFixed(4));
+      b.style.setProperty('--bi',cl((p-.48)/.16).toFixed(4));b.style.setProperty('--b',cl((p-.5)/.5).toFixed(4));
+      b.classList.toggle('wave2',p>.5)}
+    window.addEventListener('scroll',function(){requestAnimationFrame(f)},{passive:true});f();
+  })();
+
+  /* side A: auto-playing tracklist */
+  var tr=[].slice.call(document.querySelectorAll('.tracks a')),objs=[].slice.call(document.querySelectorAll('.sa-obj')),cur=0,timer=null,hold=false;
+  function play(i){cur=i;tr.forEach(function(a,k){a.classList.toggle('on',k===i)});objs.forEach(function(o,k){o.classList.toggle('on',k===i)})}
+  function auto(){clearInterval(timer);if(reduce)return;timer=setInterval(function(){if(!hold)play((cur+1)%tr.length)},3600)}
+  tr.forEach(function(a,k){
+    a.addEventListener('mouseenter',function(){hold=true;play(k)});
+    a.addEventListener('mouseleave',function(){hold=false;auto()});
+    a.addEventListener('focus',function(){hold=true;play(k)});
+    a.addEventListener('blur',function(){hold=false});
+  });
+  play(0);auto();
+
+  /* nav: scroll-spy + contents overlay */
+  var bar=document.getElementById('bar');
+  var navLinks=[].slice.call(document.querySelectorAll('.nav a'));
+  function spy(){var cur='';['build','write','dreams','about','now'].forEach(function(id){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<window.innerHeight*.4)cur=id});
+    navLinks.forEach(function(a){var on=a.getAttribute('href')==='#'+cur;if(on&&!a.classList.contains('on')&&innerWidth<=820){var nv=a.parentNode;nv.scrollTo({left:a.offsetLeft-nv.clientWidth/2+a.offsetWidth/2,behavior:'smooth'})}a.classList.toggle('on',on)})}
+  var toc=document.getElementById('toc'),menuBtn=document.getElementById('menuBtn');
+  function tocOpen(o){toc.hidden=!o;menuBtn.setAttribute('aria-expanded',String(o));root.classList.toggle('lock',o);if(o)toc.querySelector('a').focus()}
+  menuBtn.addEventListener('click',function(){tocOpen(true)});
+  document.getElementById('tocClose').addEventListener('click',function(){tocOpen(false);menuBtn.focus()});
+  toc.addEventListener('click',function(e){if(e.target.closest('a'))tocOpen(false)});
+
+  /* app details */
+  var APPS={
+    kasa:{tag:{ua:'Школа · батьківський комітет',en:'School · parents’ committee'},title:{ua:'Каса класу',en:'Class Fund'},
+      hook:{ua:'«А я ж здавала!» більше не суперечка.',en:'“But I did pay!” is no longer an argument.'},
+      story:{ua:'Екскурсія, канцтовари, квиток у театр, подарунок на День вчителя. Хтось переказав на картку, хтось дав готівкою, хтось переплатив минулого разу. Усе це жило в зошиті, у чаті й у моїй голові. Одного вечора я втретє перераховувала той самий збір і вирішила: хай рахує телефон.',
+             en:'A school trip, stationery, theatre tickets, a gift for Teachers’ Day. Someone paid by card, someone in cash, someone overpaid last time. It all lived in a notebook, a group chat and my head. One evening I was recounting the same collection for the third time and decided: let the phone do the counting.'},
+      hi:{ua:[['Кожен збір пам\u2019ятає своїх учасників','Новий учень посеред року не ламає старі розрахунки: застосунок питає, у які збори його додати.'],['Переплата не губиться','Її можна повернути готівкою або покрити нею наступну витрату, і все одразу перераховується.'],['Три перевірки замість однієї','Позначки «сплатив», квитанції і готівка, що фізично в касі, звіряються між собою.']],en:[['Each collection remembers its people','A new pupil mid-year doesn\u2019t break past sums: the app asks which collections to add them to.'],['Overpayments don\u2019t get lost','Refund them in cash or use them for the next expense, and everything recalculates.'],['Three checks instead of one','“Paid” marks, receipts and the cash actually in the box are reconciled.']]},
+      tie:{ua:'Пам’ятаєте «хто здав на екскурсію?» на обкладинці? Це звідси.',en:'Remember “who paid for the trip?” on the cover? This is where it came from.'},
+      shots:['kasa-1','kasa-2','kasa-3','kasa-4','kasa-5','kasa-6']},
+    oblik:{tag:{ua:'Ювелірна майстерня',en:'Jewellery workshop'},title:{ua:'Облік майстерні',en:'Workshop Ledger'},
+      hook:{ua:'Золото, срібло і зарплата майстра до грама.',en:'Gold, silver and the jeweller’s pay, down to the gram.'},
+      story:{ua:'Місяць роботи майстра-ювеліра: ремонти, родіювання, продажі, аванси. І окремо метал: скільки золота й срібла видали, скільки повернули, скільки пішло на угар. Раніше це був Excel на три аркуші, де одна зсунута клітинка ламала весь місяць. Тепер власник відкриває телефон і бачить одну цифру: скільки заплатити.',
+             en:'A jeweller’s month: repairs, rhodium plating, sales, advances. And the metal on top: how much gold and silver was issued, returned, and lost in melting. It used to be a three-sheet Excel file where one shifted cell broke the whole month. Now the owner opens a phone and sees one number: what to pay.'},
+      hi:{ua:[['Місяці пов\u2019язані між собою','Виправили вересень, і залишок металу в жовтні перерахувався сам.'],['Ставки в налаштуваннях, а не в формулах','Відсоток майстра чи ціну родіювання змінюють одним полем, без ризику щось зламати.'],['Кожен рядок під замком','Запис редагується тільки після натискання олівця, тож випадково нічого не зітреться.']],en:[['Months are linked','Fix September, and October\u2019s metal balance recalculates itself.'],['Rates in settings, not formulas','The jeweller\u2019s percentage or the rhodium price change in one field, with no risk of breaking anything.'],['Every row is locked','A record is editable only after tapping the pencil, so nothing gets wiped by accident.']]},
+      tie:{ua:'«24,86 г» з обкладинки теж звідси.',en:'The “24.86 g” on the cover comes from here too.'},
+      shots:['oblik-1']},
+    zp:{tag:{ua:'Команда з кількома підрозділами',en:'A team with several units'},title:{ua:'Зарплата команди',en:'Team Payroll'},
+      hook:{ua:'У кожного своя формула. Рахує її телефон.',en:'Everyone has their own formula. The phone does the maths.'},
+      story:{ua:'Офіс, люди на віддаленці й підрозділи в різних містах. Хтось на ставці, хтось на відсотку, хтось отримує за день. Плюс аванси, відпустки й підміни. Кінець місяця означав вечір з калькулятором. Тепер є графік, де видно кожного, і зарплата, яка рахується сама.',
+             en:'An office, remote staff and units in different cities. Some are on a salary, some on a percentage, some paid by the day. Add advances, holidays and cover shifts. The end of the month meant an evening with a calculator. Now there is a schedule that shows everyone, and pay that calculates itself.'},
+      hi:{ua:[['Ролі й підрозділи','Офіс, віддалені працівники, підрозділи в різних містах: у кожної ролі своя логіка нарахування.'],['Графік і зарплата пов\u2019язані','Змінили день у календарі, і сума вже інша. Дні без людей на точці підсвічуються червоним.'],['Разом і без хаосу','Вхід за PIN, кілька людей працюють одночасно, а зміни акуратно зводяться разом.']],en:[['Roles and units','Office, remote staff, units in different cities: each role has its own pay logic.'],['Schedule and pay are linked','Change a day in the calendar and the sum changes. Days with nobody on site turn red.'],['Together, without chaos','PIN sign-in, several people at once, and changes merge cleanly.']]},
+      tie:{ua:'«четвер: на зміні нікого» з обкладинки саме звідси.',en:'“Thursday: nobody on shift” on the cover comes from here.'},
+      shots:['zp-1','zp-2','zp-3']},
+
+    tab:{tag:{ua:'Постачальник · таблички',en:'Supplier · signs'},title:{ua:'Таблички',en:'Signs'},
+      hook:{ua:'«Що я вам привіз?» — питав постачальник.',en:'“What did I bring you?” the supplier would ask.'},
+      story:{ua:'У постачальника не було жодної системи. Він сам перепитував, що вже привіз, а що ні, і контролювати все доводилось мені, майже однобічно. Спершу був один спільний Excel, потім я розбила його по тижнях, з фото кожної таблички. Тепер це застосунок: замовлення з файлами, статусами й термінами, а вартість рахується за формулою постачальника.',
+             en:'The supplier had no system at all. He would ask me himself what he had already delivered, and keeping track was almost entirely on me. First it was one shared Excel file, then I split it by weeks with a photo of every sign. Now it\u2019s an app: orders with files, statuses and deadlines, and the cost is calculated by the supplier\u2019s own formula.'},
+      hi:{ua:[['Формула, а не здогадка','Ціна з розміру, ваги сталі, ціни за кілограм і множника для матеріалу чи згину. Плюс рекомендована й оптова ціна.'],['Ціни змінюються заздалегідь','Постачальник підняв ціну на сталь? Міняєте одну цифру в налаштуваннях, і всі нові розрахунки вже за новими цінами.'],['Терміни, файли, статуси','Строк у робочих днях, прострочене підсвічується. Макети DXF біля замовлення, позначки «виконано», «отримано», дата оплати.']],
+          en:[['A formula, not a guess','Price from size, steel weight, price per kilo and a multiplier for material or bend. Plus a recommended and a wholesale price.'],['Prices change in advance','Supplier raised the steel price? Change one number in settings and every new calculation uses it.'],['Deadlines, files, statuses','Lead time in working days, overdue orders highlighted. DXF files next to each order, “done” and “received” marks, payment date.']]},
+      tie:{ua:'Раніше: один Excel на все. Тепер: система, у якій видно кожне замовлення.',en:'Before: one Excel for everything. Now: a system where every order is visible.'},
+      shots:['tab-1','tab-2']},
+    alena:{tag:{ua:'Майстер кундаліні-йоги',en:'A kundalini yoga master'},title:{ua:'Сайт Альони Ткачової',en:'Alena Tkachova\u2019s website'},
+      hook:{ua:'Один дім для всіх напрямів.',en:'One home for every direction.'},
+      story:{ua:'Сайт для Альони Ткачової, майстра кундаліні-йоги. Головна сторінка збирає всі її напрями, а кожен продукт (онлайн-йога, тур до Керали, трансформаційна гра «Ліла») має власну сторінку зі своєю атмосферою. Шрифти перегукуються, а кольори й настрій у кожного свої. Усе зроблено так, щоб команді Альони було зручно працювати: бекенд уже є, сайт ще допрацьовується.',
+             en:'A website for Alena Tkachova, a kundalini yoga master. The home page gathers all her directions, and each product (online yoga, a Kerala retreat, the transformational game «Lila») has its own page with its own atmosphere. The fonts echo each other, while colours and mood differ. It\u2019s built so Alena\u2019s team can work with it easily: the back end is already there, and the site is still being polished.'},
+      hi:{ua:[['Спільна основа, різна атмосфера','Логіка, меню й шрифти спільні, а кольори й настрій кожного продукту свої. «Ліла» зовсім не схожа на тур до Керали, і так задумано.'],['Команді зручно','Анонси й усі посилання зібрані в одному місці. Змінилась оплата чи група, і правиться один рядок, а не десять сторінок.'],['Бекенд уже є','Сайт росте: нові сторінки й продукти додаються, не ламаючи того, що вже працює.']],
+          en:[['A shared base, a different mood','Logic, menu and fonts are shared, while each product has its own colours and mood. «Lila» looks nothing like the Kerala retreat, on purpose.'],['Easy for the team','Announcements and all links live in one place. A payment or group link changes, and one line is edited, not ten pages.'],['The back end is in place','The site grows: new pages and products are added without breaking what already works.']]},
+      tie:{ua:'«Пн чи Пт?» з обкладинки — звідси: кундаліні онлайн щопонеділка і щоп\u2019ятниці.',en:'“Mon or Fri?” on the cover comes from here: online kundalini every Monday and Friday.'},
+      shots:['alena-home','alena-lila']},
+    note:{tag:{ua:'Android · у трьох людей',en:'Android · on three phones'},title:{ua:'Нотатник з віджетом',en:'Notes with a widget'},
+      hook:{ua:'Нотатки просто на головному екрані.',en:'Notes right on the home screen.'},
+      story:{ua:'Брат попросив нотатник: максимально простий, але зручний, щоб писати одразу на екрані й не відкривати застосунок. Я зробила його для Android. Сама я з iPhone, тому тестувала на телефонах рідних. Тепер він стоїть у трьох людей, і щонайменше одна користується ним щодня.',en:'My brother asked for a notes app: as simple as possible but handy, so you write right on the screen without opening anything. I built it for Android. I use an iPhone myself, so I tested it on my family’s phones. Now it’s on three phones, and at least one person uses it every day.'},
+      hi:{ua:[['Пишеш просто на екрані','Не треба відкривати застосунок, усе вже перед очима.'],['Прозорий віджет','Будь-який розмір і прозорість, текст ніби на шпалерах.'],['Смайлики замість галочок','Список справ виглядає живіше і веселіше.']],
+          en:[['Write right on the screen','No need to open the app, it’s all in front of you.'],['A transparent widget','Any size and transparency, the text sits on your wallpaper.'],['Emoji instead of ticks','A to-do list that looks livelier.']]},
+      tie:{ua:'Простий, без нічого зайвого. Саме тому ним і користуються.',en:'Simple, nothing extra. That’s exactly why people use it.'},
+      mock:'<div class="mk mk-note"><div class="mk-wall"></div><div class="mk-w"><b><span class="u">Сьогодні</span><span class="e">Today</span></b><span>🌿 <span class="u">полити квіти</span><span class="e">water the plants</span></span><span>☕ <span class="u">купити каву</span><span class="e">buy coffee</span></span><span>💍 <span class="u">забрати замовлення</span><span class="e">pick up the order</span></span><span class="dim">✅ <span class="u">звірити касу</span><span class="e">check the fund</span></span></div><div class="mk-icons"><i></i><i></i><i></i><i></i></div></div>'}
+  };
+  var sheet=document.getElementById('sheet'),panel=document.getElementById('panel'),lastBtn=null,curApp=null;
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function renderApp(){var a=APPS[curApp],L=lang;
+    panel.innerHTML='<button class="close" type="button" data-close>'+(L==='ua'?'Закрити ✕':'Close ✕')+'</button>'+
+      '<span class="kick">'+esc(a.tag[L])+' · '+esc(a.title[L])+'</span><h3 id="sheetTitle">'+esc(a.hook[L])+'</h3>'+
+      '<p class="story">'+esc(a.story[L])+'</p>'+
+      (a.mock?'<div class="mockwrap">'+a.mock+'</div>':'<div class="shots">'+a.shots.map(function(f){return '<img src="img/screens/'+f+'.jpg" alt="'+esc(a.title[L])+'" loading="lazy">'}).join('')+'</div>')+(a.mock?'<p class="note">'+(L==='ua'?'Схематичний макет, не скріншот.':'A schematic mock-up, not a screenshot.')+'</p>':'')+
+      '<h4>'+(L==='ua'?'Найцікавіше':'The best bits')+'</h4><ol class="hi">'+a.hi[L].map(function(h){return '<li><b>'+esc(h[0])+'</b><span>'+esc(h[1])+'</span></li>'}).join('')+'</ol>'+
+      '<p class="tie">'+esc(a.tie[L])+'</p>'+
+      '<p class="note">'+(L==='ua'?'На скріншотах демо-дані.':'Screenshots show demo data.')+'</p>'}
+  function openApp(id,btn){curApp=id;lastBtn=btn;renderApp();sheet.hidden=false;root.classList.add('lock');panel.scrollTop=0;panel.querySelector('.close').focus()}
+  function closeApp(){sheet.hidden=true;curApp=null;root.classList.remove('lock');if(lastBtn)lastBtn.focus()}
+  document.querySelectorAll('[data-app]').forEach(function(b){b.addEventListener('click',function(){openApp(b.dataset.app,b)})});
+  sheet.addEventListener('click',function(e){if(e.target.closest('[data-close]'))closeApp()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(!sheet.hidden)closeApp();else if(!toc.hidden){tocOpen(false);menuBtn.focus()}}});
+  document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){if(curApp)renderApp()})});
+  update();
+})();
+</script>
+
+
+<script>
+/* Clarity: позначка, до якого розділу дійшла людина, і звідки прийшла */
+(function(){
+  try{var src=new URLSearchParams(location.search).get('from');if(src&&window.clarity)clarity('set','from',src);}catch(e){}
+  var seen={};
+  function chk(){['build','write','lisa','dreams','about','now','contact'].forEach(function(id){
+    var el=document.getElementById(id);if(!el||seen[id])return;
+    if(el.getBoundingClientRect().top<innerHeight*.5){seen[id]=1;if(window.clarity)clarity('event','reached_'+id);}
+  })}
+  window.addEventListener('scroll',chk,{passive:true});
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-app]');if(b&&window.clarity)clarity('event','open_app_'+b.dataset.app);
+    var t=e.target.closest('.tg,#msgSend');if(t&&window.clarity)clarity('event','click_telegram');},true);
+})();
+</script>
+</body>
+</html>
