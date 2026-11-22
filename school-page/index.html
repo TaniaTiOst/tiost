@@ -113,6 +113,7 @@
   .hint{font-size:.85rem;color:var(--muted);margin-top:12px}
   footer{margin-top:80px;background:var(--ink);color:#cfd8f5;text-align:center;padding:28px 16px}
   .presenting .tools,.presenting .hint{display:none}
+  .presenting .student.empty{display:none}
 
   @media(max-width:820px){
     .hero-in{grid-template-columns:1fr}
@@ -194,7 +195,7 @@
       <p class="count" contenteditable data-k="classcount">There are 26 students in our class. With 3 external students, there are 29 of us.</p>
     </div>
     <div class="grid" id="students"></div>
-    <p class="hint">Click a circle to add a photo. Click a name to write it.</p>
+    <p class="hint">Click a circle to add a photo. Click a name to write it. You do not need all 29: cards with no photo and no name are hidden in Present mode.</p>
   </section>
 
   <section id="news">
@@ -241,7 +242,7 @@ function bindPhoto(box, key, def){
   const input = document.createElement('input');
   input.type='file'; input.accept='image/*'; input.hidden=true;
   box.after(input);
-  const show = src => { box.classList.add('has'); box.innerHTML=''; const i=new Image(); i.src=src; box.appendChild(i); };
+  const show = src => { box.classList.add('has'); box.innerHTML=''; const i=new Image(); i.src=src; box.appendChild(i); refreshEmpty(); };
   const saved = store.get('photo_'+key) || def; if(saved) show(saved);
   box.addEventListener('click', () => input.click());
   input.addEventListener('change', () => {
@@ -260,6 +261,16 @@ function bindPhoto(box, key, def){
 }
 bindPhoto(document.querySelector('[data-photo=building]'), 'building', 'img/building.jpg');
 
+/* cards with no photo and no name are hidden in Present mode */
+function refreshEmpty(){
+  document.querySelectorAll('.student').forEach(c => {
+    const noPhoto = !c.querySelector('.photo').classList.contains('has');
+    const noName = /\[[^\]]*\]/.test(c.querySelector('.name').textContent);
+    c.classList.toggle('empty', noPhoto && noName);
+  });
+}
+document.addEventListener('input', refreshEmpty);
+
 /* 29 students */
 const grid = document.getElementById('students');
 for(let i=1;i<=29;i++){
@@ -271,6 +282,8 @@ for(let i=1;i<=29;i++){
   bindPhoto(d.querySelector('.photo'), 's'+i);
   bindEditable(d.querySelector('.name'), 'name'+i);
 }
+
+refreshEmpty();
 
 /* events (first 3 come from the school website) */
 const defaults = [
