@@ -138,7 +138,7 @@
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
   <div class="hero-in">
     <div>
-      <span class="tag" contenteditable data-k="tag">📍 Zhytomyr, Ukraine</span>
+      <img src="img/logo.png" alt="Lyceum No. 7 logo" style="width:84px;height:84px;display:block;margin-bottom:12px;border-radius:50%;background:#fff"><span class="tag" contenteditable data-k="tag">📍 Zhytomyr, Ukraine</span>
       <h1 contenteditable data-k="title">Lyceum <span>No. 7</span></h1>
       <p contenteditable data-k="sub">Named after Valerii Viktorovych Brazhevskyi. Welcome to our school web page!</p>
       <a class="cta" href="#class">Meet our class →</a>
@@ -166,8 +166,8 @@
       </div>
       <div class="card c-sm">
         <span class="ic">⏰</span>
-        <h3>School day</h3>
-        <p contenteditable data-k="about2">Lessons start at [time] and finish at [time].</p>
+        <h3>Opening hours</h3>
+        <p contenteditable data-k="about2">The school is open Monday to Friday, from 8:00 to 21:00. Saturday and Sunday are days off.</p>
       </div>
       <div class="card c-mid">
         <span class="ic">📚</span>
@@ -178,6 +178,10 @@
         <span class="ic">⭐</span>
         <h3>What we like</h3>
         <p contenteditable data-k="about4">Our favourite subjects are [subjects]. We like our school because [your own sentences].</p>
+      </div>
+      <div class="card c-yard" style="grid-column:span 6;padding:0;overflow:hidden">
+        <img src="img/building2.jpg" alt="School yard and building" style="display:block;width:100%;max-height:340px;object-fit:cover">
+        <p style="margin:0;padding:12px 20px;color:var(--muted);font-size:.9rem">Our school yard and building. Photos and logo: lyceum website, 7.lic.zhitomir.ua</p>
       </div>
     </div>
     <p class="hint">Click on any text to change it. Text with a dashed line is waiting for your information.</p>
@@ -202,10 +206,19 @@
         <button id="addRow">+ Add event</button>
         <button id="delRow">− Remove last</button>
       </div>
-      <div class="src">Events are from our lyceum website, 7.lic.zhitomir.ua</div>
+      <div class="src">Events are from our lyceum website: 7.lic.zhitomir.ua</div>
     </div>
   </section>
 </main>
+
+<section id="contact" style="max-width:1080px;margin:0 auto;padding:60px 20px 0">
+  <div class="eyebrow">Contact us</div>
+  <h2>Where to find us</h2>
+  <div class="bento">
+    <div class="card c-mid"><span class="ic">📍</span><h3>Address</h3><p>Peremohy Street, 79<br>Zhytomyr, 10003, Ukraine</p></div>
+    <div class="card c-mid"><span class="ic">📞</span><h3>Phone and email</h3><p>0412 262 534<br>ztschool7@gmail.com</p></div>
+  </div>
+</section>
 
 <footer contenteditable data-k="footer">Made by [your name], class [class] · Lyceum No. 7, Zhytomyr</footer>
 
@@ -224,12 +237,12 @@ function bindEditable(el, key){
 document.querySelectorAll('[contenteditable][data-k]').forEach(el => bindEditable(el, el.dataset.k));
 
 /* photos: resized and saved in this browser */
-function bindPhoto(box, key){
+function bindPhoto(box, key, def){
   const input = document.createElement('input');
   input.type='file'; input.accept='image/*'; input.hidden=true;
   box.after(input);
   const show = src => { box.classList.add('has'); box.innerHTML=''; const i=new Image(); i.src=src; box.appendChild(i); };
-  const saved = store.get('photo_'+key); if(saved) show(saved);
+  const saved = store.get('photo_'+key) || def; if(saved) show(saved);
   box.addEventListener('click', () => input.click());
   input.addEventListener('change', () => {
     const f = input.files[0]; if(!f) return;
@@ -245,7 +258,7 @@ function bindPhoto(box, key){
     img.src = URL.createObjectURL(f);
   });
 }
-bindPhoto(document.querySelector('[data-photo=building]'), 'building');
+bindPhoto(document.querySelector('[data-photo=building]'), 'building', 'img/building.jpg');
 
 /* 29 students */
 const grid = document.getElementById('students');
@@ -262,6 +275,7 @@ for(let i=1;i<=29;i++){
 /* events (first 3 come from the school website) */
 const defaults = [
   {d:'01', m:'Oct', t:"Defenders' Day", p:"Pupils of our lyceum say a big thank you to all defenders of Ukraine."},
+  {d:'15', m:'Oct', t:'Books about Life Today', p:'A literary event in our school library. Students talked about books about modern life in Ukraine and thought critically.'},
   {d:'16', m:'Oct', t:'Healthy Food Day', p:'A special lesson about healthy eating. We learned that healthy food can be very tasty!'},
   {d:'28', m:'Oct', t:'National Unity Radio Dictation', p:'A big dictation for all of Ukraine. Its idea: "Let’s unite with the Ukrainian word!"'}
 ];
