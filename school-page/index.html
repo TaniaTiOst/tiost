@@ -158,21 +158,21 @@
         <span class="ic">🏫</span>
         <p class="big-text" contenteditable data-k="about1">Our school is Lyceum No. 7 in Zhytomyr, Ukraine. It is named after Valerii Viktorovych Brazhevskyi.</p>
         <div class="stats">
-          <div class="stat"><b contenteditable data-k="st1">[?]</b>students</div>
-          <div class="stat"><b contenteditable data-k="st2">[?]</b>teachers</div>
-          <div class="stat"><b contenteditable data-k="st3">[?]</b>our class</div>
-          <div class="stat"><b contenteditable data-k="st4">[?]</b>founded</div>
+          <div class="stat"><b contenteditable data-k="st1">989</b>students</div>
+          <div class="stat"><b contenteditable data-k="st2">98</b>teachers</div>
+          <div class="stat"><b contenteditable data-k="st3">29</b>in our class</div>
+          <div class="stat"><b contenteditable data-k="st4">8:30</b>lessons start</div>
         </div>
       </div>
       <div class="card c-sm">
         <span class="ic">⏰</span>
-        <h3>Opening hours</h3>
-        <p contenteditable data-k="about2">The school is open Monday to Friday, from 8:00 to 21:00. Saturday and Sunday are days off.</p>
+        <h3>School day</h3>
+        <p contenteditable data-k="about2">Students come at 8:00 to 8:30. Lessons are from 8:30 to 15:55. After lessons, there are clubs and extra classes until 21:00. The school is closed on Saturday, Sunday and holidays.</p>
       </div>
       <div class="card c-mid">
         <span class="ic">📚</span>
         <h3>Our school has</h3>
-        <p contenteditable data-k="about3">a media library and a social and psychological service. [Add more: classrooms, canteen, gym, clubs.]</p>
+        <p contenteditable data-k="about3">a media library, a social and psychological service, and 17 teacher assistants. We study in one shift, five days a week. Our lessons are in Ukrainian. Our director is Mykhailo Ivanovych Chemerys.</p>
       </div>
       <div class="card c-mid">
         <span class="ic">⭐</span>
@@ -206,7 +206,7 @@
         <button id="addRow">+ Add event</button>
         <button id="delRow">− Remove last</button>
       </div>
-      <div class="src">Events are from our lyceum website: 7.lic.zhitomir.ua</div>
+      <div class="src">Events and facts about the school: lyceum website, 7.lic.zhitomir.ua (student numbers are from 1 October 2026)</div>
     </div>
   </section>
 </main>
@@ -275,9 +275,9 @@ for(let i=1;i<=29;i++){
 /* events (first 3 come from the school website) */
 const defaults = [
   {d:'01', m:'Oct', t:"Defenders' Day", p:"Pupils of our lyceum say a big thank you to all defenders of Ukraine."},
-  {d:'15', m:'Oct', t:'Books about Life Today', p:'A literary event in our school library. Students talked about books about modern life in Ukraine and thought critically.'},
+  {d:'15', m:'Oct', t:'Books about Life Today', p:'A literary event in our school library. Students discussed books about life in Ukraine today and practised critical thinking.'},
   {d:'16', m:'Oct', t:'Healthy Food Day', p:'A special lesson about healthy eating. We learned that healthy food can be very tasty!'},
-  {d:'28', m:'Oct', t:'National Unity Radio Dictation', p:'A big dictation for all of Ukraine. Its idea: "Let’s unite with the Ukrainian word!"'}
+  {d:'28', m:'Oct', t:'National Unity Radio Dictation', p:'A dictation on the radio for the whole country. Its idea: "Let’s unite with the Ukrainian word!"'}
 ];
 const box = document.getElementById('events');
 let rows = parseInt(store.get('rows') || defaults.length, 10);
